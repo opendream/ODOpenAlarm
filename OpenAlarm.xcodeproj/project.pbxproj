@@ -1,0 +1,321 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		98B4FBDE15454CE900E821CF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBDD15454CE900E821CF /* UIKit.framework */; };
+		98B4FBE015454CE900E821CF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBDF15454CE900E821CF /* Foundation.framework */; };
+		98B4FBE215454CE900E821CF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBE115454CE900E821CF /* CoreGraphics.framework */; };
+		98B4FBE415454CE900E821CF /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBE315454CE900E821CF /* CoreData.framework */; };
+		98B4FBEA15454CE900E821CF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98B4FBE815454CE900E821CF /* InfoPlist.strings */; };
+		98B4FBEC15454CE900E821CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B4FBEB15454CE900E821CF /* main.m */; };
+		98B4FBF015454CE900E821CF /* ODAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B4FBEF15454CE900E821CF /* ODAppDelegate.m */; };
+		98B4FBF315454CE900E821CF /* OpenAlarm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98B4FBF115454CE900E821CF /* OpenAlarm.xcdatamodeld */; };
+		98B4FBF615454CE900E821CF /* ODMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B4FBF515454CE900E821CF /* ODMasterViewController.m */; };
+		98B4FBF915454CE900E821CF /* ODDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B4FBF815454CE900E821CF /* ODDetailViewController.m */; };
+		98B4FBFC15454CE900E821CF /* ODMasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98B4FBFA15454CE900E821CF /* ODMasterViewController.xib */; };
+		98B4FBFF15454CEA00E821CF /* ODDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98B4FBFD15454CEA00E821CF /* ODDetailViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		98B4FBD915454CE900E821CF /* OpenAlarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenAlarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		98B4FBDD15454CE900E821CF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		98B4FBDF15454CE900E821CF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		98B4FBE115454CE900E821CF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		98B4FBE315454CE900E821CF /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		98B4FBE715454CE900E821CF /* OpenAlarm-Info.plist */ = {isa = PBXFileReference; path = "OpenAlarm-Info.plist"; sourceTree = "<group>"; };
+		98B4FBE915454CE900E821CF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		98B4FBEB15454CE900E821CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		98B4FBED15454CE900E821CF /* OpenAlarm-Prefix.pch */ = {isa = PBXFileReference; path = "OpenAlarm-Prefix.pch"; sourceTree = "<group>"; };
+		98B4FBEE15454CE900E821CF /* ODAppDelegate.h */ = {isa = PBXFileReference; path = ODAppDelegate.h; sourceTree = "<group>"; };
+		98B4FBEF15454CE900E821CF /* ODAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ODAppDelegate.m; sourceTree = "<group>"; };
+		98B4FBF215454CE900E821CF /* OpenAlarm.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenAlarm.xcdatamodel; sourceTree = "<group>"; };
+		98B4FBF415454CE900E821CF /* ODMasterViewController.h */ = {isa = PBXFileReference; path = ODMasterViewController.h; sourceTree = "<group>"; };
+		98B4FBF515454CE900E821CF /* ODMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ODMasterViewController.m; sourceTree = "<group>"; };
+		98B4FBF715454CE900E821CF /* ODDetailViewController.h */ = {isa = PBXFileReference; path = ODDetailViewController.h; sourceTree = "<group>"; };
+		98B4FBF815454CE900E821CF /* ODDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ODDetailViewController.m; sourceTree = "<group>"; };
+		98B4FBFB15454CE900E821CF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ODMasterViewController.xib; sourceTree = "<group>"; };
+		98B4FBFE15454CEA00E821CF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ODDetailViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		98B4FBD615454CE900E821CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98B4FBDE15454CE900E821CF /* UIKit.framework in Frameworks */,
+				98B4FBE015454CE900E821CF /* Foundation.framework in Frameworks */,
+				98B4FBE215454CE900E821CF /* CoreGraphics.framework in Frameworks */,
+				98B4FBE415454CE900E821CF /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		98B4FBCE15454CE900E821CF = {
+			isa = PBXGroup;
+			children = (
+				98B4FBE515454CE900E821CF /* OpenAlarm */,
+				98B4FBDC15454CE900E821CF /* Frameworks */,
+				98B4FBDA15454CE900E821CF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		98B4FBDA15454CE900E821CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				98B4FBD915454CE900E821CF /* OpenAlarm.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		98B4FBDC15454CE900E821CF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				98B4FBDD15454CE900E821CF /* UIKit.framework */,
+				98B4FBDF15454CE900E821CF /* Foundation.framework */,
+				98B4FBE115454CE900E821CF /* CoreGraphics.framework */,
+				98B4FBE315454CE900E821CF /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		98B4FBE515454CE900E821CF /* OpenAlarm */ = {
+			isa = PBXGroup;
+			children = (
+				98B4FBEE15454CE900E821CF /* ODAppDelegate.h */,
+				98B4FBEF15454CE900E821CF /* ODAppDelegate.m */,
+				98B4FBF415454CE900E821CF /* ODMasterViewController.h */,
+				98B4FBF515454CE900E821CF /* ODMasterViewController.m */,
+				98B4FBF715454CE900E821CF /* ODDetailViewController.h */,
+				98B4FBF815454CE900E821CF /* ODDetailViewController.m */,
+				98B4FBFA15454CE900E821CF /* ODMasterViewController.xib */,
+				98B4FBFD15454CEA00E821CF /* ODDetailViewController.xib */,
+				98B4FBF115454CE900E821CF /* OpenAlarm.xcdatamodeld */,
+				98B4FBE615454CE900E821CF /* Supporting Files */,
+			);
+			path = OpenAlarm;
+			sourceTree = "<group>";
+		};
+		98B4FBE615454CE900E821CF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				98B4FBE715454CE900E821CF /* OpenAlarm-Info.plist */,
+				98B4FBE815454CE900E821CF /* InfoPlist.strings */,
+				98B4FBEB15454CE900E821CF /* main.m */,
+				98B4FBED15454CE900E821CF /* OpenAlarm-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		98B4FBD815454CE900E821CF /* OpenAlarm */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 98B4FC0215454CEA00E821CF /* Build configuration list for PBXNativeTarget "OpenAlarm" */;
+			buildPhases = (
+				98B4FBD515454CE900E821CF /* Sources */,
+				98B4FBD615454CE900E821CF /* Frameworks */,
+				98B4FBD715454CE900E821CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenAlarm;
+			productName = OpenAlarm;
+			productReference = 98B4FBD915454CE900E821CF /* OpenAlarm.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		98B4FBD015454CE900E821CF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = OD;
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 98B4FBD315454CE900E821CF /* Build configuration list for PBXProject "OpenAlarm" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 98B4FBCE15454CE900E821CF;
+			productRefGroup = 98B4FBDA15454CE900E821CF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				98B4FBD815454CE900E821CF /* OpenAlarm */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		98B4FBD715454CE900E821CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98B4FBEA15454CE900E821CF /* InfoPlist.strings in Resources */,
+				98B4FBFC15454CE900E821CF /* ODMasterViewController.xib in Resources */,
+				98B4FBFF15454CEA00E821CF /* ODDetailViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		98B4FBD515454CE900E821CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98B4FBEC15454CE900E821CF /* main.m in Sources */,
+				98B4FBF015454CE900E821CF /* ODAppDelegate.m in Sources */,
+				98B4FBF315454CE900E821CF /* OpenAlarm.xcdatamodeld in Sources */,
+				98B4FBF615454CE900E821CF /* ODMasterViewController.m in Sources */,
+				98B4FBF915454CE900E821CF /* ODDetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		98B4FBE815454CE900E821CF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				98B4FBE915454CE900E821CF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		98B4FBFA15454CE900E821CF /* ODMasterViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				98B4FBFB15454CE900E821CF /* en */,
+			);
+			name = ODMasterViewController.xib;
+			sourceTree = "<group>";
+		};
+		98B4FBFD15454CEA00E821CF /* ODDetailViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				98B4FBFE15454CEA00E821CF /* en */,
+			);
+			name = ODDetailViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		98B4FC0015454CEA00E821CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		98B4FC0115454CEA00E821CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		98B4FC0315454CEA00E821CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OpenAlarm/OpenAlarm-Prefix.pch";
+				INFOPLIST_FILE = "OpenAlarm/OpenAlarm-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		98B4FC0415454CEA00E821CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OpenAlarm/OpenAlarm-Prefix.pch";
+				INFOPLIST_FILE = "OpenAlarm/OpenAlarm-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		98B4FBD315454CE900E821CF /* Build configuration list for PBXProject "OpenAlarm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98B4FC0015454CEA00E821CF /* Debug */,
+				98B4FC0115454CEA00E821CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		98B4FC0215454CEA00E821CF /* Build configuration list for PBXNativeTarget "OpenAlarm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98B4FC0315454CEA00E821CF /* Debug */,
+				98B4FC0415454CEA00E821CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		98B4FBF115454CE900E821CF /* OpenAlarm.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				98B4FBF215454CE900E821CF /* OpenAlarm.xcdatamodel */,
+			);
+			currentVersion = 98B4FBF215454CE900E821CF /* OpenAlarm.xcdatamodel */;
+			path = OpenAlarm.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 98B4FBD015454CE900E821CF /* Project object */;
+}
