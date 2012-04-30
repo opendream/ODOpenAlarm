@@ -10,6 +10,8 @@
 
 #import "ODMasterViewController.h"
 
+#import "ODListAlarmViewController.h"
+
 @implementation ODAppDelegate
 
 @synthesize window = _window;
@@ -23,9 +25,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
 
-    ODMasterViewController *masterViewController = [[ODMasterViewController alloc] initWithNibName:@"ODMasterViewController" bundle:nil];
+    ODListAlarmViewController *masterViewController = [[ODListAlarmViewController alloc] initWithNibName:@"ODListAlarmViewController" bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
-    masterViewController.managedObjectContext = self.managedObjectContext;
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     return YES;
