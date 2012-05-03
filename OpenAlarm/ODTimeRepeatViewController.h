@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#define NUMBEROFROWINSECTION 10
 
 @interface ODTimeRepeatViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 {
     IBOutlet UITableView *repeatTimeTableView;
+    NSMutableArray *selectedDayRepeat;
 
 }
+
+@property (strong, nonatomic) NSMutableArray *selectedDayRepeat;
 
 @end

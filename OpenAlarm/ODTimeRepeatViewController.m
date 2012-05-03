@@ -14,6 +14,8 @@
 
 @implementation ODTimeRepeatViewController
 
+@synthesize selectedDayRepeat;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -28,6 +30,15 @@
     [super viewDidLoad];
     repeatTimeTableView.dataSource = self;
     repeatTimeTableView.delegate = self;
+    
+    NSString *repeatFlag[10];
+    for (int i=0; i<NUMBEROFROWINSECTION; i++) {
+        repeatFlag[i] = @"0";
+    }
+    self.selectedDayRepeat = [NSMutableArray arrayWithObjects:repeatFlag count:NUMBEROFROWINSECTION];
+    //NSLog(@"%@",self.selectedDayRepeat );
+    
+    
 }
 
 - (void)viewDidUnload
@@ -42,66 +53,11 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-
-//#pragma mark - PickerView
-//
-//- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-//{
-//    return 1;
-//}
-//
-//- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-//{
-//    return 10;
-//}
-//
-//
-
-//
-//- (NSString *)pickerView:(UITableView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-//{
-//    switch (row) {
-//        case 0:
-//            return @"Everyday";
-//            break;
-//        case 1:
-//            return @"Every Weekday";
-//            break;
-//        case 2:
-//            return @"Every Weekend";
-//            break;
-//        case 3:
-//            return @"Every Sunday";
-//            break;
-//        case 4:
-//            return @"Every Monday";
-//            break;
-//        case 5:
-//            return @"Every Tuesday";
-//            break;
-//        case 6:
-//            return @"Every Wednesday";
-//            break;
-//        case 7:
-//            return @"Every Thursday";
-//            break;
-//        case 8:
-//            return @"Every Friday";
-//            break;
-//        case 9:
-//            return @"Every Saturday";
-//            break;
-//        default:
-//            return @"else";
-//            break;
-//    }
-//}
-
 #pragma mark - Table View
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return NUMBEROFROWINSECTION;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -171,16 +127,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        ODTimeRepeatViewController *timeRepeat = [[ODTimeRepeatViewController alloc] init];
-        [self.navigationController pushViewController:timeRepeat animated:YES];
-    } else if (indexPath.row == 1) {
-        ODTimeRepeatViewController *timeRepeat = [[ODTimeRepeatViewController alloc] init];
-        [self.navigationController pushViewController:timeRepeat animated:YES];
-    } else if (indexPath.row == 2) {
-        ODTimeRepeatViewController *timeRepeat = [[ODTimeRepeatViewController alloc] init];
-        [self.navigationController pushViewController:timeRepeat animated:YES];
+    
+    if ([tableView cellForRowAtIndexPath:indexPath].accessoryType == UITableViewCellAccessoryNone ) {
+        [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark; 
+        [self.selectedDayRepeat replaceObjectAtIndex:indexPath.row withObject:@"1"];
+        
+        
+    } else {
+        [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
+        [self.selectedDayRepeat replaceObjectAtIndex:indexPath.row withObject:@"0"];
     }
+    
+    //NSLog(@"%@",selectedDayRepeat);
     
 }
 

@@ -19,7 +19,7 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize navigationController = _navigationController;
-
+@dynamic title;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -29,6 +29,33 @@
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
+    
+    
+////    NSPredicate * predicate;
+////    predicate = [NSPredicate predicateWithFormat:@"self.title > %@"];
+////    
+////    
+////    NSSortDescriptor * sort = [[NSortDescriptor alloc] initWithKey:@"title"];
+////    NSArray * sortDescriptors = [NSArray arrayWithObject: sort];
+//    
+//    NSEntityDescription    * entity   = [NSEntityDescription entityForName:@"Alarm" inManagedObjectContext:[self managedObjectContext]];
+//    
+//    
+//    NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
+//    [fetch setEntity: entity];
+////    [fetch setPredicate: predicate];
+////    [fetch setSortDescriptors: sortDescriptors];
+//    
+//    NSArray * results = [[self managedObjectContext] executeFetchRequest:fetch error:nil];
+//    NSLog(@"%@", results);
+//    
+//    
+//    NSManagedObject *newAlarm = [NSEntityDescription insertNewObjectForEntityForName:entity.name inManagedObjectContext:self.managedObjectContext];
+//    [newAlarm setValue:@"talk a walk!" forKey:@"title"];
+//    
+//    //save context
+//    [[self managedObjectContext] save:NULL];
+    
     return YES;
 }
 
@@ -154,5 +181,8 @@
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
-
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@",self.title];
+}
 @end

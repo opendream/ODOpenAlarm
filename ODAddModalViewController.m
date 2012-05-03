@@ -7,7 +7,7 @@
 //
 
 #import "ODAddModalViewController.h"
-#import "ODTimeRepeatViewController.h"
+#import "ODAppDelegate.h"
 
 @interface ODAddModalViewController ()
 
@@ -20,8 +20,11 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        timeRepeat = [[ODTimeRepeatViewController alloc] init];
+        
+
     }
-    return self;
+        return self;
 }
 
 - (void)viewDidLoad
@@ -31,10 +34,19 @@
     detailNewAlarm.delegate = self;
     detailNewAlarm.dataSource = self;
 
-    
-    
+
     UIBarButtonItem *backToCameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(backToAlarmListPage)];
     self.navigationItem.LeftBarButtonItem = backToCameraButton;
+    UIBarButtonItem *saveToDB = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveAlarmToDB)];
+    self.navigationItem.rightBarButtonItem = saveToDB;
+    
+
+}
+- (void)viewWillAppear:(BOOL)animated{
+//    for (int i=0; i<10; i++) {
+    NSLog(@"%@", timeRepeat.selectedDayRepeat);
+//    }
+    
 }
 
 - (void)viewDidUnload
@@ -113,13 +125,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        ODTimeRepeatViewController *timeRepeat = [[ODTimeRepeatViewController alloc] init];
         [self.navigationController pushViewController:timeRepeat animated:YES];
     } else if (indexPath.row == 1) {
-        ODTimeRepeatViewController *timeRepeat = [[ODTimeRepeatViewController alloc] init];
         [self.navigationController pushViewController:timeRepeat animated:YES];
     } else if (indexPath.row == 2) {
-        ODTimeRepeatViewController *timeRepeat = [[ODTimeRepeatViewController alloc] init];
         [self.navigationController pushViewController:timeRepeat animated:YES];
     }
     
@@ -136,5 +145,42 @@
     
 }
 
+- (void)saveAlarmToDB
+{
+    __block NSMutableString *selectedDayRepeatString = [[NSMutableString alloc] init];
+    [timeRepeat.selectedDayRepeat enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+     [selectedDayRepeatString appendString: (NSString *)obj];
+    }];
+    
+    //    NSPredicate * predicate;
+    //    predicate = [NSPredicate predicateWithFormat:@"self.title > %@"];
+    //    
+    //    
+    //    NSSortDescriptor * sort = [[NSortDescriptor alloc] initWithKey:@"title"];
+    //    NSArray * sortDescriptors = [NSArray arrayWithObject: sort];
+    
+    ODAppDelegate *appDelegate = [[ODAppDelegate alloc] init];
+//    
+    NSEntityDescription    * entity   = [NSEntityDescription entityForName:@"Alarm" inManagedObjectContext:[appDelegate managedObjectContext]];
+//    
+//    
+//    NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
+//    [fetch setEntity: entity];
+    //    [fetch setPredicate: predicate];
+    //    [fetch setSortDescriptors: sortDescriptors];
+    
+//    NSArray * results = [[appDelegate managedObjectContext] executeFetchRequest:fetch error:nil];
+
+    
+    
+    NSManagedObject *newAlarm = [NSEntityDescription insertNewObjectForEntityForName:entity.name inManagedObjectContext:appDelegate.managedObjectContext];
+    [newAlarm setValue:selectedDayRepeatString forKey:@"repeatPeriod"];
+    [newAlarm setValue:@"wake up" forKey:@"title"];
+    [newAlarm setValue:datePicker.date  forKey:@"fireDate"];
+    NSLog(@"%@", datePicker.date);
+    //save context
+    [[appDelegate managedObjectContext] save:NULL];
+
+}
 
 @end

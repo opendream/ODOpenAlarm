@@ -20,5 +20,6 @@
 - (NSURL *)applicationDocumentsDirectory;
 
 @property (strong, nonatomic) UINavigationController *navigationController;
+@property (strong, nonatomic) NSString *title;
 
 @end
