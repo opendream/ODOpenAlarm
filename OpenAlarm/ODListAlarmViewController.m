@@ -110,7 +110,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return alarmListFromDB.count;
-    asdfsdf
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
