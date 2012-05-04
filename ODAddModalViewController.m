@@ -7,7 +7,7 @@
 //
 
 #import "ODAddModalViewController.h"
-#import "ODAppDelegate.h"
+#import "Alarm.h"
 
 @interface ODAddModalViewController ()
 
@@ -15,34 +15,54 @@
 
 @implementation ODAddModalViewController
 
+@synthesize delegate;
+@synthesize updateAlarm;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
         timeRepeat = [[ODTimeRepeatViewController alloc] init];
-        
-
+        isUpdate = false;
     }
         return self;
 }
-
+- (id)initWithNibName:(NSString *)nibNameOrNil withAlarm:(Alarm *)alarm bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        //updateAlarm = [[Alarm alloc]init];
+        // Custom initialization
+        timeRepeat = [[ODTimeRepeatViewController alloc] init];
+        isUpdate = YES;
+        self.updateAlarm = alarm;
+        NSLog(@"Alarm update %@ ",updateAlarm);
+        
+    }
+    return self;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     detailNewAlarm.delegate = self;
     detailNewAlarm.dataSource = self;
+//    [detailNewAlarm da
+    if (isUpdate) {
+        datePicker.date = updateAlarm.fireDate;
+    }
 
 
     UIBarButtonItem *backToCameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(backToAlarmListPage)];
     self.navigationItem.LeftBarButtonItem = backToCameraButton;
-    UIBarButtonItem *saveToDB = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(saveAlarmToDB)];
+    UIBarButtonItem *saveToDB = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButton)];
     self.navigationItem.rightBarButtonItem = saveToDB;
     
 
 }
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated
+{
 //    for (int i=0; i<10; i++) {
     NSLog(@"%@", timeRepeat.selectedDayRepeat);
 //    }
@@ -145,6 +165,25 @@
     
 }
 
+- (void)doneButton{
+    if(isUpdate){
+        NSLog(@"update");
+        [self updateAlarmToDB];
+    }else{
+        NSLog(@"save");
+        [self saveAlarmToDB];
+    }
+}
+
+- (void)updateAlarmToDB{
+    self.updateAlarm.fireDate = datePicker.date;
+    [APPDELEGATE saveContext];
+    
+    [self.delegate addViewController:self didUpdateAlarm:self.updateAlarm];
+    [self dismissModalViewControllerAnimated:YES];
+    
+}
+
 - (void)saveAlarmToDB
 {
     __block NSMutableString *selectedDayRepeatString = [[NSMutableString alloc] init];
@@ -172,7 +211,6 @@
 //    NSArray * results = [[appDelegate managedObjectContext] executeFetchRequest:fetch error:nil];
 
     
-    
     NSManagedObject *newAlarm = [NSEntityDescription insertNewObjectForEntityForName:entity.name inManagedObjectContext:appDelegate.managedObjectContext];
     [newAlarm setValue:selectedDayRepeatString forKey:@"repeatPeriod"];
     [newAlarm setValue:@"wake up" forKey:@"title"];
@@ -180,7 +218,15 @@
     NSLog(@"%@", datePicker.date);
     //save context
     [[appDelegate managedObjectContext] save:NULL];
-
+    
+    NSLog(@"alarm %@", newAlarm);
+    
+    if (![newAlarm isFault]) {
+        [self.delegate addViewController:self didInsertAlarm:(Alarm *)newAlarm];
+    }
+    
+    [self dismissModalViewControllerAnimated:YES];
 }
+
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		989A2D4215539444005C0D15 /* ODListAlarmTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 989A2D4115539444005C0D15 /* ODListAlarmTableViewCell.m */; };
 		98A75CF215515537006AA0BE /* Alarm.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A75CF115515537006AA0BE /* Alarm.m */; };
 		98B4FBDE15454CE900E821CF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBDD15454CE900E821CF /* UIKit.framework */; };
 		98B4FBE015454CE900E821CF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBDF15454CE900E821CF /* Foundation.framework */; };
@@ -16,10 +17,6 @@
 		98B4FBEC15454CE900E821CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B4FBEB15454CE900E821CF /* main.m */; };
 		98B4FBF015454CE900E821CF /* ODAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B4FBEF15454CE900E821CF /* ODAppDelegate.m */; };
 		98B4FBF315454CE900E821CF /* OpenAlarm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98B4FBF115454CE900E821CF /* OpenAlarm.xcdatamodeld */; };
-		98B4FBF615454CE900E821CF /* ODMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B4FBF515454CE900E821CF /* ODMasterViewController.m */; };
-		98B4FBF915454CE900E821CF /* ODDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B4FBF815454CE900E821CF /* ODDetailViewController.m */; };
-		98B4FBFC15454CE900E821CF /* ODMasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98B4FBFA15454CE900E821CF /* ODMasterViewController.xib */; };
-		98B4FBFF15454CEA00E821CF /* ODDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98B4FBFD15454CEA00E821CF /* ODDetailViewController.xib */; };
 		98B4FC081545516C00E821CF /* ODListAlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98B4FC061545516C00E821CF /* ODListAlarmViewController.m */; };
 		98B4FC091545516C00E821CF /* ODListAlarmViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98B4FC071545516C00E821CF /* ODListAlarmViewController.xib */; };
 		98B4FC4B1545602200E821CF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B4FC4A1545602200E821CF /* Icon.png */; };
@@ -30,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		989A2D4015539444005C0D15 /* ODListAlarmTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODListAlarmTableViewCell.h; sourceTree = "<group>"; };
+		989A2D4115539444005C0D15 /* ODListAlarmTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODListAlarmTableViewCell.m; sourceTree = "<group>"; };
 		98A75CF015515536006AA0BE /* Alarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alarm.h; sourceTree = "<group>"; };
 		98A75CF115515537006AA0BE /* Alarm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alarm.m; sourceTree = "<group>"; };
 		98B4FBD915454CE900E821CF /* OpenAlarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenAlarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,12 +43,6 @@
 		98B4FBEE15454CE900E821CF /* ODAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ODAppDelegate.h; sourceTree = "<group>"; };
 		98B4FBEF15454CE900E821CF /* ODAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ODAppDelegate.m; sourceTree = "<group>"; };
 		98B4FBF215454CE900E821CF /* OpenAlarm.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenAlarm.xcdatamodel; sourceTree = "<group>"; };
-		98B4FBF415454CE900E821CF /* ODMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ODMasterViewController.h; sourceTree = "<group>"; };
-		98B4FBF515454CE900E821CF /* ODMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ODMasterViewController.m; sourceTree = "<group>"; };
-		98B4FBF715454CE900E821CF /* ODDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ODDetailViewController.h; sourceTree = "<group>"; };
-		98B4FBF815454CE900E821CF /* ODDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ODDetailViewController.m; sourceTree = "<group>"; };
-		98B4FBFB15454CE900E821CF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ODMasterViewController.xib; sourceTree = "<group>"; };
-		98B4FBFE15454CEA00E821CF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ODDetailViewController.xib; sourceTree = "<group>"; };
 		98B4FC051545516C00E821CF /* ODListAlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODListAlarmViewController.h; sourceTree = "<group>"; };
 		98B4FC061545516C00E821CF /* ODListAlarmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODListAlarmViewController.m; sourceTree = "<group>"; };
 		98B4FC071545516C00E821CF /* ODListAlarmViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ODListAlarmViewController.xib; sourceTree = "<group>"; };
@@ -77,6 +70,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		989D66901553F0A8006148FA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				989A2D4015539444005C0D15 /* ODListAlarmTableViewCell.h */,
+				989A2D4115539444005C0D15 /* ODListAlarmTableViewCell.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		989D66921553F0B2006148FA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				98ECBD1C1547F24F00FF814B /* ODAddModalViewController.h */,
+				98ECBD1D1547F24F00FF814B /* ODAddModalViewController.m */,
+				98ECBD1E1547F24F00FF814B /* ODAddModalViewController.xib */,
+				98B4FC051545516C00E821CF /* ODListAlarmViewController.h */,
+				98B4FC061545516C00E821CF /* ODListAlarmViewController.m */,
+				98B4FC071545516C00E821CF /* ODListAlarmViewController.xib */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 		98B4FBCE15454CE900E821CF = {
 			isa = PBXGroup;
 			children = (
@@ -108,20 +123,9 @@
 		98B4FBE515454CE900E821CF /* OpenAlarm */ = {
 			isa = PBXGroup;
 			children = (
-				98ECBD1C1547F24F00FF814B /* ODAddModalViewController.h */,
-				98ECBD1D1547F24F00FF814B /* ODAddModalViewController.m */,
-				98ECBD1E1547F24F00FF814B /* ODAddModalViewController.xib */,
+				989D66921553F0B2006148FA /* Controller */,
 				98B4FBEE15454CE900E821CF /* ODAppDelegate.h */,
 				98B4FBEF15454CE900E821CF /* ODAppDelegate.m */,
-				98B4FBF715454CE900E821CF /* ODDetailViewController.h */,
-				98B4FBF815454CE900E821CF /* ODDetailViewController.m */,
-				98B4FBFD15454CEA00E821CF /* ODDetailViewController.xib */,
-				98B4FC051545516C00E821CF /* ODListAlarmViewController.h */,
-				98B4FC061545516C00E821CF /* ODListAlarmViewController.m */,
-				98B4FC071545516C00E821CF /* ODListAlarmViewController.xib */,
-				98B4FBF415454CE900E821CF /* ODMasterViewController.h */,
-				98B4FBF515454CE900E821CF /* ODMasterViewController.m */,
-				98B4FBFA15454CE900E821CF /* ODMasterViewController.xib */,
 				98FE678415492C040009D7C1 /* ODTimeRepeatViewController.h */,
 				98FE678515492C040009D7C1 /* ODTimeRepeatViewController.m */,
 				98FE678615492C040009D7C1 /* ODTimeRepeatViewController.xib */,
@@ -129,6 +133,7 @@
 				98B4FBE615454CE900E821CF /* Supporting Files */,
 				98A75CF015515536006AA0BE /* Alarm.h */,
 				98A75CF115515537006AA0BE /* Alarm.m */,
+				989D66901553F0A8006148FA /* View */,
 			);
 			path = OpenAlarm;
 			sourceTree = "<group>";
@@ -197,8 +202,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				98B4FBEA15454CE900E821CF /* InfoPlist.strings in Resources */,
-				98B4FBFC15454CE900E821CF /* ODMasterViewController.xib in Resources */,
-				98B4FBFF15454CEA00E821CF /* ODDetailViewController.xib in Resources */,
 				98B4FC091545516C00E821CF /* ODListAlarmViewController.xib in Resources */,
 				98B4FC4B1545602200E821CF /* Icon.png in Resources */,
 				98ECBD201547F24F00FF814B /* ODAddModalViewController.xib in Resources */,
@@ -216,12 +219,11 @@
 				98B4FBEC15454CE900E821CF /* main.m in Sources */,
 				98B4FBF015454CE900E821CF /* ODAppDelegate.m in Sources */,
 				98B4FBF315454CE900E821CF /* OpenAlarm.xcdatamodeld in Sources */,
-				98B4FBF615454CE900E821CF /* ODMasterViewController.m in Sources */,
-				98B4FBF915454CE900E821CF /* ODDetailViewController.m in Sources */,
 				98B4FC081545516C00E821CF /* ODListAlarmViewController.m in Sources */,
 				98ECBD1F1547F24F00FF814B /* ODAddModalViewController.m in Sources */,
 				98FE678715492C040009D7C1 /* ODTimeRepeatViewController.m in Sources */,
 				98A75CF215515537006AA0BE /* Alarm.m in Sources */,
+				989A2D4215539444005C0D15 /* ODListAlarmTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,22 +236,6 @@
 				98B4FBE915454CE900E821CF /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		98B4FBFA15454CE900E821CF /* ODMasterViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				98B4FBFB15454CE900E821CF /* en */,
-			);
-			name = ODMasterViewController.xib;
-			sourceTree = "<group>";
-		};
-		98B4FBFD15454CEA00E821CF /* ODDetailViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				98B4FBFE15454CEA00E821CF /* en */,
-			);
-			name = ODDetailViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

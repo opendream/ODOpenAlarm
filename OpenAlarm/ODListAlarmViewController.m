@@ -10,17 +10,23 @@
 #import "ODAddModalViewController.h"
 #import "ODAppDelegate.h"
 #import "Alarm.h"
+#import "ODListAlarmTableViewCell.h"
+
 @interface ODListAlarmViewController ()
 
 @end
 
 @implementation ODListAlarmViewController
 @synthesize managedObjectContext;
+@synthesize fetchedResultsController = __fetchedResultsController;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        alarmList.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+
     }
     return self;
 }
@@ -47,25 +53,12 @@
     //call alarm
     [self setAlarm];
 
-    
     // fetch data from DB
-    appDelegate = [[ODAppDelegate alloc] init];  
-//    managedObjectContext =[[NSManagedObjectContext alloc]init];
-    NSEntityDescription    * entity   = [NSEntityDescription entityForName:@"Alarm" inManagedObjectContext:[appDelegate managedObjectContext]];
+    NSEntityDescription    * entity   = [NSEntityDescription entityForName:@"Alarm" inManagedObjectContext:[APPDELEGATE managedObjectContext]];
 
-        
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity: entity];
-//    [fetch setPredicate: predicate];
-//    [fetch setSortDescriptors: sortDescriptors];
-//    alarmListFromDB = [[NSMutableArray alloc]init];
-    alarmListFromDB =[NSMutableArray arrayWithArray:[[appDelegate managedObjectContext] executeFetchRequest:fetch error:nil]];
-    NSLog(@"Database");
-    NSLog(@"%@", alarmListFromDB);
-    
-//    Alarm *alarm = [[Alarm alloc] initWithEntity:entity insertIntoManagedObjectContext:[appDelegate managedObjectContext]];
-
-
+    alarmListFromDB =[NSMutableArray arrayWithArray:[[APPDELEGATE managedObjectContext] executeFetchRequest:fetch error:nil]];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -81,6 +74,8 @@
 //    //    alarmListFromDB = [[NSMutableArray alloc]init];
 //    alarmListFromDB =[NSMutableArray arrayWithArray:[[appDelegate managedObjectContext] executeFetchRequest:fetch error:nil]];
 //    [alarmList reloadData];
+    NSError *error;
+    [self.fetchedResultsController performFetch:&error];
 }
 
 - (void)viewDidUnload
@@ -94,9 +89,16 @@
 - (void)insertnewAlarm
 {
     ODAddModalViewController *modalViewAdd = [[ODAddModalViewController alloc] initWithNibName:@"ODAddModalViewController" bundle:nil];
+    modalViewAdd.delegate = self;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:modalViewAdd];
     [self presentModalViewController:navController animated:YES];
                                     
+}
+
+- (void)updatenewAlarm
+{
+    
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -109,12 +111,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return alarmListFromDB.count;
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return self.fetchedResultsController.sections.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -124,39 +127,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSDictionary *dictionary = [alarmListFromDB objectAtIndex:indexPath.row];
-//    NSManagedObjectContext *context = [[NSManagedObjectContext alloc]init];
-//    Alarm *alarm = [NSEntityDescription insertNewObjectForEntityForName:@"Alarm" inManagedObjectContext:context];
     static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
+    ODListAlarmTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        
-        NSManagedObject *alarmItem = [alarmListFromDB objectAtIndex:indexPath.row];
-        
-        UIImageView *imageViewInCell = [[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y, 70, 70)];
-        [cell addSubview:imageViewInCell];
-        imageViewInCell.image = [UIImage imageNamed:@"Icon.png"];
-        
-        UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageViewInCell.frame.size.width + 20, cell.frame.origin.y + 10, 100, 20)];
-        [cell addSubview:timeLabel];
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"HH:mm"];
-        
-        timeLabel.text = [formatter stringFromDate: [alarmItem valueForKey:@"fireDate"]];
-        
-        
-        UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageViewInCell.frame.size.width + 20, cell.frame.origin.y + 30, 100, 20)];
-        [cell addSubview:detailLabel];
-        detailLabel.text = [alarmItem valueForKey:@"title"];
-        
-        UISwitch *alarmSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(detailLabel.frame.origin.x + 130, cell.frame.origin.y + 20, 30, 30)];
-        [cell addSubview:alarmSwitch];
+        cell = [[ODListAlarmTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier]; 
     }
     
-
+    Alarm *alarmItem = (Alarm *)[self.fetchedResultsController objectAtIndexPath:indexPath];    
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HH:mm"];
+    
+    cell.timeLabel.text = [formatter stringFromDate: alarmItem.fireDate];
+    cell.detailLabel.text = alarmItem.title;
+    
     return cell;
 }
 
@@ -166,21 +151,39 @@
     [alarmList setEditing:editing animated:YES];
 }
 
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"select");
+    Alarm *updateAlarm = (Alarm *)[self.fetchedResultsController objectAtIndexPath:indexPath];  
+    ODAddModalViewController *modalViewAdd = [[ODAddModalViewController alloc] initWithNibName:@"ODAddModalViewController" withAlarm:updateAlarm bundle:nil];
+
+    modalViewAdd.delegate = self;
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:modalViewAdd];
+    [self presentModalViewController:navController animated:YES];
+    
+    
+}
+-(void) tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"edit");
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-// click delete button
+    // click delete button
     // delete from Database
-    if(editingStyle == UITableViewCellEditingStyleDelete){
-    NSManagedObject *toDeleteRow = [alarmListFromDB objectAtIndex:indexPath.row];
-        [[appDelegate managedObjectContext] deleteObject:toDeleteRow];
-        [[appDelegate managedObjectContext] save:nil];
-        
-    // delete from tableview cell        
-        [alarmListFromDB removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSManagedObject *toDeleteRow = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [[APPDELEGATE managedObjectContext] deleteObject:toDeleteRow];
+        [[APPDELEGATE managedObjectContext] save:nil];
+        NSLog(@"delete from commit");
     }
     
 }
+
+
 
 
 #pragma mark - Clock View
@@ -216,55 +219,34 @@
     date.text = dateString;
 }
 - (void) fireAlarm {
-    NSManagedObject *managedObject;
-    NSDate *dateAlarm;
-    for (int i=0; i<alarmListFromDB.count; i++) {
-        managedObject = [alarmListFromDB objectAtIndex:i];//
-        dateAlarm = [managedObject valueForKey:@"fireDate"];
-//        NSLog(@"%@", [managedObject valueForKey:@"fireDate"]);
+
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:0];
+    
+    for (int i=0; i<[sectionInfo numberOfObjects]; i++) {
+        Alarm *managedObject = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];//
+        NSDate *dateAlarm = [managedObject valueForKey:@"fireDate"];
         NSDate *today = [NSDate date] ;
         
-        
-//        NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
-//        [timeFormat setDateFormat:@"HH:mm"];
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         NSDateComponents * componentsToday = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:today];
         NSDateComponents * componentsAlarm = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:dateAlarm];
-        if (componentsAlarm.minute == componentsToday.minute && componentsAlarm.hour == componentsToday.hour ) {
+        
+        // Popup Alert 
+        if ( componentsAlarm.minute == componentsToday.minute && componentsAlarm.hour == componentsToday.hour ) {
             alarmCount++;
             if (alarmCount == 1) {
                 NSLog(@"%@  ==  %@", today, dateAlarm);
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"title" message:@"message" delegate:self cancelButtonTitle:@"Snooze" otherButtonTitles:@"OK", nil];
                 [alert show];
             }
-        else if(alarmCount >= 60){
-            alarmCount=0;
+            else if (alarmCount >= 60) {
+                alarmCount = 0;
+            }
         }
-            
-            
-            
-            
-        }   
-//            else if (dateDiff == NSOrderedAscending) {
-//            NSLog(@"%@  ASCEN  %@", today, dateAlarm);
-////            NSLog(@"ASCEN");
-//        } else if (dateDiff == NSOrderedDescending) {
-//            NSLog(@"%@  DECEN  %@", today, dateAlarm);
-////            NSLog(@"Desen");
-//        }
-//        NSlog(@"%@", dateDiff);
-        
-//        
-//        if([NSDate date] < [managedObject valueForKey:@"fireDate"]){
-//            NSLog(@"%d",i);
-//        }
-        
-        
-        
     }
 }
 
-- (void) setAlarm {
+- (void)setAlarm {
     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
     
     localNotif.timeZone = [NSTimeZone defaultTimeZone];
@@ -275,11 +257,113 @@
     localNotif.fireDate = [itemDate addTimeInterval:5];
     
     localNotif.soundName = UILocalNotificationDefaultSoundName;
-//    localNotif.applicationIconBadgeNumber = 1;
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
     
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+}
 
 
+- (NSFetchedResultsController *)fetchedResultsController
+{
+    if (__fetchedResultsController != nil) {
+        return __fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Alarm" inManagedObjectContext:[APPDELEGATE managedObjectContext]];
+    [fetchRequest setEntity:entity];
+    
+    // Set the batch size to a suitable number.
+    [fetchRequest setFetchBatchSize:20]; 
+    
+    // Edit the sort key as appropriate.
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:nil];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[APPDELEGATE managedObjectContext] sectionNameKeyPath:nil cacheName:nil];
+    aFetchedResultsController.delegate = self;
+    self.fetchedResultsController = aFetchedResultsController;
+    
+	NSError *error = nil;
+	if (![self.fetchedResultsController performFetch:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	    abort();
+	}
+    
+    return __fetchedResultsController;
+}  
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    [alarmList beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [alarmList insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [alarmList deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath
+{
+    UITableView *tableView = alarmList;
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            NSLog(@"insert from Fetch");
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            NSLog(@"delete from Fetch");
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[alarmList cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [alarmList endUpdates];
+}
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = [[object valueForKey:@"fireDate"] description];
+}
+
+
+- (void)addViewController:(ODAddModalViewController *)controller didInsertAlarm:(Alarm *)alarm
+{
+    [alarmList reloadData]; 
+}
+
+- (void)addViewController:(ODAddModalViewController *)controller didUpdateAlarm:(Alarm *)alarm
+{
+    NSLog(@"UpdateAlarm %@", alarm);
 }
 
 @end
