@@ -154,10 +154,6 @@
     
 }
 
-
-
-
-
 - (void)backToAlarmListPage
 {
     NSLog(@"close");
@@ -198,9 +194,8 @@
     //    NSSortDescriptor * sort = [[NSortDescriptor alloc] initWithKey:@"title"];
     //    NSArray * sortDescriptors = [NSArray arrayWithObject: sort];
     
-    ODAppDelegate *appDelegate = [[ODAppDelegate alloc] init];
 //    
-    NSEntityDescription    * entity   = [NSEntityDescription entityForName:@"Alarm" inManagedObjectContext:[appDelegate managedObjectContext]];
+    NSEntityDescription    * entity   = [NSEntityDescription entityForName:@"Alarm" inManagedObjectContext:[APPDELEGATE managedObjectContext]];
 //    
 //    
 //    NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
@@ -211,13 +206,18 @@
 //    NSArray * results = [[appDelegate managedObjectContext] executeFetchRequest:fetch error:nil];
 
     
-    NSManagedObject *newAlarm = [NSEntityDescription insertNewObjectForEntityForName:entity.name inManagedObjectContext:appDelegate.managedObjectContext];
-    [newAlarm setValue:selectedDayRepeatString forKey:@"repeatPeriod"];
-    [newAlarm setValue:@"wake up" forKey:@"title"];
-    [newAlarm setValue:datePicker.date  forKey:@"fireDate"];
+    Alarm *newAlarm = [NSEntityDescription insertNewObjectForEntityForName:entity.name inManagedObjectContext:[APPDELEGATE managedObjectContext]];
+//    [newAlarm setValue:selectedDayRepeatString forKey:@"repeatPeriod"];
+//    [newAlarm setValue:@"wake up" forKey:@"title"];
+//    [newAlarm setValue:datePicker.date  forKey:@"fireDate"];
+    newAlarm.repeatPeriod = selectedDayRepeatString;
+    newAlarm.title = @"wake up";
+    newAlarm.fireDate = datePicker.date;
+    
+    
     NSLog(@"%@", datePicker.date);
     //save context
-    [[appDelegate managedObjectContext] save:NULL];
+    [APPDELEGATE saveContext];
     
     NSLog(@"alarm %@", newAlarm);
     

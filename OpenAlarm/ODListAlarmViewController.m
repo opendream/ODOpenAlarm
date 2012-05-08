@@ -48,56 +48,47 @@
     // set clock
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
     // set fireAlarm
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(fireAlarm) userInfo:nil repeats:YES];
+    //[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(fireAlarm) userInfo:nil repeats:YES];
     
     //call alarm
     [self setAlarm];
-
-    // fetch data from DB
-    NSEntityDescription    * entity   = [NSEntityDescription entityForName:@"Alarm" inManagedObjectContext:[APPDELEGATE managedObjectContext]];
-
-    NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-    [fetch setEntity: entity];
-    alarmListFromDB =[NSMutableArray arrayWithArray:[[APPDELEGATE managedObjectContext] executeFetchRequest:fetch error:nil]];
+    
+    NSError *error;
+    NSLog(@"perform fetch %@",[self.fetchedResultsController performFetch:&error] == YES ? @"YES" : @"NO");
+    if (error) {
+        NSLog(@"Cannot perform fetch");
+    }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alarmService) name:@"alarmServicesWillAlert" object:nil];
+} 
+ 
+ - (void)alarmService
+{
+    NSLog(@"Alarm fire!");
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-//    appDelegate = [[ODAppDelegate alloc] init];  
-//    //    managedObjectContext =[[NSManagedObjectContext alloc]init];
-//    NSEntityDescription    * entity   = [NSEntityDescription entityForName:@"Alarm" inManagedObjectContext:[appDelegate managedObjectContext]];
-//    
-//    
-//    NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-//    [fetch setEntity: entity];
-//    //    [fetch setPredicate: predicate];
-//    //    [fetch setSortDescriptors: sortDescriptors];
-//    //    alarmListFromDB = [[NSMutableArray alloc]init];
-//    alarmListFromDB =[NSMutableArray arrayWithArray:[[appDelegate managedObjectContext] executeFetchRequest:fetch error:nil]];
-//    [alarmList reloadData];
-    NSError *error;
-    [self.fetchedResultsController performFetch:&error];
+- (void)viewWillAppear:(BOOL)animated 
+{
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidUnload
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
 
+}
 
 - (void)insertnewAlarm
 {
     ODAddModalViewController *modalViewAdd = [[ODAddModalViewController alloc] initWithNibName:@"ODAddModalViewController" bundle:nil];
     modalViewAdd.delegate = self;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:modalViewAdd];
-    [self presentModalViewController:navController animated:YES];
-                                    
+    [self presentModalViewController:navController animated:YES];              
 }
 
 - (void)updatenewAlarm
 {
-    
     
 }
 
@@ -176,8 +167,8 @@
     // delete from Database
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObject *toDeleteRow = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        [[APPDELEGATE managedObjectContext] deleteObject:toDeleteRow];
-        [[APPDELEGATE managedObjectContext] save:nil];
+        [[self.fetchedResultsController managedObjectContext] deleteObject:toDeleteRow];
+        [[self.fetchedResultsController managedObjectContext] save:nil];
         NSLog(@"delete from commit");
     }
     
@@ -215,7 +206,7 @@
 
     
     time.text = [NSString stringWithFormat:@"%i:%i:%i", hour, minute, sec];
-//    date.text = [NSString stringWithFormat:@"%i %i %i", day, month, year];
+
     date.text = dateString;
 }
 - (void) fireAlarm {
@@ -251,13 +242,16 @@
     
     localNotif.timeZone = [NSTimeZone defaultTimeZone];
     NSDate *itemDate = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *comp = [[NSDateComponents alloc] init];
     
+    Alarm *localNotifFireDate = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    NSLog(@"%@ fire alarm",localNotifFireDate.fireDate);
     localNotif.alertBody = @"eating";
     localNotif.alertAction = NSLocalizedString(@"View Details", nil);
-    localNotif.fireDate = [itemDate addTimeInterval:5];
-    
+    localNotif.fireDate = localNotifFireDate.fireDate;
+
     localNotif.soundName = UILocalNotificationDefaultSoundName;
-    
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
 }
 
@@ -334,6 +328,7 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
+            NSLog(@"update from Fetch");
             [self configureCell:[alarmList cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
             
@@ -355,15 +350,14 @@
     cell.textLabel.text = [[object valueForKey:@"fireDate"] description];
 }
 
-
 - (void)addViewController:(ODAddModalViewController *)controller didInsertAlarm:(Alarm *)alarm
 {
-    [alarmList reloadData]; 
+    [alarmList reloadData];
 }
 
 - (void)addViewController:(ODAddModalViewController *)controller didUpdateAlarm:(Alarm *)alarm
 {
-    NSLog(@"UpdateAlarm %@", alarm);
+    [alarmList reloadData];
 }
 
 @end

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		987262721558E2C000D1B566 /* ODAlarmServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 987262711558E2BF00D1B566 /* ODAlarmServices.m */; };
+		98726277155908D100D1B566 /* ODAlartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98726275155908D100D1B566 /* ODAlartViewController.m */; };
+		98726278155908D100D1B566 /* ODAlartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98726276155908D100D1B566 /* ODAlartViewController.xib */; };
 		989A2D4215539444005C0D15 /* ODListAlarmTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 989A2D4115539444005C0D15 /* ODListAlarmTableViewCell.m */; };
 		98A75CF215515537006AA0BE /* Alarm.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A75CF115515537006AA0BE /* Alarm.m */; };
 		98B4FBDE15454CE900E821CF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBDD15454CE900E821CF /* UIKit.framework */; };
@@ -27,6 +30,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		987262701558E2BF00D1B566 /* ODAlarmServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODAlarmServices.h; sourceTree = "<group>"; };
+		987262711558E2BF00D1B566 /* ODAlarmServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODAlarmServices.m; sourceTree = "<group>"; };
+		98726274155908D100D1B566 /* ODAlartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODAlartViewController.h; sourceTree = "<group>"; };
+		98726275155908D100D1B566 /* ODAlartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODAlartViewController.m; sourceTree = "<group>"; };
+		98726276155908D100D1B566 /* ODAlartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ODAlartViewController.xib; sourceTree = "<group>"; };
 		989A2D4015539444005C0D15 /* ODListAlarmTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODListAlarmTableViewCell.h; sourceTree = "<group>"; };
 		989A2D4115539444005C0D15 /* ODListAlarmTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODListAlarmTableViewCell.m; sourceTree = "<group>"; };
 		98A75CF015515536006AA0BE /* Alarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alarm.h; sourceTree = "<group>"; };
@@ -123,9 +131,15 @@
 		98B4FBE515454CE900E821CF /* OpenAlarm */ = {
 			isa = PBXGroup;
 			children = (
+				989D66901553F0A8006148FA /* View */,
 				989D66921553F0B2006148FA /* Controller */,
 				98B4FBEE15454CE900E821CF /* ODAppDelegate.h */,
 				98B4FBEF15454CE900E821CF /* ODAppDelegate.m */,
+				987262701558E2BF00D1B566 /* ODAlarmServices.h */,
+				987262711558E2BF00D1B566 /* ODAlarmServices.m */,
+				98726274155908D100D1B566 /* ODAlartViewController.h */,
+				98726275155908D100D1B566 /* ODAlartViewController.m */,
+				98726276155908D100D1B566 /* ODAlartViewController.xib */,
 				98FE678415492C040009D7C1 /* ODTimeRepeatViewController.h */,
 				98FE678515492C040009D7C1 /* ODTimeRepeatViewController.m */,
 				98FE678615492C040009D7C1 /* ODTimeRepeatViewController.xib */,
@@ -133,7 +147,6 @@
 				98B4FBE615454CE900E821CF /* Supporting Files */,
 				98A75CF015515536006AA0BE /* Alarm.h */,
 				98A75CF115515537006AA0BE /* Alarm.m */,
-				989D66901553F0A8006148FA /* View */,
 			);
 			path = OpenAlarm;
 			sourceTree = "<group>";
@@ -206,6 +219,7 @@
 				98B4FC4B1545602200E821CF /* Icon.png in Resources */,
 				98ECBD201547F24F00FF814B /* ODAddModalViewController.xib in Resources */,
 				98FE678815492C040009D7C1 /* ODTimeRepeatViewController.xib in Resources */,
+				98726278155908D100D1B566 /* ODAlartViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +238,8 @@
 				98FE678715492C040009D7C1 /* ODTimeRepeatViewController.m in Sources */,
 				98A75CF215515537006AA0BE /* Alarm.m in Sources */,
 				989A2D4215539444005C0D15 /* ODListAlarmTableViewCell.m in Sources */,
+				987262721558E2C000D1B566 /* ODAlarmServices.m in Sources */,
+				98726277155908D100D1B566 /* ODAlartViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

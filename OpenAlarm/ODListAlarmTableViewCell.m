@@ -18,8 +18,6 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-    
-        [super layoutSubviews];
         
         imageViewInCell = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.origin.x + 5, self.frame.origin.y, 70, 70)];
         [self.contentView addSubview:imageViewInCell];
@@ -54,7 +52,7 @@
         [self setEditingAccessoryType:UITableViewCellEditingStyleDelete];
         [UIView animateWithDuration:0.5 animations:^{
             CGRect f = self.imageViewInCell.frame;
-            f.origin.x = 100;
+            f.origin.x = 50;
             imageViewInCell.frame = f;
         }];
     } else {
@@ -69,7 +67,7 @@
 
 - (void)layoutSubviews
 {
-
+    
 }
 
 @end

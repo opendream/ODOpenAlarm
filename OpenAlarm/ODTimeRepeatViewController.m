@@ -7,6 +7,7 @@
 //
 
 #import "ODTimeRepeatViewController.h"
+#import "ODAlarmServices.h"
 
 @interface ODTimeRepeatViewController ()
 
@@ -37,8 +38,6 @@
     }
     self.selectedDayRepeat = [NSMutableArray arrayWithObjects:repeatFlag count:NUMBEROFROWINSECTION];
     //NSLog(@"%@",self.selectedDayRepeat );
-    
-    
 }
 
 - (void)viewDidUnload

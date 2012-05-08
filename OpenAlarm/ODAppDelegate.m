@@ -7,7 +7,8 @@
 //
 
 #import "ODListAlarmViewController.h"
-
+#import "ODAlarmServices.h"
+#import "ODAlartViewController.h"
 @implementation ODAppDelegate
 
 @synthesize window = _window;
@@ -25,8 +26,13 @@
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
+    alertViewController = [[ODAlartViewController alloc] initWithNibName:@"ODAlartViewController" bundle:nil];
+    [ODAlarmServices sharedAlarmServices];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushAlartView:) name:@"alarmServicesWillAlert" object:nil];
     
+    //[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkCounter) userInfo:nil repeats:YES];
+    //[self pushAlartView];
 ////    NSPredicate * predicate;
 ////    predicate = [NSPredicate predicateWithFormat:@"self.title > %@"];
 ////    
@@ -53,6 +59,30 @@
 //    [[self managedObjectContext] save:NULL];
     
     return YES;
+}
+
+- (void)pushAlartView:(NSNotification *)n
+{
+    NSLog(@"%@",[n.userInfo valueForKey:@"title"]);
+    __block CGRect rect = alertViewController.view.frame;
+    rect.origin.y = 400;
+    alertViewController.view.frame = rect;
+    alertViewController.alertMessege.text = [n.userInfo valueForKey:@"title"];
+    [self.navigationController.view addSubview:alertViewController.view];
+    [UIView animateWithDuration:0.5 animations:^{
+        rect = alertViewController.view.frame;
+        rect.origin.y = 0;
+        alertViewController.view.frame = rect;
+    }];
+}
+- (void)hideAlertView
+{
+//    [self.navigationController.view 
+    [alertViewController.view removeFromSuperview];
+}
+- (void)checkCounter
+{
+    //NSLog(@"alarmService[%d] counter : %f",[ODAlarmServices sharedAlarmServices],[[ODAlarmServices sharedAlarmServices] counter]);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

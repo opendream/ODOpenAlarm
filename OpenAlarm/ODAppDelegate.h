@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ODAlartViewController.h"
 #define APPDELEGATE (ODAppDelegate *)[[UIApplication sharedApplication] delegate]
 
 @interface ODAppDelegate : UIResponder <UIApplicationDelegate>
-
+{
+    ODAlartViewController *alertViewController;
+}
 @property (strong, nonatomic) UIWindow *window;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
