@@ -87,7 +87,7 @@
        
     switch (indexPath.row) {
         case 0:
-            choiceRepeat.text = @"Everyday";
+            choiceRepeat.text = @"Every 2 minute";
             break;
         case 1:
             choiceRepeat.text = @"Every Weekday";

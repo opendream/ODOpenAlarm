@@ -13,6 +13,7 @@
 @interface ODAppDelegate : UIResponder <UIApplicationDelegate>
 {
     ODAlartViewController *alertViewController;
+     __block UIBackgroundTaskIdentifier bgTask;
 }
 @property (strong, nonatomic) UIWindow *window;
 

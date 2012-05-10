@@ -187,46 +187,24 @@
      [selectedDayRepeatString appendString: (NSString *)obj];
     }];
     
-    //    NSPredicate * predicate;
-    //    predicate = [NSPredicate predicateWithFormat:@"self.title > %@"];
-    //    
-    //    
-    //    NSSortDescriptor * sort = [[NSortDescriptor alloc] initWithKey:@"title"];
-    //    NSArray * sortDescriptors = [NSArray arrayWithObject: sort];
-    
-//    
     NSEntityDescription    * entity   = [NSEntityDescription entityForName:@"Alarm" inManagedObjectContext:[APPDELEGATE managedObjectContext]];
-//    
-//    
-//    NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-//    [fetch setEntity: entity];
-    //    [fetch setPredicate: predicate];
-    //    [fetch setSortDescriptors: sortDescriptors];
-    
-//    NSArray * results = [[appDelegate managedObjectContext] executeFetchRequest:fetch error:nil];
-
-    
     Alarm *newAlarm = [NSEntityDescription insertNewObjectForEntityForName:entity.name inManagedObjectContext:[APPDELEGATE managedObjectContext]];
-//    [newAlarm setValue:selectedDayRepeatString forKey:@"repeatPeriod"];
-//    [newAlarm setValue:@"wake up" forKey:@"title"];
-//    [newAlarm setValue:datePicker.date  forKey:@"fireDate"];
     newAlarm.repeatPeriod = selectedDayRepeatString;
     newAlarm.title = @"wake up";
+    unsigned int unitFlags = NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSCalendar * calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents * components = [calendar components:unitFlags fromDate:datePicker.date];
+    components.second = 0;
+    NSDate *saveAlarm = [calendar dateFromComponents:components];
     newAlarm.fireDate = datePicker.date;
-    
-    
-    NSLog(@"%@", datePicker.date);
     //save context
     [APPDELEGATE saveContext];
-    
-    NSLog(@"alarm %@", newAlarm);
-    
+    NSLog(@"save alarm %@",saveAlarm);
     if (![newAlarm isFault]) {
         [self.delegate addViewController:self didInsertAlarm:(Alarm *)newAlarm];
     }
     
     [self dismissModalViewControllerAnimated:YES];
 }
-
 
 @end

@@ -10,10 +10,13 @@
 
 @interface ODAlartViewController : UIViewController {
     IBOutlet UILabel *alertMessege;
-
+    IBOutlet UILabel *dateLabel;
+    IBOutlet UILabel *timeLabel;
 }
 
 @property(strong, nonatomic) UILabel *alertMessege;
+@property(strong, nonatomic) UILabel *dateLabel;
+@property(strong, nonatomic) UILabel *timeLabel;
 
 - (IBAction)hideView:(id)sender;
 @end

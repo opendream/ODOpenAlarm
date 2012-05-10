@@ -51,7 +51,7 @@
     //[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(fireAlarm) userInfo:nil repeats:YES];
     
     //call alarm
-    [self setAlarm];
+    //[self setAlarm];
     
     NSError *error;
     NSLog(@"perform fetch %@",[self.fetchedResultsController performFetch:&error] == YES ? @"YES" : @"NO");
@@ -209,6 +209,7 @@
 
     date.text = dateString;
 }
+
 - (void) fireAlarm {
 
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:0];
