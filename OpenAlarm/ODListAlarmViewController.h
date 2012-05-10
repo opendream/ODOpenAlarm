@@ -14,8 +14,6 @@
     IBOutlet UIView *clockViewer;
     IBOutlet UILabel *date;
     IBOutlet UILabel *time;
-    NSMutableArray *alarmListFromDB;
-    int alarmCount;
 }
 @property(strong,nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;

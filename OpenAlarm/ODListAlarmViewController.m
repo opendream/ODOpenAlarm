@@ -34,7 +34,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    alarmCount = 0;
     alarmList.delegate = self;
     alarmList.dataSource = self;
     
@@ -47,29 +46,13 @@
         
     // set clock
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
-    // set fireAlarm
-    //[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(fireAlarm) userInfo:nil repeats:YES];
-    
-    //call alarm
-    //[self setAlarm];
-    
-    NSError *error;
-    NSLog(@"perform fetch %@",[self.fetchedResultsController performFetch:&error] == YES ? @"YES" : @"NO");
-    if (error) {
-        NSLog(@"Cannot perform fetch");
-    }
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alarmService) name:@"alarmServicesWillAlert" object:nil];
 } 
  
  - (void)alarmService
 {
     NSLog(@"Alarm fire!");
-}
-
-- (void)viewWillAppear:(BOOL)animated 
-{
-    [super viewWillAppear:animated];
 }
 
 - (void)viewDidUnload
@@ -85,11 +68,6 @@
     modalViewAdd.delegate = self;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:modalViewAdd];
     [self presentModalViewController:navController animated:YES];              
-}
-
-- (void)updatenewAlarm
-{
-    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

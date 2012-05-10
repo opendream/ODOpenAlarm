@@ -68,9 +68,6 @@ static ODAlarmServices *shareAlarmService = nil;
             if (checkRepeatPeriod == '1') {
                 switch (i) {
                     case 0:
-                        
-                        
-                        
                         //NSLog(@"%d", i);
                         if ( componentsAlarm.minute == componentsToday.minute && componentsAlarm.hour == componentsToday.hour ) {
                             alarmCount++; 
@@ -127,7 +124,6 @@ static ODAlarmServices *shareAlarmService = nil;
                 }
             }
         }
-    NSLog(@"%d",alarmCount);
       
     }
 }
