@@ -11,12 +11,15 @@
 extern NSString *alarmServicesWillAlert;
 
 @interface ODAlarmServices : NSObject{
-    NSArray *alarm;
+    NSArray *alarms;
     int alarmCount;
 }
 
+@property (nonatomic, strong) NSArray *alarms;
 @property (nonatomic, assign) float counter;
 
 + (id)sharedAlarmServices;
+- (void)fetchAlarm;
+- (BOOL)alarmTest:(Alarm *)a;
 
 @end

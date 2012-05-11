@@ -85,11 +85,17 @@
 
 - (void)pushAlartView:(NSNotification *)n
 {
-    NSLog(@"%@",[n.userInfo valueForKey:@"title"]);
+    NSLog(@"%@",[n.userInfo valueForKey:@"kAlarm"]);
     __block CGRect rect = alertViewController.view.frame;
     rect.origin.y = 400;
     alertViewController.view.frame = rect;
-    alertViewController.alertMessege.text = [n.userInfo valueForKey:@"title"];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zzz"];
+    [formatter setTimeZone:[NSTimeZone defaultTimeZone]];
+    NSString *stringFromDate = [formatter stringFromDate:[(Alarm *)[n.userInfo valueForKey:@"kAlarm"] fireDate]];
+    
+    alertViewController.alertMessege.text = stringFromDate;
     [self.navigationController.view addSubview:alertViewController.view];
     [UIView animateWithDuration:0.5 animations:^{
         rect = alertViewController.view.frame;

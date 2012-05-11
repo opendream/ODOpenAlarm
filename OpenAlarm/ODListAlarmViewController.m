@@ -188,53 +188,6 @@
     date.text = dateString;
 }
 
-- (void) fireAlarm {
-
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:0];
-    
-    for (int i=0; i<[sectionInfo numberOfObjects]; i++) {
-        Alarm *managedObject = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];//
-        NSDate *dateAlarm = [managedObject valueForKey:@"fireDate"];
-        NSDate *today = [NSDate date] ;
-        
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateComponents * componentsToday = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:today];
-        NSDateComponents * componentsAlarm = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:dateAlarm];
-        
-        // Popup Alert 
-        if ( componentsAlarm.minute == componentsToday.minute && componentsAlarm.hour == componentsToday.hour ) {
-            alarmCount++;
-            if (alarmCount == 1) {
-                NSLog(@"%@  ==  %@", today, dateAlarm);
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"title" message:@"message" delegate:self cancelButtonTitle:@"Snooze" otherButtonTitles:@"OK", nil];
-                [alert show];
-            }
-            else if (alarmCount >= 60) {
-                alarmCount = 0;
-            }
-        }
-    }
-}
-
-- (void)setAlarm {
-    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-    
-    localNotif.timeZone = [NSTimeZone defaultTimeZone];
-    NSDate *itemDate = [NSDate date];
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *comp = [[NSDateComponents alloc] init];
-    
-    Alarm *localNotifFireDate = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-    NSLog(@"%@ fire alarm",localNotifFireDate.fireDate);
-    localNotif.alertBody = @"eating";
-    localNotif.alertAction = NSLocalizedString(@"View Details", nil);
-    localNotif.fireDate = localNotifFireDate.fireDate;
-
-    localNotif.soundName = UILocalNotificationDefaultSoundName;
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
-}
-
-
 - (NSFetchedResultsController *)fetchedResultsController
 {
     if (__fetchedResultsController != nil) {

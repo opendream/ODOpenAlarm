@@ -15,22 +15,25 @@ NSString *alarmServicesWillAlert;
 static ODAlarmServices *shareAlarmService = nil;
 
 @synthesize counter;
+@synthesize alarms;
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        self.counter = 10;
-        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkAlarm) userInfo:nil repeats:YES];
-        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(fetchAlarm) userInfo:nil repeats:YES];
+        // notification center
         alarmServicesWillAlert = @"alarmServicesWillAlert";
-        alarmCount = 0;
         
+        // timer
         [self fetchAlarm];
         [self setAlarm];
+        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(fetchAlarm) userInfo:nil repeats:YES];
+        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkAlarm) userInfo:nil repeats:YES];
+        alarmCount = 0;
     }
     return self;
 }
+
 + (id)sharedAlarmServices
 {
     @synchronized(self) {
@@ -40,107 +43,66 @@ static ODAlarmServices *shareAlarmService = nil;
     return shareAlarmService;
 }
 
-- (void)checkAlarm
+- (BOOL)calculateFireTime:(Alarm *)a
 {
-//    NSLog(@"checkAlarm");
-
-    for (int i=0; i<alarm.count; i++) {
-        
-        NSString *title = [[alarm objectAtIndex:i] valueForKey:@"title"];
-        NSDate *dateAlarm = [[alarm objectAtIndex:i] valueForKey:@"fireDate"];
-        NSString *repeatPeriod = [[alarm objectAtIndex:i] valueForKey:@"repeatPeriod"];
-        NSDate *today = [NSDate date] ;
-//        NSLog(@"%@",dateAlarm);
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateComponents * componentsToday = [calendar components:(NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:today];
-        NSDateComponents * componentsAlarm = [calendar components:(NSWeekdayCalendarUnit |  NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:dateAlarm];
-        NSArray *key = [[NSArray alloc]initWithObjects:@"fireDate", @"title",nil];
-        NSArray *object = [[NSArray alloc]initWithObjects:dateAlarm,title,nil];
-        
-        NSDictionary *userInfo = [[NSDictionary alloc] initWithObjects:object forKeys:key];
-        
-//        NSLog(@"repeat Period ::  %@", repeatPeriod);
-        char checkRepeatPeriod;
-        int counterRepeat = 0;
-        for(int i = 0;i<[repeatPeriod length];i++)
-        {
-            checkRepeatPeriod = [repeatPeriod characterAtIndex:i];
-            if (checkRepeatPeriod == '1') {
-                switch (i) {
-                    case 0:
-                        //NSLog(@"%d", i);
-                        if ( componentsAlarm.minute == componentsToday.minute && componentsAlarm.hour == componentsToday.hour ) {
-                            alarmCount++; 
-                            if (alarmCount == 1) {
-                                [[NSNotificationCenter defaultCenter] postNotificationName:alarmServicesWillAlert object:nil userInfo:userInfo];
-                            }
-                            else if (alarmCount >= 60) {
-                                alarmCount = 0;
-                            }
-                        }                
-                        break;
-                    case 1:
-                        //NSLog(@"%d", i);
-                        break;
-                    case 2:
-                        //NSLog(@"%d", i);
-                        break;
-                    case 3:
-                        //NSLog(@"%d", i);
-                        break;
-                    case 4:
-                        //NSLog(@"%d", i);
-                        break;
-                    case 5:
-                        //NSLog(@"%d", i);
-                        break;
-                    case 6:
-                        //NSLog(@"%d", i);
-                        break;
-                    case 7:
-                        //NSLog(@"%d", i);
-                        break;
-                    case 8:
-                        //NSLog(@"%d", i);
-                        break;
-                    case 9:
-                        //NSLog(@"%d", i);
-                        break;
-                    default:
-                        break;
-                }
-            }else if (checkRepeatPeriod == '0') {
-                counterRepeat++;
-            }
-        }
-        if (counterRepeat == [repeatPeriod length]) {
-            if ( componentsAlarm.minute == componentsToday.minute && componentsAlarm.hour == componentsToday.hour ) {
-                alarmCount++;
-                if (alarmCount == 1) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:alarmServicesWillAlert object:nil userInfo:userInfo];
-                }
-                else if (alarmCount >= 60) {
-                    alarmCount = 0;
-                }
-            }
-        }
-      
-    }
+    NSDate *today = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents * componentsToday = [calendar components:(NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:today];
+    NSDateComponents * componentsAlarm = [calendar components:(NSWeekdayCalendarUnit |  NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:a.nextFireDate];
+    
+    NSInteger nowCheck = ( componentsToday.hour * 60 ) + componentsToday.minute;
+    NSInteger alarmCheck = ( componentsAlarm.hour * 60 ) + componentsAlarm.minute;
+    
+    return (alarmCheck - nowCheck) % a.alarmPeriod.intValue == 0;
 }
 
-- (void)fetchAlarm{
+- (BOOL)alarmTest:(Alarm *)a
+{
+    // check whether alarm should be alert
+    // alarmCheck, nowCheck -> in second
+    
+    if ([a shouldAlert] && [self calculateFireTime:a]) {
+        
+        a.repeatFlag = [NSNumber numberWithBool:NO];
+        [self performSelector:@selector(repeatAlarmCheck:) withObject:a afterDelay:(60)];
+        NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:a, @"kAlarm", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:alarmServicesWillAlert object:nil userInfo:userInfo];
+    } 
+    
+    return YES;
+}
+
+- (void)checkAlarm
+{
+    for (Alarm *alarmObject in alarms) {
+        
+        [self alarmTest:alarmObject];
+        [APPDELEGATE saveContext];
+    }
+    
+}
+
+- (void)repeatAlarmCheck:(Alarm *)a
+{
+    NSLog(@"line 76 repeatAlarmCheck  %@",a);
+    a.repeatFlag = [NSNumber numberWithBool:YES];
+    [APPDELEGATE saveContext];
+}
+
+- (void)fetchAlarm
+{
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Alarm" inManagedObjectContext:[APPDELEGATE managedObjectContext]];
     NSFetchRequest *request = [[NSFetchRequest alloc]init];
     [request setEntity:entity];
-    alarm = [[APPDELEGATE managedObjectContext] executeFetchRequest:request error:nil];
+    alarms = [[APPDELEGATE managedObjectContext] executeFetchRequest:request error:nil];
 }
 
 - (void)setAlarm {
-    for (int i=0; i<alarm.count; i++) {
+    for (int i=0; i<alarms.count; i++) {
         
         UILocalNotification *localNotif = [[UILocalNotification alloc] init];
         localNotif.timeZone = [NSTimeZone defaultTimeZone];
-        Alarm *localNotifFireDate = [alarm objectAtIndex:i];
+        Alarm *localNotifFireDate = [alarms objectAtIndex:i];
         //NSLog(@"%@ fire alarm",localNotifFireDate.fireDate);
         localNotif.alertBody = localNotifFireDate.title;
         localNotif.alertAction = NSLocalizedString(@"View Details", nil);

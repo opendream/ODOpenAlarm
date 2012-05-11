@@ -191,15 +191,10 @@
     Alarm *newAlarm = [NSEntityDescription insertNewObjectForEntityForName:entity.name inManagedObjectContext:[APPDELEGATE managedObjectContext]];
     newAlarm.repeatPeriod = selectedDayRepeatString;
     newAlarm.title = @"wake up";
-    unsigned int unitFlags = NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
-    NSCalendar * calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents * components = [calendar components:unitFlags fromDate:datePicker.date];
-    components.second = 0;
-    NSDate *saveAlarm = [calendar dateFromComponents:components];
     newAlarm.fireDate = datePicker.date;
-    //save context
+    newAlarm.nextFireDate = datePicker.date;
+    newAlarm.alarmPeriod = [NSNumber numberWithInt:2];
     [APPDELEGATE saveContext];
-    NSLog(@"save alarm %@",saveAlarm);
     if (![newAlarm isFault]) {
         [self.delegate addViewController:self didInsertAlarm:(Alarm *)newAlarm];
     }

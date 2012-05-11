@@ -11,7 +11,6 @@
 		98726277155908D100D1B566 /* ODAlartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98726275155908D100D1B566 /* ODAlartViewController.m */; };
 		98726278155908D100D1B566 /* ODAlartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98726276155908D100D1B566 /* ODAlartViewController.xib */; };
 		989A2D4215539444005C0D15 /* ODListAlarmTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 989A2D4115539444005C0D15 /* ODListAlarmTableViewCell.m */; };
-		98A75CF215515537006AA0BE /* Alarm.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A75CF115515537006AA0BE /* Alarm.m */; };
 		98B4FBDE15454CE900E821CF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBDD15454CE900E821CF /* UIKit.framework */; };
 		98B4FBE015454CE900E821CF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBDF15454CE900E821CF /* Foundation.framework */; };
 		98B4FBE215454CE900E821CF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBE115454CE900E821CF /* CoreGraphics.framework */; };
@@ -27,6 +26,12 @@
 		98ECBD201547F24F00FF814B /* ODAddModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98ECBD1E1547F24F00FF814B /* ODAddModalViewController.xib */; };
 		98FE678715492C040009D7C1 /* ODTimeRepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FE678515492C040009D7C1 /* ODTimeRepeatViewController.m */; };
 		98FE678815492C040009D7C1 /* ODTimeRepeatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98FE678615492C040009D7C1 /* ODTimeRepeatViewController.xib */; };
+		CE7CE132155BC7A0004DA7C3 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7CE131155BC79F004DA7C3 /* SenTestingKit.framework */; };
+		CEBE439F155BA8CB00CAD5C3 /* Alarm.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBE439E155BA8CB00CAD5C3 /* Alarm.m */; };
+		CEBE441B155BC03600CAD5C3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBDD15454CE900E821CF /* UIKit.framework */; };
+		CEBE441C155BC03600CAD5C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBDF15454CE900E821CF /* Foundation.framework */; };
+		CEBE4422155BC03600CAD5C3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEBE4420155BC03600CAD5C3 /* InfoPlist.strings */; };
+		CEBE442C155BC10400CAD5C3 /* ODAlarmServicesTest.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBE442B155BC10400CAD5C3 /* ODAlarmServicesTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,8 +42,6 @@
 		98726276155908D100D1B566 /* ODAlartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ODAlartViewController.xib; sourceTree = "<group>"; };
 		989A2D4015539444005C0D15 /* ODListAlarmTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODListAlarmTableViewCell.h; sourceTree = "<group>"; };
 		989A2D4115539444005C0D15 /* ODListAlarmTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODListAlarmTableViewCell.m; sourceTree = "<group>"; };
-		98A75CF015515536006AA0BE /* Alarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alarm.h; sourceTree = "<group>"; };
-		98A75CF115515537006AA0BE /* Alarm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alarm.m; sourceTree = "<group>"; };
 		98B4FBD915454CE900E821CF /* OpenAlarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenAlarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98B4FBDD15454CE900E821CF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		98B4FBDF15454CE900E821CF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -61,6 +64,15 @@
 		98FE678415492C040009D7C1 /* ODTimeRepeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODTimeRepeatViewController.h; sourceTree = "<group>"; };
 		98FE678515492C040009D7C1 /* ODTimeRepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODTimeRepeatViewController.m; sourceTree = "<group>"; };
 		98FE678615492C040009D7C1 /* ODTimeRepeatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ODTimeRepeatViewController.xib; sourceTree = "<group>"; };
+		CE7CE131155BC79F004DA7C3 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		CEBE439D155BA8CB00CAD5C3 /* Alarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alarm.h; sourceTree = "<group>"; };
+		CEBE439E155BA8CB00CAD5C3 /* Alarm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alarm.m; sourceTree = "<group>"; };
+		CEBE4418155BC03600CAD5C3 /* ODAlarm.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ODAlarm.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEBE441F155BC03600CAD5C3 /* ODAlarm-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ODAlarm-Info.plist"; sourceTree = "<group>"; };
+		CEBE4421155BC03600CAD5C3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEBE4426155BC03600CAD5C3 /* ODAlarm-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ODAlarm-Prefix.pch"; sourceTree = "<group>"; };
+		CEBE442A155BC10400CAD5C3 /* ODAlarmServicesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODAlarmServicesTest.h; sourceTree = "<group>"; };
+		CEBE442B155BC10400CAD5C3 /* ODAlarmServicesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODAlarmServicesTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +84,16 @@
 				98B4FBE015454CE900E821CF /* Foundation.framework in Frameworks */,
 				98B4FBE215454CE900E821CF /* CoreGraphics.framework in Frameworks */,
 				98B4FBE415454CE900E821CF /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEBE4414155BC03600CAD5C3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE7CE132155BC7A0004DA7C3 /* SenTestingKit.framework in Frameworks */,
+				CEBE441B155BC03600CAD5C3 /* UIKit.framework in Frameworks */,
+				CEBE441C155BC03600CAD5C3 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,8 +125,10 @@
 		98B4FBCE15454CE900E821CF = {
 			isa = PBXGroup;
 			children = (
-				98B4FBDC15454CE900E821CF /* Frameworks */,
+				CE7CE131155BC79F004DA7C3 /* SenTestingKit.framework */,
 				98B4FBE515454CE900E821CF /* OpenAlarm */,
+				CEBE441D155BC03600CAD5C3 /* ODAlarm */,
+				98B4FBDC15454CE900E821CF /* Frameworks */,
 				98B4FBDA15454CE900E821CF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -113,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				98B4FBD915454CE900E821CF /* OpenAlarm.app */,
+				CEBE4418155BC03600CAD5C3 /* ODAlarm.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -145,8 +170,8 @@
 				98FE678615492C040009D7C1 /* ODTimeRepeatViewController.xib */,
 				98B4FBF115454CE900E821CF /* OpenAlarm.xcdatamodeld */,
 				98B4FBE615454CE900E821CF /* Supporting Files */,
-				98A75CF015515536006AA0BE /* Alarm.h */,
-				98A75CF115515537006AA0BE /* Alarm.m */,
+				CEBE439D155BA8CB00CAD5C3 /* Alarm.h */,
+				CEBE439E155BA8CB00CAD5C3 /* Alarm.m */,
 			);
 			path = OpenAlarm;
 			sourceTree = "<group>";
@@ -159,6 +184,26 @@
 				98B4FBE815454CE900E821CF /* InfoPlist.strings */,
 				98B4FBEB15454CE900E821CF /* main.m */,
 				98B4FBED15454CE900E821CF /* OpenAlarm-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CEBE441D155BC03600CAD5C3 /* ODAlarm */ = {
+			isa = PBXGroup;
+			children = (
+				CEBE441E155BC03600CAD5C3 /* Supporting Files */,
+				CEBE442A155BC10400CAD5C3 /* ODAlarmServicesTest.h */,
+				CEBE442B155BC10400CAD5C3 /* ODAlarmServicesTest.m */,
+			);
+			path = ODAlarm;
+			sourceTree = "<group>";
+		};
+		CEBE441E155BC03600CAD5C3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CEBE441F155BC03600CAD5C3 /* ODAlarm-Info.plist */,
+				CEBE4420155BC03600CAD5C3 /* InfoPlist.strings */,
+				CEBE4426155BC03600CAD5C3 /* ODAlarm-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -183,6 +228,24 @@
 			productReference = 98B4FBD915454CE900E821CF /* OpenAlarm.app */;
 			productType = "com.apple.product-type.application";
 		};
+		CEBE4417155BC03600CAD5C3 /* ODAlarm */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEBE4427155BC03600CAD5C3 /* Build configuration list for PBXNativeTarget "ODAlarm" */;
+			buildPhases = (
+				CEBE4413155BC03600CAD5C3 /* Sources */,
+				CEBE4414155BC03600CAD5C3 /* Frameworks */,
+				CEBE4415155BC03600CAD5C3 /* Resources */,
+				CEBE4416155BC03600CAD5C3 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ODAlarm;
+			productName = ODAlarm;
+			productReference = CEBE4418155BC03600CAD5C3 /* ODAlarm.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -205,6 +268,7 @@
 			projectRoot = "";
 			targets = (
 				98B4FBD815454CE900E821CF /* OpenAlarm */,
+				CEBE4417155BC03600CAD5C3 /* ODAlarm */,
 			);
 		};
 /* End PBXProject section */
@@ -223,7 +287,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CEBE4415155BC03600CAD5C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEBE4422155BC03600CAD5C3 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CEBE4416155BC03600CAD5C3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		98B4FBD515454CE900E821CF /* Sources */ = {
@@ -236,10 +324,18 @@
 				98B4FC081545516C00E821CF /* ODListAlarmViewController.m in Sources */,
 				98ECBD1F1547F24F00FF814B /* ODAddModalViewController.m in Sources */,
 				98FE678715492C040009D7C1 /* ODTimeRepeatViewController.m in Sources */,
-				98A75CF215515537006AA0BE /* Alarm.m in Sources */,
 				989A2D4215539444005C0D15 /* ODListAlarmTableViewCell.m in Sources */,
 				987262721558E2C000D1B566 /* ODAlarmServices.m in Sources */,
 				98726277155908D100D1B566 /* ODAlartViewController.m in Sources */,
+				CEBE439F155BA8CB00CAD5C3 /* Alarm.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEBE4413155BC03600CAD5C3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEBE442C155BC10400CAD5C3 /* ODAlarmServicesTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +346,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				98B4FBE915454CE900E821CF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		CEBE4420155BC03600CAD5C3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEBE4421155BC03600CAD5C3 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -305,6 +409,10 @@
 		98B4FC0315454CEA00E821CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenAlarm/OpenAlarm-Prefix.pch";
 				INFOPLIST_FILE = "OpenAlarm/OpenAlarm-Info.plist";
@@ -316,11 +424,45 @@
 		98B4FC0415454CEA00E821CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenAlarm/OpenAlarm-Prefix.pch";
 				INFOPLIST_FILE = "OpenAlarm/OpenAlarm-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		CEBE4428155BC03600CAD5C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ODAlarm/ODAlarm-Prefix.pch";
+				INFOPLIST_FILE = "ODAlarm/ODAlarm-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		CEBE4429155BC03600CAD5C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ODAlarm/ODAlarm-Prefix.pch";
+				INFOPLIST_FILE = "ODAlarm/ODAlarm-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
@@ -341,6 +483,15 @@
 			buildConfigurations = (
 				98B4FC0315454CEA00E821CF /* Debug */,
 				98B4FC0415454CEA00E821CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEBE4427155BC03600CAD5C3 /* Build configuration list for PBXNativeTarget "ODAlarm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEBE4428155BC03600CAD5C3 /* Debug */,
+				CEBE4429155BC03600CAD5C3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
