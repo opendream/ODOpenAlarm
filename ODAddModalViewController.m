@@ -65,7 +65,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return 2;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -93,22 +93,14 @@
     
     switch (indexPath.row) {
         case 0:
-            leftLabel.text = @"Repeat";
+            leftLabel.text = @"Label";
             rightLabel.text = @"Every 2 hour";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         case 1:
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            leftLabel.text = @"Sound";
-            rightLabel.text = @"Default";
-            break;
-        case 2:
-            leftLabel.text = @"Label";
-            rightLabel.text = @"Alarm!";
-            break;
-        case 3:
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            leftLabel.text = @"Alarm Photo";
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            leftLabel.text = @"Status";
+            
             break;
     }
     

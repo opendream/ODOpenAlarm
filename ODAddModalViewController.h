@@ -23,6 +23,7 @@
     
     IBOutlet UITableView *detailNewAlarm;
     IBOutlet UIDatePicker *datePicker;
+    UISwitch *alarmSwitch;
 }
 
 @property (unsafe_unretained) id <ODAddViewControllerDelegate> delegate;

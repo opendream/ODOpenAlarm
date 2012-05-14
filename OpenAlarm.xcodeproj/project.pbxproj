@@ -571,6 +571,7 @@
 				CE8D88D5155FF261001C441E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
