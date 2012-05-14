@@ -1,3 +1,4 @@
+
 //
 //  ODAlarmServices.m
 //  OpenAlarm
@@ -7,6 +8,7 @@
 //
 
 #import "ODAlarmServices.h"
+#import <AudioToolbox/AudioServices.h>
 
 @implementation ODAlarmServices
 
@@ -283,6 +285,34 @@ static ODAlarmServices *shareAlarmService = nil;
     if (writeFlag) {
         NSLog(@"Write successful");
     }
+}
+
+#pragma mark - AudioToolBox
+
+- (void)alertWithSound:(NSString *)soundName withSoundType:(NSString *)soundType
+{
+    // Create the URL for the source audio file. The URLForResource:withExtension: method is
+    //    new in iOS 4.0.
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSURL *tapSound   = [[NSBundle mainBundle] URLForResource:soundName withExtension:soundType]; //@"tap.aif"
+    
+    
+    if (![fm fileExistsAtPath:[tapSound path]]) {
+        tapSound   = [[NSBundle mainBundle] URLForResource:@"tap" withExtension:@"aif"]; //@"tap.aif"
+    }    
+    
+    CFURLRef		soundFileURLRef;
+    SystemSoundID	soundFileObject;
+    // Store the URL as a CFURLRef instance
+    soundFileURLRef = (__bridge CFURLRef)tapSound;
+    
+    // Create a system sound object representing the sound file.
+    AudioServicesCreateSystemSoundID (soundFileURLRef, &soundFileObject);
+    
+    AudioServicesPlayAlertSound (soundFileObject);
+    
+
+    
 }
 
 @end

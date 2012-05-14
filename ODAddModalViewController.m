@@ -9,12 +9,13 @@
 #import "ODAddModalViewController.h"
 #import "Alarm.h"
 #import "ODEditLabelViewController.h"
+#import "ODSoundListViewController.h"
 
 @interface ODAddModalViewController()
 {
     ODEditLabelViewController *editViewController;
     BOOL isAlarmOn;
-    
+    ODSoundListViewController *soundListViewController;
 }
 
 @end
@@ -62,6 +63,7 @@
     UIBarButtonItem *backToCameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
                                                                                         target:self action:@selector(backToAlarmListPage)];
     self.navigationItem.LeftBarButtonItem = backToCameraButton;
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     
     UIBarButtonItem *saveToDB = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
                                                                               target:self action:@selector(doneButton)];
@@ -85,7 +87,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -100,7 +102,7 @@
     
     UITableViewCell *cell;
     switch (indexPath.row) {
-        case 0: {
+        case 0: { //label
             cell = [tableView dequeueReusableCellWithIdentifier:CellLabelIdentifier];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellLabelIdentifier];
@@ -110,8 +112,7 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         }
-        case 1: {
-            
+        case 1: {   //status
             UILabel *leftLabel;
             UISwitch *statusSwitch;
             cell = [tableView dequeueReusableCellWithIdentifier:CellStatusIdentifier];
@@ -139,6 +140,17 @@
             leftLabel.text = @"Status";
             break;
         }
+        case 2: {   //sound
+            cell = [tableView dequeueReusableCellWithIdentifier:CellLabelIdentifier];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellLabelIdentifier];
+            }
+            cell.textLabel.text = @"Sound";
+            cell.detailTextLabel.text = @"Default";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+            break;
+        }
     }
     return cell;
 }
@@ -160,7 +172,12 @@
             editViewController.currentName = saveTextLabel;
             [self.navigationController pushViewController:editViewController animated:YES];
             break;
-        }   
+        }
+        case 2: {   //sound
+            soundListViewController = [[ODSoundListViewController alloc] init];
+            [self.navigationController pushViewController:soundListViewController animated:YES];
+            break;        
+        }
     }
 }
 
