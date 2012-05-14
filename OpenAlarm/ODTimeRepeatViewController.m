@@ -7,11 +7,14 @@
 //
 
 #import "ODTimeRepeatViewController.h"
-#import "ODAlarmServices.h"
 
 #define DAY_SECTION 7
 #define TIME_SECTION 3
-
+@interface ODTimeRepeatViewController()
+{
+    NSIndexPath *lastIndexPath;
+}
+@end
 @implementation ODTimeRepeatViewController
 
 @synthesize selectedDayRepeat, selectedTimeRepeat;
@@ -20,9 +23,35 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+        [self setRepeatTimeFlag:TIME_FLAG_DEFAULT andRepeatDayFlag:DAY_FLAG_DEFAULT];
     }
     return self;
+}
+
+- (void)setRepeatTimeFlag:(NSString *)stringFlag
+{
+    NSString *repeatFlag[TIME_SECTION];
+    
+    for (int i = 0; i < TIME_SECTION; i++) {
+        repeatFlag[i] = [NSString stringWithFormat:@"%c" , [stringFlag characterAtIndex:i]];
+    }
+    self.selectedTimeRepeat = [NSMutableArray arrayWithObjects:repeatFlag count:TIME_SECTION];
+}
+
+- (void)setRepeatDayFlag:(NSString *)stringFlag
+{
+    NSString *repeatFlag[DAY_SECTION];
+    
+    for (int i = 0; i < DAY_SECTION; i++) {
+        repeatFlag[i] = [NSString stringWithFormat:@"%c" , [stringFlag characterAtIndex:i]];
+    }
+    self.selectedDayRepeat = [NSMutableArray arrayWithObjects:repeatFlag count:DAY_SECTION];
+}
+
+- (void)setRepeatTimeFlag:(NSString *)timeFlag andRepeatDayFlag:(NSString *)dayFlag
+{
+    [self setRepeatTimeFlag:timeFlag];
+    [self setRepeatDayFlag:dayFlag];
 }
 
 - (void)viewDidLoad
@@ -30,14 +59,6 @@
     [super viewDidLoad];
     repeatTimeTableView.dataSource = self;
     repeatTimeTableView.delegate = self;
-    
-    NSString *repeatFlag[10];
-    
-    for (int i=0; i< DAY_SECTION; i++)
-        repeatFlag[i] = @"0";
-    
-    self.selectedDayRepeat = [NSMutableArray arrayWithObjects:repeatFlag count:DAY_SECTION];
-    self.selectedTimeRepeat = [NSMutableArray arrayWithObjects:repeatFlag count:TIME_SECTION];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -71,15 +92,6 @@
 {
     NSString *t;
     switch (choice) {
-        case 99:
-            t = @"Every 2 minute";
-            break;
-        case 98:
-            t = @"Every Weekday";
-            break;
-        case 97:
-            t = @"Every Weekend";
-            break;
         case 0:
             t = @"Every Sunday";
             break;
@@ -120,33 +132,48 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellDayIdentifier = @"CellDayIdentifier";
+    static NSString *CellTimeIdentifier = @"CellTimeIdentifier";
+    UITableViewCell *cell;
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
-    
-    if (indexPath.section == 0) {
-        cell.textLabel.text = [self mappingTimeStringFromRepeatChoice:indexPath.row];
-        
-        if ([[self.selectedTimeRepeat objectAtIndex:indexPath.row] isEqualToString:@"1"]) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        } else {
-            cell.accessoryType = UITableViewCellAccessoryNone;
+    switch (indexPath.section) {
+        case 0: {
+            cell = [tableView dequeueReusableCellWithIdentifier:CellTimeIdentifier];
+            
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellTimeIdentifier];
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+            
+            cell.textLabel.text = [self mappingTimeStringFromRepeatChoice:indexPath.row];
+            
+            if ([[self.selectedTimeRepeat objectAtIndex:indexPath.row] isEqualToString:@"1"]) {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+
+            break;
         }
-    } else if (indexPath.section == 1) {
-        cell.textLabel.text = [self mappingDayStringFromRepeatChoice:indexPath.row];
-        
-        if ([[self.selectedDayRepeat objectAtIndex:indexPath.row] isEqualToString:@"1"]) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        } else {
-            cell.accessoryType = UITableViewCellAccessoryNone;
+        case 1: {
+            cell = [tableView dequeueReusableCellWithIdentifier:CellDayIdentifier];
+            
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellDayIdentifier];
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+            
+            cell.textLabel.text = [self mappingDayStringFromRepeatChoice:indexPath.row];
+            
+            if ([[self.selectedDayRepeat objectAtIndex:indexPath.row] isEqualToString:@"1"]) {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+            break;
         }
     }
-    
+
     return cell;
 }
 
@@ -164,7 +191,9 @@
         label.text = @"Day";
     }
     
+    [label removeFromSuperview];
     [textLabel addSubview:label];
+    
     return textLabel;
 }
 
@@ -177,21 +206,44 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        if ([tableView cellForRowAtIndexPath:indexPath].accessoryType == UITableViewCellAccessoryNone) {
-            [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark; 
-            [self.selectedTimeRepeat replaceObjectAtIndex:indexPath.row withObject:@"1"];
-        } else {
-            [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
-            [self.selectedTimeRepeat replaceObjectAtIndex:indexPath.row withObject:@"0"];
+    
+    switch (indexPath.section) {
+        case 0: {
+            UITableViewCell* newCell = [tableView cellForRowAtIndexPath:indexPath]; 
+            int newRow = [indexPath row]; 
+            int oldRow = (lastIndexPath != nil) ? [lastIndexPath row] : -1; 
+            
+            if(newRow != oldRow) 
+            { 
+                newCell.accessoryType = UITableViewCellAccessoryCheckmark; 
+                UITableViewCell* oldCell = [tableView cellForRowAtIndexPath:lastIndexPath]; 
+                oldCell.accessoryType = UITableViewCellAccessoryNone;
+                [self.selectedTimeRepeat replaceObjectAtIndex:newRow withObject:@"1"];
+                if (oldRow != -1)
+                    [self.selectedTimeRepeat replaceObjectAtIndex:oldRow withObject:@"0"];
+                lastIndexPath = indexPath; 
+            } else {
+                if (newCell.accessoryType == UITableViewCellAccessoryCheckmark){
+                    newCell.accessoryType = UITableViewCellAccessoryNone;
+                    [self.selectedTimeRepeat replaceObjectAtIndex:newRow withObject:@"0"];
+                    lastIndexPath = indexPath;
+                }else {
+                    newCell.accessoryType = UITableViewCellAccessoryCheckmark;
+                    [self.selectedTimeRepeat replaceObjectAtIndex:newRow withObject:@"1"];
+                    lastIndexPath = indexPath;
+                }
+            }
+            break;
         }
-    } else if (indexPath.section == 1) {
-        if ([tableView cellForRowAtIndexPath:indexPath].accessoryType == UITableViewCellAccessoryNone) {
-            [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark; 
-            [self.selectedDayRepeat replaceObjectAtIndex:indexPath.row withObject:@"1"];
-        } else {
-            [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
-            [self.selectedDayRepeat replaceObjectAtIndex:indexPath.row withObject:@"0"];
+        case 1: {
+            if ([tableView cellForRowAtIndexPath:indexPath].accessoryType == UITableViewCellAccessoryNone) {
+                [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark; 
+                [self.selectedDayRepeat replaceObjectAtIndex:indexPath.row withObject:@"1"];
+            } else {
+                [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
+                [self.selectedDayRepeat replaceObjectAtIndex:indexPath.row withObject:@"0"];
+            }
+            break;
         }
     }
 }

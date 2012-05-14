@@ -8,21 +8,26 @@
 
 #import "ODListAlarmTableViewCell.h"
 
+@interface ODListAlarmTableViewCell()
+{
+    NSDateFormatter *dateFormat;
+}
+@end
+
 @implementation ODListAlarmTableViewCell
 
-@synthesize timeLabel;
-@synthesize detailLabel;
 @synthesize imageViewInCell, alarmSwitch;
+@synthesize alarm;
+
+#define CELL_HEIGHT 70
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        imageViewInCell = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.origin.x + 5, self.frame.origin.y, 70, 70)];
+        imageViewInCell = [[UIImageView alloc] initWithFrame:CGRectMake(50, CELL_HEIGHT / 2 - 50 / 2, 50, 50)];
         [self.contentView addSubview:imageViewInCell];
-        
-        imageViewInCell.image = [UIImage imageNamed:@"Icon.png"];
         
         timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(80 + 20,self.frame.origin.y + 10, 100, 20)];
         timeLabel.backgroundColor = [UIColor clearColor];
@@ -32,42 +37,63 @@
         detailLabel.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:detailLabel];
         
-//        alarmSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(detailLabel.frame.origin.x + 120,self.frame.origin.y + 20, 30, 30)];
-//        [self addSubview:alarmSwitch];
+        alarmSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(self.frame.size.width - 100, CELL_HEIGHT / 2 - 30 / 2, 100, 30)];
+        [alarmSwitch addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
         
-        self.shouldIndentWhileEditing = YES;    
+        [self.contentView addSubview:alarmSwitch];
+        
+        dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setTimeStyle:NSDateFormatterMediumStyle];
+        [dateFormat setDateFormat:@"HH : mm"];
+        
+        self.shouldIndentWhileEditing = NO; 
+        self.clearsContextBeforeDrawing = YES;
     } 
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+- (void)switchChanged:(id)sender
 {
-    [super setSelected:selected animated:animated];
+    [alarm setEnable:[NSNumber numberWithBool:[(UISwitch *)sender isOn]]];
+    
+    NSLog(@"ODListAlarmTableViewCell.m - switchChanged %@, sender class %@", sender, [sender class]);
+    
+    NSLog(@"Alarm enable flag : %@", alarm.enable.boolValue == YES ? @"YES" : @"NO");
 }
+
+//- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+//{
+//    [super setSelected:selected animated:animated];
+//}
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
-    NSLog(@"Edit in cell %@",editing == YES ? @"YES" : @"NO");
+    [super setEditing:editing animated:animated];
     if (editing) {
         [self setEditingAccessoryType:UITableViewCellEditingStyleDelete];
-        [UIView animateWithDuration:0.5 animations:^{
-            CGRect f = self.imageViewInCell.frame;
-            f.origin.x = 50;
-            imageViewInCell.frame = f;
-        }];
+//        [UIView animateWithDuration:0.3 animations:^{
+//            CGRect f = self.imageViewInCell.frame;
+//            f.origin.x = 50;
+//            imageViewInCell.frame = f;
+//        }];
     } else {
         [self setEditingAccessoryType:UITableViewCellEditingStyleNone];
-        [UIView animateWithDuration:0.5 animations:^{
-            CGRect f = self.imageViewInCell.frame;
-            f.origin.x = 5;
-            imageViewInCell.frame = f;
-        }];        
+//        [UIView animateWithDuration:0.3 animations:^{
+//            CGRect f = self.imageViewInCell.frame;
+//            f.origin.x = 20;
+//            imageViewInCell.frame = f;
+//        }];        
     }
 }
 
 - (void)layoutSubviews
 {
+    imageViewInCell.image = [UIImage imageNamed:@"Icon.png"];
     
+    timeLabel.text = [dateFormat stringFromDate:[alarm fireDate]];
+    detailLabel.text = [alarm title];
+    
+    [alarmSwitch setOn:[alarm enable].boolValue];
 }
 
 @end

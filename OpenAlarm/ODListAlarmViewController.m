@@ -17,7 +17,7 @@
 @end
 
 @implementation ODListAlarmViewController
-@synthesize managedObjectContext;
+//@synthesize managedObjectContext;
 @synthesize fetchedResultsController = __fetchedResultsController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -34,8 +34,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    alarmList.delegate = self;
-    alarmList.dataSource = self;
     
     //creat right navigation button (add button)
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertnewAlarm)];
@@ -47,19 +45,11 @@
     // set clock
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alarmService) name:@"alarmServicesWillAlert" object:nil];
 } 
- 
- - (void)alarmService
-{
-    NSLog(@"Alarm fire!");
-}
 
 - (void)viewDidUnload
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewDidUnload];
-
 }
 
 - (void)insertnewAlarm
@@ -78,6 +68,8 @@
 
 #pragma mark - Table View
 
+#define CELL_HEIGHT 70
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
@@ -91,7 +83,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70.0;
+    return CELL_HEIGHT;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -101,15 +93,12 @@
     ODListAlarmTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[ODListAlarmTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier]; 
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     Alarm *alarmItem = (Alarm *)[self.fetchedResultsController objectAtIndexPath:indexPath];    
     
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm"];
-    
-    cell.timeLabel.text = [formatter stringFromDate: alarmItem.fireDate];
-    cell.detailLabel.text = alarmItem.title;
+    cell.alarm = alarmItem;
     
     return cell;
 }
@@ -117,31 +106,32 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animate 
 {
     [super setEditing:editing animated:animate];
-    [alarmList setEditing:editing animated:YES];
+    
+    [alarmList setEditing:editing animated:animate];
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
     return YES;
 }
 
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"select");
-    Alarm *updateAlarm = (Alarm *)[self.fetchedResultsController objectAtIndexPath:indexPath];  
-    ODAddModalViewController *modalViewAdd = [[ODAddModalViewController alloc] initWithNibName:@"ODAddModalViewController" withAlarm:updateAlarm bundle:nil];
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Alarm *updateAlarm = (Alarm *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    ODAddModalViewController *modalViewAdd = [[ODAddModalViewController alloc] initWithNibName:@"ODAddModalViewController" withAlarm:updateAlarm bundle:nil];
     modalViewAdd.delegate = self;
+    
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:modalViewAdd];
     [self presentModalViewController:navController animated:YES];
-    
-    
-}
--(void) tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"edit");
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // click delete button
     // delete from Database
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObject *toDeleteRow = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -152,15 +142,17 @@
     
 }
 
-
-
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
+}
 
 #pragma mark - Clock View
 
-- (void)setTime{
+- (void)setTime
+{
     
     NSDate *today = [NSDate date];
-//    NSDate *dateShow= [NSDate dateWithTimeIntervalSinceNow:0];
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setTimeStyle:NSDateFormatterMediumStyle];
@@ -179,10 +171,6 @@
 //    NSInteger day = [components day];
 //    NSInteger month = [components month];
 //    NSInteger year = [components year];
-    
-        
-
-    
     time.text = [NSString stringWithFormat:@"%i:%i:%i", hour, minute, sec];
 
     date.text = dateString;
@@ -261,7 +249,6 @@
             
         case NSFetchedResultsChangeUpdate:
             NSLog(@"update from Fetch");
-            [self configureCell:[alarmList cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
             
         case NSFetchedResultsChangeMove:
@@ -274,12 +261,6 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [alarmList endUpdates];
-}
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"fireDate"] description];
 }
 
 - (void)addViewController:(ODAddModalViewController *)controller didInsertAlarm:(Alarm *)alarm

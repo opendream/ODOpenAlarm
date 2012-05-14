@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Alarm.h"
+
 extern NSString *alarmServicesWillAlert;
 
 @interface ODAlarmServices : NSObject{
@@ -19,7 +20,13 @@ extern NSString *alarmServicesWillAlert;
 @property (nonatomic, assign) float counter;
 
 + (id)sharedAlarmServices;
-- (void)fetchAlarm;
+
+- (BOOL)fetchAlarm;
 - (BOOL)alarmTest:(Alarm *)a;
 
 @end
+
+////////////////////////// TODO ////////////////////////////
+// - Move saveAlarmToDB and updateAlarmToDB to services
+// - Create alarm's label or message view
+// - Add photo/sound/video

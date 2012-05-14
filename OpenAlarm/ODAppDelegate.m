@@ -8,7 +8,7 @@
 
 #import "ODListAlarmViewController.h"
 #import "ODAlarmServices.h"
-#import "ODAlartViewController.h"
+
 @implementation ODAppDelegate
 
 @synthesize window = _window;
@@ -16,6 +16,7 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize navigationController = _navigationController;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -25,62 +26,13 @@
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
-    alertViewController = [[ODAlartViewController alloc] initWithNibName:@"ODAlartViewController" bundle:nil];
+    
+    alertViewController = [[ODAlertViewController alloc] initWithNibName:@"ODAlertViewController" bundle:nil];
     [ODAlarmServices sharedAlarmServices];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushAlartView:) name:@"alarmServicesWillAlert" object:nil];
-
-    //[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkCounter) userInfo:nil repeats:YES];
-    //[self pushAlartView];
-////    NSPredicate * predicate;
-////    predicate = [NSPredicate predicateWithFormat:@"self.title > %@"];
-////    
-////    
-////    NSSortDescriptor * sort = [[NSortDescriptor alloc] initWithKey:@"title"];
-////    NSArray * sortDescriptors = [NSArray arrayWithObject: sort];
-//    
-//    NSEntityDescription    * entity   = [NSEntityDescription entityForName:@"Alarm" inManagedObjectContext:[self managedObjectContext]];
-//    
-//    
-//    NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-//    [fetch setEntity: entity];
-////    [fetch setPredicate: predicate];
-////    [fetch setSortDescriptors: sortDescriptors];
-//    
-//    NSArray * results = [[self managedObjectContext] executeFetchRequest:fetch error:nil];
-//    NSLog(@"%@", results);
-//    
-//    
-//    NSManagedObject *newAlarm = [NSEntityDescription insertNewObjectForEntityForName:entity.name inManagedObjectContext:self.managedObjectContext];
-//    [newAlarm setValue:@"talk a walk!" forKey:@"title"];
-//    
-//    //save context
-//    [[self managedObjectContext] save:NULL];
-//    dispatch_queue_t q_background = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-//    dispatch_async(q_background, ^{
-//        [self methodToRepeatEveryOneSecond];
-//    });
-    UIDevice* device = [UIDevice currentDevice];
-    BOOL backgroundSupported = NO;
-    if ([device respondsToSelector:@selector(isMultitaskingSupported)])
-        backgroundSupported = device.multitaskingSupported;
-    
     
     return YES;
-}
-- (void)methodToRepeatEveryOneSecond
-{
-    // Do your thing here
-    
-//    NSLog(@"Log using GCD");
-//    
-//    // Call this method again using GCD 
-//    dispatch_queue_t q_background = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-//    double delayInSeconds = 1.0;
-//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-//    dispatch_after(popTime, q_background, ^(void){
-//        [self methodToRepeatEveryOneSecond];
-//    });
 }
 
 - (void)pushAlartView:(NSNotification *)n
@@ -106,12 +58,7 @@
 
 - (void)hideAlertView
 {
-//    [self.navigationController.view 
     [alertViewController.view removeFromSuperview];
-}
-- (void)checkCounter
-{
-    //NSLog(@"alarmService[%d] counter : %f",[ODAlarmServices sharedAlarmServices],[[ODAlarmServices sharedAlarmServices] counter]);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -133,35 +80,15 @@
     NSLog(@"taskIdentifier: %d",taskIdentifier);
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-//        if ([[DBSession sharedSession] isLinked])
-//        {
-//            NSLog(@"is linked in didFinishPickingMediaWithInfo");
-//            NSData *data = UIImageJPEGRepresentation(self.image, 1.0);
-//            NSString *path = [[self documentsDirectory] stringByAppendingPathComponent: @"img.jpg"];
-//            [data writeToFile: path atomically: YES];
-//            NSString *filename = @"image.jpg";
-//            NSString *destPath = @"/";
-//            
-//            [[self restClient] uploadFile: filename toPath:destPath withParentRev:nil fromPath: path];
-//        }
-        
-//        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(fetchAlarm) userInfo:nil repeats:YES];
         NSLog(@"Finishing background task");
         [[UIApplication sharedApplication] endBackgroundTask: taskIdentifier];
         taskIdentifier = UIBackgroundTaskInvalid;
     });
 }
 
-
-
-
-
-
-
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     NSLog(@"applicationWillEnterForeground");
-    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

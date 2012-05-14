@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ODAlartViewController.h"
+#import "ODAlertViewController.h"
+
+#define TIME_FLAG_DEFAULT @"000"
+#define DAY_FLAG_DEFAULT @"0000000"
+
 #define APPDELEGATE (ODAppDelegate *)[[UIApplication sharedApplication] delegate]
 
 @interface ODAppDelegate : UIResponder <UIApplicationDelegate>
 {
-    ODAlartViewController *alertViewController;
-     __block UIBackgroundTaskIdentifier bgTask;
+    ODAlertViewController *alertViewController;
 }
 @property (strong, nonatomic) UIWindow *window;
 
@@ -21,10 +24,9 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-- (void)saveContext;
-- (NSURL *)applicationDocumentsDirectory;
-
 @property (strong, nonatomic) UINavigationController *navigationController;
 
+- (void)saveContext;
+- (NSURL *)applicationDocumentsDirectory;
 
 @end

@@ -8,13 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ODTimeRepeatViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
-{
+@interface ODTimeRepeatViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+    
+    NSMutableArray *selectedDayRepeat, *selectedTimeRepeat;    
     IBOutlet UITableView *repeatTimeTableView;
-    NSMutableArray *selectedDayRepeat, *selectedTimeRepeat;
 }
 
 @property (strong, nonatomic) NSMutableArray *selectedDayRepeat;
 @property (strong, nonatomic) NSMutableArray *selectedTimeRepeat;
+
+- (void)setRepeatTimeFlag:(NSString *)stringFlag;
+- (void)setRepeatDayFlag:(NSString *)stringFlag;
 
 @end

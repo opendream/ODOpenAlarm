@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'OpenAlarmTests' target in the 'OpenAlarmTests' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif

@@ -6,13 +6,13 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "ODAlartViewController.h"
+#import "ODAlertViewController.h"
 
-@interface ODAlartViewController ()
+@interface ODAlertViewController ()
 
 @end
 
-@implementation ODAlartViewController
+@implementation ODAlertViewController
 
 @synthesize alertMessege;
 @synthesize timeLabel;

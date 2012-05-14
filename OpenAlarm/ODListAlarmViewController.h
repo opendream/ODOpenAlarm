@@ -10,12 +10,14 @@
 #import "ODAppDelegate.h"
 #import "ODAddModalViewController.h"
 @interface ODListAlarmViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, ODAddViewControllerDelegate> {
+
     IBOutlet UITableView *alarmList;
-    IBOutlet UIView *clockViewer;
+
     IBOutlet UILabel *date;
     IBOutlet UILabel *time;
 }
-@property(strong,nonatomic) NSManagedObjectContext *managedObjectContext;
+
+//@property(strong,nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end

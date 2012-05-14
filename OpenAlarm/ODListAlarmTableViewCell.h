@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Alarm.h"
 
 @interface ODListAlarmTableViewCell : UITableViewCell
 {
@@ -16,8 +17,8 @@
     UIImageView *imageViewInCell;
 }
 
-@property (nonatomic, strong) UILabel *timeLabel;
-@property (nonatomic, strong) UILabel *detailLabel;
+@property (nonatomic, weak) Alarm *alarm;
+
 @property (nonatomic, strong) UISwitch *alarmSwitch;
 @property (nonatomic, strong) UIImageView *imageViewInCell;
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ODAlartViewController : UIViewController {
+@interface ODAlertViewController : UIViewController {
     IBOutlet UILabel *alertMessege;
     IBOutlet UILabel *dateLabel;
     IBOutlet UILabel *timeLabel;
