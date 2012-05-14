@@ -70,7 +70,7 @@
 							<object class="IBUISwitch" id="762259339">
 								<reference key="NSNextResponder" ref="289870515"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{189, 11}, {94, 27}}</string>
+								<string key="NSFrame">{{206, 11}, {94, 27}}</string>
 								<reference key="NSSuperview" ref="289870515"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -83,9 +83,10 @@
 							<object class="IBUILabel" id="136699540">
 								<reference key="NSNextResponder" ref="289870515"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{34, 11}, {103, 27}}</string>
+								<string key="NSFrame">{{25, 11}, {103, 27}}</string>
 								<reference key="NSSuperview" ref="289870515"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="762259339"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor" id="269633921">
 									<int key="NSColorSpace">1</int>
@@ -112,11 +113,11 @@
 									<string key="name">GillSans</string>
 									<string key="family">Gill Sans</string>
 									<int key="traits">0</int>
-									<double key="pointSize">22</double>
+									<double key="pointSize">24</double>
 								</object>
 								<object class="NSFont" key="IBUIFont">
 									<string key="NSName">GillSans</string>
-									<double key="NSSize">22</double>
+									<double key="NSSize">24</double>
 									<int key="NSfFlags">16</int>
 								</object>
 							</object>
@@ -124,7 +125,7 @@
 						<string key="NSFrame">{{0, 367}, {320, 49}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="762259339"/>
+						<reference key="NSNextKeyView" ref="136699540"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -136,7 +137,7 @@
 				<string key="NSFrame">{{0, 64}, {320, 416}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
+				<reference key="NSNextKeyView" ref="791307394"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">10</int>
 					<object class="NSImage" key="NSImage">

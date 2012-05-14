@@ -20,6 +20,7 @@
 @synthesize alarm;
 
 #define CELL_HEIGHT 92
+#define SPACING 25
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -31,15 +32,17 @@
         imageViewInCell.image = [UIImage imageNamed:@"bg.png"];
         [self.contentView addSubview:imageViewInCell];
         
-        detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.origin.x + self.frame.size.width*1/10, self.bounds.size.height / 2 + 25 / 2 , 100, 25)];
+        detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(SPACING, CELL_HEIGHT / 2 - 25 / 2 , 320 * 0.6, 25)];
         detailLabel.backgroundColor = [UIColor clearColor];
         detailLabel.font = [UIFont fontWithName:@"Gill Sans" size:24];
         detailLabel.shadowColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5];
         detailLabel.shadowOffset = CGSizeMake(1, 2);
+        detailLabel.lineBreakMode = UILineBreakModeTailTruncation;
         [self.contentView addSubview:detailLabel];
         
-        timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.origin.x + self.frame.size.width*2/3, self.bounds.size.height / 2 + 25 / 2 , 100, 25)];
+        timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width - 320 * 0.3 - SPACING, CELL_HEIGHT / 2 - 25 / 2 , 320 * 0.3, 25)];
         timeLabel.backgroundColor = [UIColor clearColor];
+        timeLabel.textAlignment = UITextAlignmentRight;
         timeLabel.font = [UIFont fontWithName:@"Gill Sans" size:24]; 
         timeLabel.shadowColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5];
         timeLabel.shadowOffset = CGSizeMake(1, 2);

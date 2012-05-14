@@ -59,6 +59,7 @@
     UIBarButtonItem *backToCameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
                                                                                         target:self action:@selector(backToAlarmListPage)];
     self.navigationItem.LeftBarButtonItem = backToCameraButton;
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     
     UIBarButtonItem *saveToDB = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
                                                                               target:self action:@selector(doneButton)];
