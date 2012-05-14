@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3050925D1560F403001DABA9 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3050925B1560F403001DABA9 /* bg.png */; };
+		3050925E1560F403001DABA9 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3050925C1560F403001DABA9 /* bg@2x.png */; };
 		987262721558E2C000D1B566 /* ODAlarmServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 987262711558E2BF00D1B566 /* ODAlarmServices.m */; };
 		98726278155908D100D1B566 /* ODAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98726276155908D100D1B566 /* ODAlertViewController.xib */; };
 		989A2D4215539444005C0D15 /* ODListAlarmTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 989A2D4115539444005C0D15 /* ODListAlarmTableViewCell.m */; };
@@ -38,6 +40,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3050925B1560F403001DABA9 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		3050925C1560F403001DABA9 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
 		987262701558E2BF00D1B566 /* ODAlarmServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODAlarmServices.h; sourceTree = "<group>"; };
 		987262711558E2BF00D1B566 /* ODAlarmServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODAlarmServices.m; sourceTree = "<group>"; };
 		98726274155908D100D1B566 /* ODAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODAlertViewController.h; sourceTree = "<group>"; };
@@ -114,6 +118,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		305092601560F409001DABA9 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				3050925B1560F403001DABA9 /* bg.png */,
+				3050925C1560F403001DABA9 /* bg@2x.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		989D66901553F0A8006148FA /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +206,7 @@
 		98B4FBE615454CE900E821CF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				305092601560F409001DABA9 /* images */,
 				98B4FC4A1545602200E821CF /* Icon.png */,
 				98B4FBE715454CE900E821CF /* OpenAlarm-Info.plist */,
 				98B4FBE815454CE900E821CF /* InfoPlist.strings */,
@@ -341,6 +355,8 @@
 				98ECBD201547F24F00FF814B /* ODAddModalViewController.xib in Resources */,
 				98FE678815492C040009D7C1 /* ODTimeRepeatViewController.xib in Resources */,
 				98726278155908D100D1B566 /* ODAlertViewController.xib in Resources */,
+				3050925D1560F403001DABA9 /* bg.png in Resources */,
+				3050925E1560F403001DABA9 /* bg@2x.png in Resources */,
 				CE799A811560CA820078A4C0 /* ODEditLabelViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

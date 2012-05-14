@@ -24,6 +24,8 @@
 
     ODListAlarmViewController *masterViewController = [[ODListAlarmViewController alloc] initWithNibName:@"ODListAlarmViewController" bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     
