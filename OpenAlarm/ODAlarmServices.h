@@ -26,6 +26,7 @@ extern NSString *alarmServicesWillAlert;
 
 - (BOOL)isAlarmEnable;
 - (void)setEnableAlarm:(BOOL)enable;
+- (void)setAlarm;
 @end
 
 ////////////////////////// TODO ////////////////////////////

@@ -7,7 +7,11 @@
 //
 
 #import <SenTestingKit/SenTestingKit.h>
+#import "ODAlarmServices.h"
 
 @interface OpenAlarmTests : SenTestCase
-
+{
+    ODAlarmServices *alarmServices;
+    NSArray *datasource;
+}
 @end

@@ -46,6 +46,7 @@
     NSString *label = [(Alarm *)[n.userInfo valueForKey:@"kAlarm"] title];
     
     alertViewController.alertMessege.text = label;
+    alertViewController.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg",(arc4random()%5)+1]];
     [self.navigationController.view addSubview:alertViewController.view];
     [UIView animateWithDuration:0.5 animations:^{
         rect = alertViewController.view.frame;
@@ -66,27 +67,11 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    NSLog(@"applicationDidEnterBackground");
-    NSLog(@"%@",NSStringFromSelector(_cmd));
-    
-    __block UIBackgroundTaskIdentifier taskIdentifier;
-    taskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        NSLog(@"Background task ran out of time and was terminated.");
-        [[UIApplication sharedApplication] endBackgroundTask: taskIdentifier];
-        taskIdentifier = UIBackgroundTaskInvalid;
-    }];
-    NSLog(@"taskIdentifier: %d",taskIdentifier);
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        
-        NSLog(@"Finishing background task");
-        [[UIApplication sharedApplication] endBackgroundTask: taskIdentifier];
-        taskIdentifier = UIBackgroundTaskInvalid;
-    });
+    [[ODAlarmServices sharedAlarmServices] setAlarm];
 }
-
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    NSLog(@"applicationWillEnterForeground");
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

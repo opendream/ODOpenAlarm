@@ -26,7 +26,6 @@ static ODAlarmServices *shareAlarmService = nil;
         
         // timer
         [self fetchAlarm];
-        [self setAlarm];
 
         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkAlarm) userInfo:nil repeats:YES];
 
@@ -98,11 +97,19 @@ static ODAlarmServices *shareAlarmService = nil;
     // check whether alarm should be alert
     // alarmCheck, nowCheck -> in second
     
+    NSDate *today = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    NSDateComponents * componentsToday = [calendar components:(NSSecondCalendarUnit) 
+                                                     fromDate:today];
+    
     // check alert
     if (![a shouldAlert]) {
         return NO;
     }
-    
+    if (![self isAlarmEnable]) {
+        return NO;
+    }
     // check repeat
     NSString *repeatTimeFlags = [a repeatTimeFlag];
     NSString *repeatDayFlags = [a repeatDayFlag];
@@ -116,6 +123,8 @@ static ODAlarmServices *shareAlarmService = nil;
         if (shouldAlert) {
             a.repeatFlag = [NSNumber numberWithBool:NO];
             [APPDELEGATE saveContext];
+            
+            [self performSelector:@selector(repeatCooldown:) withObject:a afterDelay:60-componentsToday.second];
         }
         return shouldAlert;
         
@@ -194,28 +203,49 @@ static ODAlarmServices *shareAlarmService = nil;
     return [alarms count] > 0 ? YES : NO;
 }
 
-#warning should not use setAlarm for method name
+//#warning should not use setAlarm for method name
 - (void)setAlarm 
 {
-    for (int i=0; i<alarms.count; i++) {
-        
-        UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-        localNotif.timeZone = [NSTimeZone defaultTimeZone];
-
-        Alarm *localNotifFireDate = [alarms objectAtIndex:i];
-
-        localNotif.alertBody = localNotifFireDate.title;
-        localNotif.alertAction = NSLocalizedString(@"View Details", nil);
-        localNotif.fireDate = localNotifFireDate.fireDate;
-        NSLog(@"%@",localNotifFireDate.fireDate);
-
-        NSArray *object = [[NSArray alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@",localNotifFireDate.fireDate]];
-        NSArray *key = [[NSArray alloc]initWithContentsOfFile:@"notif"];
-        localNotif.userInfo = [[NSDictionary alloc]initWithObjects:object forKeys:key];
-        localNotif.soundName = UILocalNotificationDefaultSoundName;
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+    for (Alarm *localNotifFireDate in alarms) {
+        if ([self shouldAlertLocalNotification:localNotifFireDate] == YES) {
+            UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+            localNotif.timeZone = [NSTimeZone defaultTimeZone];
+            localNotif.alertBody = localNotifFireDate.title;
+            localNotif.alertAction = NSLocalizedString(@"View Details", nil);
+            localNotif.fireDate = localNotifFireDate.fireDate;
+            
+            NSArray *object = [[NSArray alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@",localNotifFireDate.fireDate]];
+            NSArray *key = [[NSArray alloc]initWithContentsOfFile:@"notif"];
+            localNotif.userInfo = [[NSDictionary alloc]initWithObjects:object forKeys:key];
+            localNotif.soundName = UILocalNotificationDefaultSoundName;
+            
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+            
+        }
     }
+}
+
+- (BOOL)shouldAlertLocalNotification :(Alarm *)a
+{
+    
+    NSDate *today = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    NSDateComponents * componentsToday = [calendar components:(NSWeekdayCalendarUnit | NSHourCalendarUnit 
+                                                               | NSMinuteCalendarUnit | NSSecondCalendarUnit) 
+                                                     fromDate:today];
+    
+    NSDateComponents * componentsAlarm = [calendar components:(NSWeekdayCalendarUnit |  NSHourCalendarUnit 
+                                                               | NSMinuteCalendarUnit) 
+                                                     fromDate:a.fireDate];
+    
+    NSInteger nowCheck = ( componentsToday.hour * 60 ) + componentsToday.minute;
+    NSInteger alarmCheck = ( componentsAlarm.hour * 60 ) + componentsAlarm.minute;
+    
+    if(nowCheck < alarmCheck ) {
+        return YES;
+    }
+    return NO;
 }
 
 #define ALARMFILE @"ALARMFILE"
@@ -232,8 +262,6 @@ static ODAlarmServices *shareAlarmService = nil;
         // Read from file
         NSError *error;
         NSString *contentAlarm = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
-        NSLog(@"contentAlarm");
-        
         if ([contentAlarm isEqualToString:@"1"]) {
             return YES;
         }

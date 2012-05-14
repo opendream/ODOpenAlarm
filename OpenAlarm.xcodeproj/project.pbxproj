@@ -37,7 +37,23 @@
 		CE8D88EC155FF3FC001C441E /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8D88E4155FF3FC001C441E /* libOCMock.a */; };
 		CE8D88F31560068E001C441E /* ODAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98726275155908D100D1B566 /* ODAlertViewController.m */; };
 		CEBE439F155BA8CB00CAD5C3 /* Alarm.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBE439E155BA8CB00CAD5C3 /* Alarm.m */; };
+		CEE3688715610549000B50BD /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEE3688215610549000B50BD /* 2.jpg */; };
+		CEE3688815610549000B50BD /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEE3688315610549000B50BD /* 3.jpg */; };
+		CEE3688915610549000B50BD /* 4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEE3688415610549000B50BD /* 4.jpg */; };
+		CEE3688A15610549000B50BD /* 5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEE3688515610549000B50BD /* 5.jpg */; };
+		CEE3688D15610594000B50BD /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CEE3688C15610594000B50BD /* 1.jpg */; };
+		CEE3688F15612816000B50BD /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBE315454CE900E821CF /* CoreData.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CEE3689B15612B08000B50BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98B4FBD015454CE900E821CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 98B4FBD815454CE900E821CF;
+			remoteInfo = OpenAlarm;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3050925B1560F403001DABA9 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
@@ -89,6 +105,11 @@
 		CE8D88EB155FF3FC001C441E /* OCMockRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockRecorder.h; sourceTree = "<group>"; };
 		CEBE439D155BA8CB00CAD5C3 /* Alarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alarm.h; sourceTree = "<group>"; };
 		CEBE439E155BA8CB00CAD5C3 /* Alarm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alarm.m; sourceTree = "<group>"; };
+		CEE3688215610549000B50BD /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
+		CEE3688315610549000B50BD /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
+		CEE3688415610549000B50BD /* 4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 4.jpg; sourceTree = "<group>"; };
+		CEE3688515610549000B50BD /* 5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 5.jpg; sourceTree = "<group>"; };
+		CEE3688C15610594000B50BD /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		CEE9495A155FE7390076126C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
@@ -108,6 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEE3688F15612816000B50BD /* CoreData.framework in Frameworks */,
 				CE8D88C6155FF261001C441E /* SenTestingKit.framework in Frameworks */,
 				CE8D88C7155FF261001C441E /* UIKit.framework in Frameworks */,
 				CE8D88C8155FF261001C441E /* Foundation.framework in Frameworks */,
@@ -121,6 +143,11 @@
 		305092601560F409001DABA9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				CEE3688C15610594000B50BD /* 1.jpg */,
+				CEE3688215610549000B50BD /* 2.jpg */,
+				CEE3688315610549000B50BD /* 3.jpg */,
+				CEE3688415610549000B50BD /* 4.jpg */,
+				CEE3688515610549000B50BD /* 5.jpg */,
 				3050925B1560F403001DABA9 /* bg.png */,
 				3050925C1560F403001DABA9 /* bg@2x.png */,
 			);
@@ -311,6 +338,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CEE3689C15612B08000B50BD /* PBXTargetDependency */,
 			);
 			name = OpenAlarmTests;
 			productName = OpenAlarmTests;
@@ -358,6 +386,11 @@
 				3050925D1560F403001DABA9 /* bg.png in Resources */,
 				3050925E1560F403001DABA9 /* bg@2x.png in Resources */,
 				CE799A811560CA820078A4C0 /* ODEditLabelViewController.xib in Resources */,
+				CEE3688715610549000B50BD /* 2.jpg in Resources */,
+				CEE3688815610549000B50BD /* 3.jpg in Resources */,
+				CEE3688915610549000B50BD /* 4.jpg in Resources */,
+				CEE3688A15610549000B50BD /* 5.jpg in Resources */,
+				CEE3688D15610594000B50BD /* 1.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +448,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CEE3689C15612B08000B50BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 98B4FBD815454CE900E821CF /* OpenAlarm */;
+			targetProxy = CEE3689B15612B08000B50BD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		98B4FBE815454CE900E821CF /* InfoPlist.strings */ = {
@@ -528,6 +569,7 @@
 		CE8D88D4155FF261001C441E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/OpenAlarm.app/OpenAlarm";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
@@ -541,8 +583,10 @@
 					"\"$(SRCROOT)\"/**",
 					"\"$(SRCROOT)/Libraries\"/**",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -550,6 +594,7 @@
 		CE8D88D5155FF261001C441E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/OpenAlarm.app/OpenAlarm";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
@@ -563,8 +608,10 @@
 					"\"$(SRCROOT)\"/**",
 					"\"$(SRCROOT)/Libraries\"/**",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;

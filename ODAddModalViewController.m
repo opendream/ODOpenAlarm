@@ -13,6 +13,7 @@
 @interface ODAddModalViewController()
 {
     ODEditLabelViewController *editViewController;
+    BOOL isAlarmOn;
     
 }
 
@@ -41,6 +42,8 @@
         self.updateAlarm = alarm;
         isUpdate = YES;
         saveTextLabel = updateAlarm.title;
+        //isAlarmOn = [updateAlarm enable].boolValue;
+        
     }
     return self;
 }
@@ -63,12 +66,13 @@
     UIBarButtonItem *saveToDB = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
                                                                               target:self action:@selector(doneButton)];
     self.navigationItem.rightBarButtonItem = saveToDB;
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     [detailNewAlarm reloadData];
 }
 
@@ -107,6 +111,7 @@
             break;
         }
         case 1: {
+            
             UILabel *leftLabel;
             UISwitch *statusSwitch;
             cell = [tableView dequeueReusableCellWithIdentifier:CellStatusIdentifier];
@@ -118,6 +123,15 @@
                 [cell.contentView addSubview:leftLabel];
                 
                 statusSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(220, 10, 100, 30)];
+               
+                [statusSwitch addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+                if (self.updateAlarm != nil) {
+                    [statusSwitch setOn:[updateAlarm enable].boolValue];
+                    isAlarmOn = statusSwitch.isOn;
+                } else {
+                    [statusSwitch setOn:YES];
+                    isAlarmOn = YES;
+                }
                 [cell.contentView addSubview:statusSwitch];
             }
             cell.accessoryType = UITableViewCellAccessoryNone;
@@ -163,6 +177,11 @@
         [self saveAlarmToDB];
 }
 
+- (void)switchChanged:(UISwitch *)sender
+{
+    isAlarmOn = sender.on;
+}
+
 - (void)updateAlarmToDB
 {
     __block NSMutableString *selectedDayRepeatString = [[NSMutableString alloc] init];
@@ -178,6 +197,7 @@
     self.updateAlarm.repeatDayFlag = selectedDayRepeatString;
     self.updateAlarm.repeatTimeFlag = selectedTimeRepeatString;
     self.updateAlarm.title = saveTextLabel;
+    self.updateAlarm.enable = [NSNumber numberWithBool:isAlarmOn];
     [APPDELEGATE saveContext];
     
     [self.delegate addViewController:self didUpdateAlarm:self.updateAlarm];
@@ -207,7 +227,7 @@
     newAlarm.repeatPeriod = selectedDayRepeatString;
     newAlarm.title = saveTextLabel;
     newAlarm.fireDate = datePicker.date;
-
+    newAlarm.enable = [NSNumber numberWithBool:isAlarmOn];
     newAlarm.alarmPeriod = [NSNumber numberWithInt:1];
     [APPDELEGATE saveContext];
 
