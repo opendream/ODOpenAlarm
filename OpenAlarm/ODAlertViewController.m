@@ -15,13 +15,21 @@
 @implementation ODAlertViewController
 
 @synthesize alertMessege;
-@synthesize timeLabel;
-@synthesize dateLabel;
+@synthesize imageView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        UIView *textBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 120.0)];
+        textBackground.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+        alertMessege = [[UILabel alloc] initWithFrame:CGRectMake(20, 25, 280, 80)];
+        alertMessege.backgroundColor = [UIColor clearColor];
+        alertMessege.textColor = [UIColor whiteColor];
+        alertMessege.textAlignment = UITextAlignmentCenter;
+        alertMessege.font = [UIFont fontWithName:@"Helvetica-Bold" size:30];
+        [textBackground addSubview:alertMessege];
+        [self.view addSubview:textBackground];
     }
     return self;
 }
@@ -29,8 +37,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setTime];
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -52,36 +58,5 @@
 }
 
 #pragma mark - Clock View
-
-- (void)setTime{
-    
-    NSDate *today = [NSDate date];
-    //    NSDate *dateShow= [NSDate dateWithTimeIntervalSinceNow:0];
-    
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setTimeStyle:NSDateFormatterMediumStyle];
-    [dateFormat setDateFormat:@"dd MMM yyyy"];
-    NSString *dateString = [dateFormat stringFromDate:today];
-    
-    NSCalendar * calendar = [[NSCalendar alloc]
-                             initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents * components =
-    [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:today];
-    
-    NSInteger hour = [components hour];
-    NSInteger minute = [components minute];
-    NSInteger sec = [components second];
-    
-    //    NSInteger day = [components day];
-    //    NSInteger month = [components month];
-    //    NSInteger year = [components year];
-    
-    
-    
-    
-    timeLabel.text = [NSString stringWithFormat:@"%i:%i:%i", hour, minute, sec];
-    
-    dateLabel.text = dateString;
-}
 
 @end

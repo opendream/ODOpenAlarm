@@ -9,14 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface ODAlertViewController : UIViewController {
-    IBOutlet UILabel *alertMessege;
-    IBOutlet UILabel *dateLabel;
-    IBOutlet UILabel *timeLabel;
 }
 
 @property(strong, nonatomic) UILabel *alertMessege;
-@property(strong, nonatomic) UILabel *dateLabel;
-@property(strong, nonatomic) UILabel *timeLabel;
-
+@property(strong, nonatomic) IBOutlet UIImageView *imageView;
 - (IBAction)hideView:(id)sender;
 @end
