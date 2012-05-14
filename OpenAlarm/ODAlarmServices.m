@@ -195,7 +195,6 @@ static ODAlarmServices *shareAlarmService = nil;
 }
 
 #warning should not use setAlarm for method name
-
 - (void)setAlarm 
 {
     for (int i=0; i<alarms.count; i++) {
@@ -218,4 +217,44 @@ static ODAlarmServices *shareAlarmService = nil;
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
     }
 }
+
+#define ALARMFILE @"ALARMFILE"
+- (BOOL)isAlarmEnable
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSArray *documentsDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentPath = [documentsDir lastObject];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:ALARMFILE];
+    
+    BOOL fileExisted = [fm fileExistsAtPath:filePath];
+    
+    if (fileExisted) {
+        // Read from file
+        NSError *error;
+        NSString *contentAlarm = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+        NSLog(@"contentAlarm");
+        
+        if ([contentAlarm isEqualToString:@"1"]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+- (void)setEnableAlarm:(BOOL)enable
+{
+    NSArray *documentsDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentPath = [documentsDir lastObject];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:ALARMFILE];
+    
+    NSString *boolFlag = enable ? @"1" : @"0";
+    
+    NSError *error;
+    BOOL writeFlag = [boolFlag writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    if (writeFlag) {
+        NSLog(@"Write successful");
+    }
+}
+
 @end

@@ -11,6 +11,7 @@
 #import "ODAppDelegate.h"
 #import "Alarm.h"
 #import "ODListAlarmTableViewCell.h"
+#import "ODAlarmServices.h"
 
 @interface ODListAlarmViewController ()
 
@@ -26,7 +27,6 @@
     if (self) {
         // Custom initialization
         alarmList.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-
     }
     return self;
 }
@@ -37,18 +37,34 @@
     
     //creat right navigation button (add button)
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertnewAlarm)];
-    self.navigationItem.rightBarButtonItem = addButton;
-    
+    self.navigationItem.leftBarButtonItem = addButton;
+        
     //creat left navigation button (delete button)
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
         
     // set clock
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(setTime) userInfo:nil repeats:YES];
-
+    
+    [enableAlarmSwitch addTarget:self action:@selector(alarmSwitchAction:) forControlEvents:UIControlEventValueChanged];
 } 
+
+- (void)alarmSwitchAction:(id)sender
+{
+    UISwitch *alarmSwitch = (UISwitch *)sender;
+    
+    [[ODAlarmServices sharedAlarmServices] setEnableAlarm:[alarmSwitch isOn]];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [enableAlarmSwitch setOn:[[ODAlarmServices sharedAlarmServices] isAlarmEnable]];
+}
 
 - (void)viewDidUnload
 {
+    enableAlarmSwitch = nil;
     [super viewDidUnload];
 }
 
@@ -68,7 +84,7 @@
 
 #pragma mark - Table View
 
-#define CELL_HEIGHT 70
+#define CELL_HEIGHT 92
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -156,24 +172,36 @@
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setTimeStyle:NSDateFormatterMediumStyle];
-    [dateFormat setDateFormat:@"dd MMM yyyy"];
+    [dateFormat setDateFormat:@"HH:mm:ss"];
     NSString *dateString = [dateFormat stringFromDate:today];
 
-    NSCalendar * calendar = [[NSCalendar alloc]
-                             initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents * components =
-    [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:today];
+//    NSCalendar * calendar = [[NSCalendar alloc]
+//                             initWithCalendarIdentifier:NSGregorianCalendar];
+//    NSDateComponents * components =
+//    [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:today];
     
-    NSInteger hour = [components hour];
-    NSInteger minute = [components minute];
-    NSInteger sec = [components second];
+//    NSInteger hour = [components hour];
+//    NSInteger minute = [components minute];
+//    NSInteger sec = [components second];
     
 //    NSInteger day = [components day];
 //    NSInteger month = [components month];
 //    NSInteger year = [components year];
-    time.text = [NSString stringWithFormat:@"%i:%i:%i", hour, minute, sec];
+    
+    
+//    time.text = [NSString stringWithFormat:@"%i:%i:%i", hour, minute, sec];
+//
+//    date.text = dateString;
+    
+    
+    NSString *show = dateString; //[NSString stringWithFormat:@"%@",dateString ,[NSString stringWithFormat:@"%2i:%2i:%2i", hour, minute, sec] ];
+    time.text = show;
+    time.textAlignment = UITextAlignmentCenter;
+    time.font = [UIFont fontWithName:@"AppleGothic" size:20];
+    self.navigationItem.title = dateString;
 
-    date.text = dateString;
+
+    
 }
 
 - (NSFetchedResultsController *)fetchedResultsController

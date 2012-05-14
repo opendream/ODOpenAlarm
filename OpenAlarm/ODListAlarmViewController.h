@@ -12,12 +12,13 @@
 @interface ODListAlarmViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, ODAddViewControllerDelegate> {
 
     IBOutlet UITableView *alarmList;
-
-    IBOutlet UILabel *date;
     IBOutlet UILabel *time;
+    
+    __weak IBOutlet UISwitch *enableAlarmSwitch;
 }
 
 //@property(strong,nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (assign, nonatomic) BOOL enabledAlarm;
 
 @end
