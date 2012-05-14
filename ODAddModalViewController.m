@@ -8,7 +8,15 @@
 
 #import "ODAddModalViewController.h"
 #import "Alarm.h"
+#import "ODEditLabelViewController.h"
 
+@interface ODAddModalViewController()
+{
+    ODEditLabelViewController *editViewController;
+    
+}
+
+@end
 @implementation ODAddModalViewController
 
 @synthesize delegate;
@@ -18,20 +26,21 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        timeRepeat = [[ODTimeRepeatViewController alloc] init];
-        isUpdate = false;
+        timeRepeat = [[ODTimeRepeatViewController alloc] initWithNibName:@"ODTimeRepeatViewController" bundle:nil];
+        editViewController = [[ODEditLabelViewController alloc] initWithNibName:@"ODEditLabelViewController" bundle:nil];
+        isUpdate = NO;
+        saveTextLabel = [[NSString alloc]init];
     }
-        return self;
+    return self;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil withAlarm:(Alarm *)alarm bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [self initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        timeRepeat = [[ODTimeRepeatViewController alloc] init];
-        isUpdate = YES;
-        
         self.updateAlarm = alarm;
+        isUpdate = YES;
+        saveTextLabel = updateAlarm.title;
     }
     return self;
 }
@@ -56,6 +65,13 @@
     self.navigationItem.rightBarButtonItem = saveToDB;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [detailNewAlarm reloadData];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -75,35 +91,41 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UILabel *leftLabel; 
-    UILabel *rightLabel;
+    static NSString *CellLabelIdentifier = @"LabelCell";
+    static NSString *CellStatusIdentifier = @"StatusCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        
-        leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
-        [cell addSubview:leftLabel];
-       
-        rightLabel = [[UILabel alloc] initWithFrame:CGRectMake(180, 10, 100, 20)];
-        [cell addSubview:rightLabel];
-    }
-    
+    UITableViewCell *cell;
     switch (indexPath.row) {
-        case 0:
-            leftLabel.text = @"Label";
-            rightLabel.text = @"Every 2 hour";
+        case 0: {
+            cell = [tableView dequeueReusableCellWithIdentifier:CellLabelIdentifier];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellLabelIdentifier];
+            }
+            cell.textLabel.text = @"Label";
+            cell.detailTextLabel.text = saveTextLabel;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
-        case 1:
+        }
+        case 1: {
+            UILabel *leftLabel;
+            UISwitch *statusSwitch;
+            cell = [tableView dequeueReusableCellWithIdentifier:CellStatusIdentifier];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellStatusIdentifier];
+                cell.accessoryType = UITableViewCellAccessoryNone;
+                
+                leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
+                [cell.contentView addSubview:leftLabel];
+                
+                statusSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(220, 10, 100, 30)];
+                [cell.contentView addSubview:statusSwitch];
+            }
             cell.accessoryType = UITableViewCellAccessoryNone;
+            leftLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
             leftLabel.text = @"Status";
-            
             break;
+        }
     }
-    
     return cell;
 }
 
@@ -113,7 +135,19 @@
         [timeRepeat setRepeatTimeFlag:updateAlarm.repeatTimeFlag];
         [timeRepeat setRepeatDayFlag:updateAlarm.repeatDayFlag];
     }
-    [self.navigationController pushViewController:timeRepeat animated:YES];
+    
+    switch (indexPath.row) {
+        case 0: {
+            editViewController = [[ODEditLabelViewController alloc] initWithNibName:@"ODEditLabelViewController" bundle:nil];
+            editViewController.delegate = self;
+            if (self.updateAlarm != nil) {
+                editViewController.textLabel.text = updateAlarm.title;
+            }
+            editViewController.currentName = saveTextLabel;
+            [self.navigationController pushViewController:editViewController animated:YES];
+            break;
+        }   
+    }
 }
 
 - (void)backToAlarmListPage
@@ -143,6 +177,7 @@
     self.updateAlarm.fireDate = datePicker.date;
     self.updateAlarm.repeatDayFlag = selectedDayRepeatString;
     self.updateAlarm.repeatTimeFlag = selectedTimeRepeatString;
+    self.updateAlarm.title = saveTextLabel;
     [APPDELEGATE saveContext];
     
     [self.delegate addViewController:self didUpdateAlarm:self.updateAlarm];
@@ -170,7 +205,7 @@
     newAlarm.repeatTimeFlag = selectedTimeRepeatString;
     
     newAlarm.repeatPeriod = selectedDayRepeatString;
-    newAlarm.title = @"wake up";
+    newAlarm.title = saveTextLabel;
     newAlarm.fireDate = datePicker.date;
 
     newAlarm.alarmPeriod = [NSNumber numberWithInt:1];
@@ -181,6 +216,13 @@
     }
     
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)shouldSaveTextLabel:(ODEditLabelViewController *)controller :(NSString *)textLabel
+{
+    saveTextLabel = textLabel;
+    [detailNewAlarm reloadData];
+    NSLog(@"reloadData");
 }
 
 @end

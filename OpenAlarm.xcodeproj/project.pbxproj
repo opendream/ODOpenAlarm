@@ -27,6 +27,8 @@
 		98ECBD201547F24F00FF814B /* ODAddModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98ECBD1E1547F24F00FF814B /* ODAddModalViewController.xib */; };
 		98FE678715492C040009D7C1 /* ODTimeRepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FE678515492C040009D7C1 /* ODTimeRepeatViewController.m */; };
 		98FE678815492C040009D7C1 /* ODTimeRepeatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98FE678615492C040009D7C1 /* ODTimeRepeatViewController.xib */; };
+		CE799A801560CA820078A4C0 /* ODEditLabelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE799A7E1560CA820078A4C0 /* ODEditLabelViewController.m */; };
+		CE799A811560CA820078A4C0 /* ODEditLabelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE799A7F1560CA820078A4C0 /* ODEditLabelViewController.xib */; };
 		CE8D88C6155FF261001C441E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE9495A155FE7390076126C /* SenTestingKit.framework */; };
 		CE8D88C7155FF261001C441E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBDD15454CE900E821CF /* UIKit.framework */; };
 		CE8D88C8155FF261001C441E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B4FBDF15454CE900E821CF /* Foundation.framework */; };
@@ -69,6 +71,9 @@
 		98FE678415492C040009D7C1 /* ODTimeRepeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODTimeRepeatViewController.h; sourceTree = "<group>"; };
 		98FE678515492C040009D7C1 /* ODTimeRepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODTimeRepeatViewController.m; sourceTree = "<group>"; };
 		98FE678615492C040009D7C1 /* ODTimeRepeatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ODTimeRepeatViewController.xib; sourceTree = "<group>"; };
+		CE799A7D1560CA810078A4C0 /* ODEditLabelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODEditLabelViewController.h; sourceTree = "<group>"; };
+		CE799A7E1560CA820078A4C0 /* ODEditLabelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODEditLabelViewController.m; sourceTree = "<group>"; };
+		CE799A7F1560CA820078A4C0 /* ODEditLabelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ODEditLabelViewController.xib; sourceTree = "<group>"; };
 		CE8D88C5155FF261001C441E /* OpenAlarmTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenAlarmTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE8D88CB155FF261001C441E /* OpenAlarmTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OpenAlarmTests-Info.plist"; sourceTree = "<group>"; };
 		CE8D88CD155FF261001C441E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -143,6 +148,9 @@
 				98ECBD1C1547F24F00FF814B /* ODAddModalViewController.h */,
 				98ECBD1D1547F24F00FF814B /* ODAddModalViewController.m */,
 				98ECBD1E1547F24F00FF814B /* ODAddModalViewController.xib */,
+				CE799A7D1560CA810078A4C0 /* ODEditLabelViewController.h */,
+				CE799A7E1560CA820078A4C0 /* ODEditLabelViewController.m */,
+				CE799A7F1560CA820078A4C0 /* ODEditLabelViewController.xib */,
 				98726274155908D100D1B566 /* ODAlertViewController.h */,
 				98726275155908D100D1B566 /* ODAlertViewController.m */,
 				98726276155908D100D1B566 /* ODAlertViewController.xib */,
@@ -349,6 +357,7 @@
 				98726278155908D100D1B566 /* ODAlertViewController.xib in Resources */,
 				3050925D1560F403001DABA9 /* bg.png in Resources */,
 				3050925E1560F403001DABA9 /* bg@2x.png in Resources */,
+				CE799A811560CA820078A4C0 /* ODEditLabelViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +402,7 @@
 				989A2D4215539444005C0D15 /* ODListAlarmTableViewCell.m in Sources */,
 				987262721558E2C000D1B566 /* ODAlarmServices.m in Sources */,
 				CEBE439F155BA8CB00CAD5C3 /* Alarm.m in Sources */,
+				CE799A801560CA820078A4C0 /* ODEditLabelViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

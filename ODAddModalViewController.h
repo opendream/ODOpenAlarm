@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ODTimeRepeatViewController.h"
+#import "ODEditLabelViewController.h"
 
 @protocol ODAddViewControllerDelegate;
 
 @class Alarm;
 
-@interface ODAddModalViewController : UIViewController<UITableViewDelegate, UITableViewDataSource> {
+@interface ODAddModalViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, ODEditLabelViewControllerDelegate> {
     
     __unsafe_unretained id <ODAddViewControllerDelegate> delegate;
     
@@ -23,7 +24,8 @@
     
     IBOutlet UITableView *detailNewAlarm;
     IBOutlet UIDatePicker *datePicker;
-    UISwitch *alarmSwitch;
+    
+    NSString *saveTextLabel;
 }
 
 @property (unsafe_unretained) id <ODAddViewControllerDelegate> delegate;
