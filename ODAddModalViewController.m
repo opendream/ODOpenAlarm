@@ -9,11 +9,12 @@
 #import "ODAddModalViewController.h"
 #import "Alarm.h"
 #import "ODEditLabelViewController.h"
+#import "ODSoundListViewController.h"
 
 @interface ODAddModalViewController()
 {
     ODEditLabelViewController *editViewController;
-    
+    ODSoundListViewController *soundListViewController;
 }
 
 @end
@@ -82,7 +83,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -97,7 +98,7 @@
     
     UITableViewCell *cell;
     switch (indexPath.row) {
-        case 0: {
+        case 0: { //label
             cell = [tableView dequeueReusableCellWithIdentifier:CellLabelIdentifier];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellLabelIdentifier];
@@ -107,7 +108,7 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         }
-        case 1: {
+        case 1: {   //status
             UILabel *leftLabel;
             UISwitch *statusSwitch;
             cell = [tableView dequeueReusableCellWithIdentifier:CellStatusIdentifier];
@@ -124,6 +125,17 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
             leftLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
             leftLabel.text = @"Status";
+            break;
+        }
+        case 2: {   //sound
+            cell = [tableView dequeueReusableCellWithIdentifier:CellLabelIdentifier];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellLabelIdentifier];
+            }
+            cell.textLabel.text = @"Sound";
+            cell.detailTextLabel.text = @"Default";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
             break;
         }
     }
@@ -147,7 +159,12 @@
             editViewController.currentName = saveTextLabel;
             [self.navigationController pushViewController:editViewController animated:YES];
             break;
-        }   
+        }
+        case 2: {   //sound
+            soundListViewController = [[ODSoundListViewController alloc] init];
+            [self.navigationController pushViewController:soundListViewController animated:YES];
+            break;        
+        }
     }
 }
 

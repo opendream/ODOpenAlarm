@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		3050925D1560F403001DABA9 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3050925B1560F403001DABA9 /* bg.png */; };
 		3050925E1560F403001DABA9 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3050925C1560F403001DABA9 /* bg@2x.png */; };
+		305F8D781561107D000B1E2C /* tap.aif in Resources */ = {isa = PBXBuildFile; fileRef = 305F8D771561107D000B1E2C /* tap.aif */; };
+		305F8D7B15611189000B1E2C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305F8D7A15611189000B1E2C /* AudioToolbox.framework */; };
+		307FE510156116AA00EC8210 /* ODSoundListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 307FE50F156116AA00EC8210 /* ODSoundListViewController.m */; };
+		307FE51415611AFD00EC8210 /* ODSound.m in Sources */ = {isa = PBXBuildFile; fileRef = 307FE51315611AFD00EC8210 /* ODSound.m */; };
 		987262721558E2C000D1B566 /* ODAlarmServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 987262711558E2BF00D1B566 /* ODAlarmServices.m */; };
 		98726278155908D100D1B566 /* ODAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98726276155908D100D1B566 /* ODAlertViewController.xib */; };
 		989A2D4215539444005C0D15 /* ODListAlarmTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 989A2D4115539444005C0D15 /* ODListAlarmTableViewCell.m */; };
@@ -42,6 +46,12 @@
 /* Begin PBXFileReference section */
 		3050925B1560F403001DABA9 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		3050925C1560F403001DABA9 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
+		305F8D771561107D000B1E2C /* tap.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = tap.aif; sourceTree = "<group>"; };
+		305F8D7A15611189000B1E2C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		307FE50E156116AA00EC8210 /* ODSoundListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ODSoundListViewController.h; path = ../ODSoundListViewController.h; sourceTree = "<group>"; };
+		307FE50F156116AA00EC8210 /* ODSoundListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ODSoundListViewController.m; path = ../ODSoundListViewController.m; sourceTree = "<group>"; };
+		307FE51215611AFD00EC8210 /* ODSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ODSound.h; path = ../ODSound.h; sourceTree = "<group>"; };
+		307FE51315611AFD00EC8210 /* ODSound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ODSound.m; path = ../ODSound.m; sourceTree = "<group>"; };
 		987262701558E2BF00D1B566 /* ODAlarmServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODAlarmServices.h; sourceTree = "<group>"; };
 		987262711558E2BF00D1B566 /* ODAlarmServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODAlarmServices.m; sourceTree = "<group>"; };
 		98726274155908D100D1B566 /* ODAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODAlertViewController.h; sourceTree = "<group>"; };
@@ -97,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				305F8D7B15611189000B1E2C /* AudioToolbox.framework in Frameworks */,
 				98B4FBDE15454CE900E821CF /* UIKit.framework in Frameworks */,
 				98B4FBE015454CE900E821CF /* Foundation.framework in Frameworks */,
 				98B4FBE215454CE900E821CF /* CoreGraphics.framework in Frameworks */,
@@ -127,6 +138,14 @@
 			name = images;
 			sourceTree = "<group>";
 		};
+		305F8D761561107D000B1E2C /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				305F8D771561107D000B1E2C /* tap.aif */,
+			);
+			path = sounds;
+			sourceTree = "<group>";
+		};
 		989D66901553F0A8006148FA /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +158,8 @@
 		989D66921553F0B2006148FA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				307FE50E156116AA00EC8210 /* ODSoundListViewController.h */,
+				307FE50F156116AA00EC8210 /* ODSoundListViewController.m */,
 				98B4FC051545516C00E821CF /* ODListAlarmViewController.h */,
 				98B4FC061545516C00E821CF /* ODListAlarmViewController.m */,
 				98B4FC071545516C00E821CF /* ODListAlarmViewController.xib */,
@@ -161,6 +182,8 @@
 		98B4FBCE15454CE900E821CF = {
 			isa = PBXGroup;
 			children = (
+				305F8D7A15611189000B1E2C /* AudioToolbox.framework */,
+				305F8D761561107D000B1E2C /* sounds */,
 				98B4FBE515454CE900E821CF /* OpenAlarm */,
 				CE8D88C9155FF261001C441E /* OpenAlarmTests */,
 				98B4FBDC15454CE900E821CF /* Frameworks */,
@@ -272,6 +295,8 @@
 		CE8D88EE155FFE52001C441E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				307FE51215611AFD00EC8210 /* ODSound.h */,
+				307FE51315611AFD00EC8210 /* ODSound.m */,
 				98B4FBF115454CE900E821CF /* OpenAlarm.xcdatamodeld */,
 				CEBE439D155BA8CB00CAD5C3 /* Alarm.h */,
 				CEBE439E155BA8CB00CAD5C3 /* Alarm.m */,
@@ -358,6 +383,7 @@
 				3050925D1560F403001DABA9 /* bg.png in Resources */,
 				3050925E1560F403001DABA9 /* bg@2x.png in Resources */,
 				CE799A811560CA820078A4C0 /* ODEditLabelViewController.xib in Resources */,
+				305F8D781561107D000B1E2C /* tap.aif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +429,8 @@
 				987262721558E2C000D1B566 /* ODAlarmServices.m in Sources */,
 				CEBE439F155BA8CB00CAD5C3 /* Alarm.m in Sources */,
 				CE799A801560CA820078A4C0 /* ODEditLabelViewController.m in Sources */,
+				307FE510156116AA00EC8210 /* ODSoundListViewController.m in Sources */,
+				307FE51415611AFD00EC8210 /* ODSound.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
