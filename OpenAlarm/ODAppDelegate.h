@@ -12,6 +12,9 @@
 #define TIME_FLAG_DEFAULT @"000"
 #define DAY_FLAG_DEFAULT @"0000000"
 
+#define kSoundName @"kSoundWav"
+#define kSoundType @"kSoundType"
+
 #define APPDELEGATE (ODAppDelegate *)[[UIApplication sharedApplication] delegate]
 
 @interface ODAppDelegate : UIResponder <UIApplicationDelegate, ODAlertViewControllerDelegate>

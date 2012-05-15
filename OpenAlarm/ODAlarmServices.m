@@ -147,7 +147,7 @@ static ODAlarmServices *shareAlarmService = nil;
         
         if (shouldAlert) {
             
-            alarm.repeatFlag = [NSNumber numberWithBool:NO];
+            alarm.repeatFlag = [NSNumber numberWithBool:NO];    
             [APPDELEGATE saveContext];
             
             [self performSelector:@selector(repeatCooldown:) withObject:alarm afterDelay:60 - componentsToday.second];
@@ -170,8 +170,8 @@ static ODAlarmServices *shareAlarmService = nil;
             
             NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:alarm, @"kAlarm", nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:alarmServicesWillAlert object:nil userInfo:userInfo];
-            [APPDELEGATE saveContext];
-            
+        
+            [self alertWithSoundString:[alarm sound]];
         }
     }    
 }
@@ -185,12 +185,18 @@ static ODAlarmServices *shareAlarmService = nil;
 
 - (NSArray *)fetchAllAlarms
 {
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"fireDate" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    
+    
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Alarm" 
                                               inManagedObjectContext:[APPDELEGATE managedObjectContext]];
+    
     
     // Query all alarms
     NSFetchRequest *request = [[NSFetchRequest alloc]init];
     [request setEntity:entity];
+    [request setSortDescriptors:sortDescriptors];
     
     NSError *error;
     NSArray *allAlarms = [[APPDELEGATE managedObjectContext] executeFetchRequest:request error:&error];
@@ -360,15 +366,24 @@ static ODAlarmServices *shareAlarmService = nil;
     
     AudioServicesPlayAlertSound (soundFileObject);
     
-    [self resetAlert];
-    
     [self performSelector:@selector(vibratePhone) withObject:nil afterDelay:0];
     [self performSelector:@selector(vibratePhone) withObject:nil afterDelay:1.0];
 }
 
+- (void)alertWithSoundString:(NSString *)soundString
+{
+    NSArray *soundArray = [soundString componentsSeparatedByString:@"."];
+    
+    if ([soundArray count] > 1)
+        [self alertWithSound:[soundArray objectAtIndex:0] withSoundType:[soundArray objectAtIndex:1]];
+    else
+        NSLog(@"split string error!");
+    
+}
+
 - (void)vibratePhone
 {
-    AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 }
 
 @end

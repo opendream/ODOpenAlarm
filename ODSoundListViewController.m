@@ -8,23 +8,25 @@
 
 #import "ODSoundListViewController.h"
 #import "ODSound.h"
-@interface ODSoundListViewController ()
-{
-    NSIndexPath *lastIndexPath;
+#import "ODAlarmServices.h"
 
+@interface ODSoundListViewController () {
+    NSIndexPath *lastIndexPath;
 }
 @end
 
 @implementation ODSoundListViewController
+
+@synthesize delegate;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        ODSound *s1 = [ODSound soundName:@"tap" andType:@"aif"];
-        ODSound *s2 = [ODSound soundName:@"tap" andType:@"aif"];
-        ODSound *s3 = [ODSound soundName:@"tap" andType:@"aif"];
+        ODSound *s1 = [ODSound soundName:@"Basso" andType:@"aiff"];
+        ODSound *s2 = [ODSound soundName:@"Blow" andType:@"aiff"];
+        ODSound *s3 = [ODSound soundName:@"Glass" andType:@"aiff"];
         ODSound *s4 = [ODSound soundName:@"tap" andType:@"aif"];
         
         datasource = [NSArray arrayWithObjects:s1, s2, s3, s4, nil];
@@ -36,19 +38,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    UIBarButtonItem *backToCameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
+                                                                                        target:self action:@selector(back)];
+    self.navigationItem.LeftBarButtonItem = backToCameraButton;
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    
+    UIBarButtonItem *saveToDB = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+                                                                              target:self action:@selector(doneButton)];
+    self.navigationItem.rightBarButtonItem = saveToDB;
 }
 
-- (void)viewDidUnload
+- (void)back
 {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)doneButton
+{
+    if ([self.delegate respondsToSelector:@selector(soundController:didSelectSound:)]) {
+        [self.delegate soundController:self didSelectSound:[self selectedSound]];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -66,7 +76,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return datasource.count;
+    return [datasource count];
 }
 
 
@@ -75,69 +85,22 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    // Configure the cell...
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier ];
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
     ODSound *currentSound = [datasource objectAtIndex:indexPath.row];
-    
     cell.textLabel.text = currentSound.name;
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
     UITableViewCell* newCell = [tableView cellForRowAtIndexPath:indexPath]; 
     int newRow = [indexPath row]; 
     int oldRow = (lastIndexPath != nil) ? [lastIndexPath row] : -1; 
@@ -161,8 +124,25 @@
         }
     }
     
-    NSLog(@"selectedIndex >>>>>> %d",selectedIndex);
     
+    ODSound *sound = [datasource objectAtIndex:indexPath.row];
+    
+    if (sound != nil) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:[sound name] forKey:kSoundName];
+        [userDefaults setObject:[sound type] forKey:kSoundType];
+        [userDefaults synchronize];
+    }
+    
+    [[ODAlarmServices sharedAlarmServices] alertWithSound:[sound name] withSoundType:[sound type]];
+}
+
+- (ODSound *)selectedSound
+{
+    if (selectedIndex < [datasource count]) {
+        return [datasource objectAtIndex:selectedIndex];
+    }
+    return nil;
 }
 
 @end

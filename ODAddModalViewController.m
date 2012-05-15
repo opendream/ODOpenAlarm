@@ -7,16 +7,36 @@
 //
 
 #import "ODAddModalViewController.h"
-#import "Alarm.h"
+
 #import "ODEditLabelViewController.h"
 #import "ODSoundListViewController.h"
+
+#import "Alarm.h"
+#import "ODSound.h"
 
 @interface ODAddModalViewController() {
     ODEditLabelViewController *editViewController;
     ODSoundListViewController *soundListViewController;
     BOOL isAlarmOn;
+    ODSound *selectedSound;
 }
 @end
+
+
+@implementation NSString(MergingStringFromArray)
+
++ (NSString *)mergeStringFromArray:(NSArray *)mergeArray
+{
+    __block NSMutableString *mergeString = [[NSMutableString alloc] init];
+    [mergeArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+        [mergeString appendString: (NSString *)obj];
+    }];
+    
+    return mergeString;
+}
+
+@end
+
 
 @implementation ODAddModalViewController
 
@@ -144,7 +164,13 @@
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellLabelIdentifier];
             }
             cell.textLabel.text = @"Sound";
-            cell.detailTextLabel.text = @"Default";
+            
+            if (selectedSound == nil) {
+                cell.detailTextLabel.text = @"No sound";
+            } else {
+                cell.detailTextLabel.text = [selectedSound.name capitalizedString];
+            }
+            
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
             break;
@@ -173,6 +199,7 @@
         }
         case 2: { //sound
             soundListViewController = [[ODSoundListViewController alloc] init];
+            soundListViewController.delegate = self;
             [self.navigationController pushViewController:soundListViewController animated:YES];
             break;        
         }
@@ -203,6 +230,7 @@
     [sArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
         [mergeString appendString: (NSString *)obj];
     }];
+
     return mergeString;
 }
 
@@ -219,9 +247,10 @@
     self.updateAlarm.fireDate = saveDate; // set to DB
     self.updateAlarm.title = saveTextLabel;
     self.updateAlarm.enable = [NSNumber numberWithBool:isAlarmOn];
+    self.updateAlarm.sound = [NSString stringWithFormat:@"%@.%@", selectedSound.name, selectedSound.type];
     
-    self.updateAlarm.repeatDayFlag = [self mergeStringFromArray:timeRepeat.selectedDayRepeat];
-    self.updateAlarm.repeatTimeFlag = [self mergeStringFromArray:timeRepeat.selectedTimeRepeat];
+    self.updateAlarm.repeatDayFlag = [NSString mergeStringFromArray:timeRepeat.selectedDayRepeat];
+    self.updateAlarm.repeatTimeFlag = [NSString mergeStringFromArray:timeRepeat.selectedTimeRepeat];
     
     [APPDELEGATE saveContext];
     
@@ -243,15 +272,12 @@
     [dateComps setSecond:0];
     NSDate *saveDate = [calendar dateFromComponents:dateComps];
     newAlarm.fireDate = saveDate; // set to DB
-    
     newAlarm.enable = [NSNumber numberWithBool:isAlarmOn];
-    
     newAlarm.repeatDayFlag = [self mergeStringFromArray:timeRepeat.selectedDayRepeat];
     newAlarm.repeatTimeFlag = [self mergeStringFromArray:timeRepeat.selectedTimeRepeat];
-    
-    
+    newAlarm.sound = [NSString stringWithFormat:@"%@.%@", selectedSound.name, selectedSound.type];;
     [APPDELEGATE saveContext];
-
+    
     if ([newAlarm isFault]) {
         if ([self.delegate respondsToSelector:@selector(addViewController:didFailInsertAlarm:)]) {
             [self.delegate addViewController:self didFailInsertAlarm:nil];
@@ -269,6 +295,14 @@
     }
     
     [self.navigationController popToViewController:self animated:YES];
+}
+
+#pragma mark - ODSoundListViewViewControllerDelegate
+
+- (void)soundController:(ODSoundListViewController *)controller didSelectSound:(ODSound *)sound
+{
+    selectedSound = sound;
+    [controller.navigationController popViewControllerAnimated:YES];
 }
 
 @end

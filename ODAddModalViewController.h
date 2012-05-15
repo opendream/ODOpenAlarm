@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "ODTimeRepeatViewController.h"
 #import "ODEditLabelViewController.h"
+#import "ODSoundListViewController.h"
 
 @protocol ODAddViewControllerDelegate;
 
 @class Alarm;
 
-@interface ODAddModalViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, ODEditLabelViewControllerDelegate> {
+@interface ODAddModalViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, ODEditLabelViewControllerDelegate, ODSoundListViewControllerDelegate> {
     
     __unsafe_unretained id <ODAddViewControllerDelegate> delegate;
     
@@ -40,4 +41,11 @@
 - (void)addViewController:(ODAddModalViewController *)controller didUpdateAlarm:(Alarm *)alarm;
 @optional
 - (void)addViewController:(ODAddModalViewController *)controller didFailInsertAlarm:(Alarm *)alarm;
+@end
+
+
+@interface NSString(MergingStringFromArray)
+
++ (NSString *)mergeStringFromArray:(NSArray *)mergeArray;
+
 @end
