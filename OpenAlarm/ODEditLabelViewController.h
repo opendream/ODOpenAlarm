@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 @protocol ODEditLabelViewControllerDelegate;
 
-@interface ODEditLabelViewController : UIViewController
-{
+@interface ODEditLabelViewController : UIViewController <UITextFieldDelegate> {
     __unsafe_unretained id <ODEditLabelViewControllerDelegate> delegate;
     
 }
@@ -22,6 +21,6 @@
 
 @protocol ODEditLabelViewControllerDelegate <NSObject>
 
-- (void) shouldSaveTextLabel:(ODEditLabelViewController *)controller :(NSString *)textLabel;
+- (void)shouldSaveTextLabel:(ODEditLabelViewController *)controller withString:(NSString *)text;
 
 @end

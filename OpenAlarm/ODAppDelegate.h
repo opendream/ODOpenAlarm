@@ -14,10 +14,8 @@
 
 #define APPDELEGATE (ODAppDelegate *)[[UIApplication sharedApplication] delegate]
 
-@interface ODAppDelegate : UIResponder <UIApplicationDelegate>
-{
-    ODAlertViewController *alertViewController;
-}
+@interface ODAppDelegate : UIResponder <UIApplicationDelegate, ODAlertViewControllerDelegate>
+
 @property (strong, nonatomic) UIWindow *window;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;

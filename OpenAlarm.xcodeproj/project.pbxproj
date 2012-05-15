@@ -31,6 +31,21 @@
 		98ECBD201547F24F00FF814B /* ODAddModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98ECBD1E1547F24F00FF814B /* ODAddModalViewController.xib */; };
 		98FE678715492C040009D7C1 /* ODTimeRepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FE678515492C040009D7C1 /* ODTimeRepeatViewController.m */; };
 		98FE678815492C040009D7C1 /* ODTimeRepeatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98FE678615492C040009D7C1 /* ODTimeRepeatViewController.xib */; };
+		CE08B59415616832009FAEA0 /* Basso.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE08B58615616832009FAEA0 /* Basso.aiff */; };
+		CE08B59515616832009FAEA0 /* Blow.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE08B58715616832009FAEA0 /* Blow.aiff */; };
+		CE08B59615616832009FAEA0 /* Bottle.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE08B58815616832009FAEA0 /* Bottle.aiff */; };
+		CE08B59715616832009FAEA0 /* Frog.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE08B58915616832009FAEA0 /* Frog.aiff */; };
+		CE08B59815616832009FAEA0 /* Funk.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE08B58A15616832009FAEA0 /* Funk.aiff */; };
+		CE08B59915616832009FAEA0 /* Glass.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE08B58B15616832009FAEA0 /* Glass.aiff */; };
+		CE08B59A15616832009FAEA0 /* Hero.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE08B58C15616832009FAEA0 /* Hero.aiff */; };
+		CE08B59B15616832009FAEA0 /* Morse.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE08B58D15616832009FAEA0 /* Morse.aiff */; };
+		CE08B59C15616832009FAEA0 /* Ping.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE08B58E15616832009FAEA0 /* Ping.aiff */; };
+		CE08B59D15616832009FAEA0 /* Pop.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE08B58F15616832009FAEA0 /* Pop.aiff */; };
+		CE08B59E15616832009FAEA0 /* Purr.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE08B59015616832009FAEA0 /* Purr.aiff */; };
+		CE08B59F15616832009FAEA0 /* Sosumi.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE08B59115616832009FAEA0 /* Sosumi.aiff */; };
+		CE08B5A015616832009FAEA0 /* Submarine.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE08B59215616832009FAEA0 /* Submarine.aiff */; };
+		CE08B5A115616832009FAEA0 /* Tink.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE08B59315616832009FAEA0 /* Tink.aiff */; };
+		CE08B5A715616FFA009FAEA0 /* alarm-clock-1.wav in Resources */ = {isa = PBXBuildFile; fileRef = CE08B5A615616FFA009FAEA0 /* alarm-clock-1.wav */; };
 		CE799A801560CA820078A4C0 /* ODEditLabelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE799A7E1560CA820078A4C0 /* ODEditLabelViewController.m */; };
 		CE799A811560CA820078A4C0 /* ODEditLabelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE799A7F1560CA820078A4C0 /* ODEditLabelViewController.xib */; };
 		CE8D88C6155FF261001C441E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE9495A155FE7390076126C /* SenTestingKit.framework */; };
@@ -97,6 +112,21 @@
 		98FE678415492C040009D7C1 /* ODTimeRepeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODTimeRepeatViewController.h; sourceTree = "<group>"; };
 		98FE678515492C040009D7C1 /* ODTimeRepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODTimeRepeatViewController.m; sourceTree = "<group>"; };
 		98FE678615492C040009D7C1 /* ODTimeRepeatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ODTimeRepeatViewController.xib; sourceTree = "<group>"; };
+		CE08B58615616832009FAEA0 /* Basso.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Basso.aiff; sourceTree = "<group>"; };
+		CE08B58715616832009FAEA0 /* Blow.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Blow.aiff; sourceTree = "<group>"; };
+		CE08B58815616832009FAEA0 /* Bottle.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Bottle.aiff; sourceTree = "<group>"; };
+		CE08B58915616832009FAEA0 /* Frog.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Frog.aiff; sourceTree = "<group>"; };
+		CE08B58A15616832009FAEA0 /* Funk.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Funk.aiff; sourceTree = "<group>"; };
+		CE08B58B15616832009FAEA0 /* Glass.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Glass.aiff; sourceTree = "<group>"; };
+		CE08B58C15616832009FAEA0 /* Hero.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Hero.aiff; sourceTree = "<group>"; };
+		CE08B58D15616832009FAEA0 /* Morse.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Morse.aiff; sourceTree = "<group>"; };
+		CE08B58E15616832009FAEA0 /* Ping.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Ping.aiff; sourceTree = "<group>"; };
+		CE08B58F15616832009FAEA0 /* Pop.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Pop.aiff; sourceTree = "<group>"; };
+		CE08B59015616832009FAEA0 /* Purr.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Purr.aiff; sourceTree = "<group>"; };
+		CE08B59115616832009FAEA0 /* Sosumi.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Sosumi.aiff; sourceTree = "<group>"; };
+		CE08B59215616832009FAEA0 /* Submarine.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Submarine.aiff; sourceTree = "<group>"; };
+		CE08B59315616832009FAEA0 /* Tink.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Tink.aiff; sourceTree = "<group>"; };
+		CE08B5A615616FFA009FAEA0 /* alarm-clock-1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "alarm-clock-1.wav"; sourceTree = "<group>"; };
 		CE799A7D1560CA810078A4C0 /* ODEditLabelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODEditLabelViewController.h; sourceTree = "<group>"; };
 		CE799A7E1560CA820078A4C0 /* ODEditLabelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODEditLabelViewController.m; sourceTree = "<group>"; };
 		CE799A7F1560CA820078A4C0 /* ODEditLabelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ODEditLabelViewController.xib; sourceTree = "<group>"; };
@@ -151,7 +181,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		305092601560F409001DABA9 /* images */ = {
+		305092601560F409001DABA9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
 				CEE3688C15610594000B50BD /* 1.jpg */,
@@ -162,15 +192,31 @@
 				3050925B1560F403001DABA9 /* bg.png */,
 				3050925C1560F403001DABA9 /* bg@2x.png */,
 			);
-			name = images;
+			name = Images;
 			sourceTree = "<group>";
 		};
 		305F8D761561107D000B1E2C /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				CE08B5A615616FFA009FAEA0 /* alarm-clock-1.wav */,
+				CE08B58615616832009FAEA0 /* Basso.aiff */,
+				CE08B58715616832009FAEA0 /* Blow.aiff */,
+				CE08B58815616832009FAEA0 /* Bottle.aiff */,
+				CE08B58915616832009FAEA0 /* Frog.aiff */,
+				CE08B58A15616832009FAEA0 /* Funk.aiff */,
+				CE08B58B15616832009FAEA0 /* Glass.aiff */,
+				CE08B58C15616832009FAEA0 /* Hero.aiff */,
+				CE08B58D15616832009FAEA0 /* Morse.aiff */,
+				CE08B58E15616832009FAEA0 /* Ping.aiff */,
+				CE08B58F15616832009FAEA0 /* Pop.aiff */,
+				CE08B59015616832009FAEA0 /* Purr.aiff */,
+				CE08B59115616832009FAEA0 /* Sosumi.aiff */,
+				CE08B59215616832009FAEA0 /* Submarine.aiff */,
+				CE08B59315616832009FAEA0 /* Tink.aiff */,
 				305F8D771561107D000B1E2C /* tap.aif */,
 			);
-			path = sounds;
+			name = sounds;
+			path = ../sounds;
 			sourceTree = "<group>";
 		};
 		989D66901553F0A8006148FA /* View */ = {
@@ -185,23 +231,13 @@
 		989D66921553F0B2006148FA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				307FE50E156116AA00EC8210 /* ODSoundListViewController.h */,
-				307FE50F156116AA00EC8210 /* ODSoundListViewController.m */,
-				98B4FC051545516C00E821CF /* ODListAlarmViewController.h */,
-				98B4FC061545516C00E821CF /* ODListAlarmViewController.m */,
-				98B4FC071545516C00E821CF /* ODListAlarmViewController.xib */,
-				98FE678415492C040009D7C1 /* ODTimeRepeatViewController.h */,
-				98FE678515492C040009D7C1 /* ODTimeRepeatViewController.m */,
-				98FE678615492C040009D7C1 /* ODTimeRepeatViewController.xib */,
-				98ECBD1C1547F24F00FF814B /* ODAddModalViewController.h */,
-				98ECBD1D1547F24F00FF814B /* ODAddModalViewController.m */,
-				98ECBD1E1547F24F00FF814B /* ODAddModalViewController.xib */,
-				CE799A7D1560CA810078A4C0 /* ODEditLabelViewController.h */,
-				CE799A7E1560CA820078A4C0 /* ODEditLabelViewController.m */,
-				CE799A7F1560CA820078A4C0 /* ODEditLabelViewController.xib */,
 				98726274155908D100D1B566 /* ODAlertViewController.h */,
 				98726275155908D100D1B566 /* ODAlertViewController.m */,
 				98726276155908D100D1B566 /* ODAlertViewController.xib */,
+				98B4FC051545516C00E821CF /* ODListAlarmViewController.h */,
+				98B4FC061545516C00E821CF /* ODListAlarmViewController.m */,
+				98B4FC071545516C00E821CF /* ODListAlarmViewController.xib */,
+				CECD4E311561601E00147FAE /* Form */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -209,8 +245,6 @@
 		98B4FBCE15454CE900E821CF = {
 			isa = PBXGroup;
 			children = (
-				305F8D7A15611189000B1E2C /* AudioToolbox.framework */,
-				305F8D761561107D000B1E2C /* sounds */,
 				98B4FBE515454CE900E821CF /* OpenAlarm */,
 				CE8D88C9155FF261001C441E /* OpenAlarmTests */,
 				98B4FBDC15454CE900E821CF /* Frameworks */,
@@ -230,6 +264,7 @@
 		98B4FBDC15454CE900E821CF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				305F8D7A15611189000B1E2C /* AudioToolbox.framework */,
 				CEE9495A155FE7390076126C /* SenTestingKit.framework */,
 				98B4FBDD15454CE900E821CF /* UIKit.framework */,
 				98B4FBDF15454CE900E821CF /* Foundation.framework */,
@@ -256,7 +291,8 @@
 		98B4FBE615454CE900E821CF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				305092601560F409001DABA9 /* images */,
+				305F8D761561107D000B1E2C /* sounds */,
+				305092601560F409001DABA9 /* Images */,
 				98B4FC4A1545602200E821CF /* Icon.png */,
 				98B4FBE715454CE900E821CF /* OpenAlarm-Info.plist */,
 				98B4FBE815454CE900E821CF /* InfoPlist.strings */,
@@ -329,6 +365,24 @@
 				CEBE439E155BA8CB00CAD5C3 /* Alarm.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		CECD4E311561601E00147FAE /* Form */ = {
+			isa = PBXGroup;
+			children = (
+				98ECBD1C1547F24F00FF814B /* ODAddModalViewController.h */,
+				98ECBD1D1547F24F00FF814B /* ODAddModalViewController.m */,
+				98ECBD1E1547F24F00FF814B /* ODAddModalViewController.xib */,
+				CE799A7D1560CA810078A4C0 /* ODEditLabelViewController.h */,
+				CE799A7E1560CA820078A4C0 /* ODEditLabelViewController.m */,
+				CE799A7F1560CA820078A4C0 /* ODEditLabelViewController.xib */,
+				307FE50E156116AA00EC8210 /* ODSoundListViewController.h */,
+				307FE50F156116AA00EC8210 /* ODSoundListViewController.m */,
+				98FE678415492C040009D7C1 /* ODTimeRepeatViewController.h */,
+				98FE678515492C040009D7C1 /* ODTimeRepeatViewController.m */,
+				98FE678615492C040009D7C1 /* ODTimeRepeatViewController.xib */,
+			);
+			name = Form;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -411,15 +465,27 @@
 				3050925D1560F403001DABA9 /* bg.png in Resources */,
 				3050925E1560F403001DABA9 /* bg@2x.png in Resources */,
 				CE799A811560CA820078A4C0 /* ODEditLabelViewController.xib in Resources */,
-<<<<<<< HEAD
 				CEE3688715610549000B50BD /* 2.jpg in Resources */,
 				CEE3688815610549000B50BD /* 3.jpg in Resources */,
 				CEE3688915610549000B50BD /* 4.jpg in Resources */,
 				CEE3688A15610549000B50BD /* 5.jpg in Resources */,
 				CEE3688D15610594000B50BD /* 1.jpg in Resources */,
-=======
 				305F8D781561107D000B1E2C /* tap.aif in Resources */,
->>>>>>> 27773a9dac736dee8bf3dd60f3435a9a459580fb
+				CE08B59415616832009FAEA0 /* Basso.aiff in Resources */,
+				CE08B59515616832009FAEA0 /* Blow.aiff in Resources */,
+				CE08B59615616832009FAEA0 /* Bottle.aiff in Resources */,
+				CE08B59715616832009FAEA0 /* Frog.aiff in Resources */,
+				CE08B59815616832009FAEA0 /* Funk.aiff in Resources */,
+				CE08B59915616832009FAEA0 /* Glass.aiff in Resources */,
+				CE08B59A15616832009FAEA0 /* Hero.aiff in Resources */,
+				CE08B59B15616832009FAEA0 /* Morse.aiff in Resources */,
+				CE08B59C15616832009FAEA0 /* Ping.aiff in Resources */,
+				CE08B59D15616832009FAEA0 /* Pop.aiff in Resources */,
+				CE08B59E15616832009FAEA0 /* Purr.aiff in Resources */,
+				CE08B59F15616832009FAEA0 /* Sosumi.aiff in Resources */,
+				CE08B5A015616832009FAEA0 /* Submarine.aiff in Resources */,
+				CE08B5A115616832009FAEA0 /* Tink.aiff in Resources */,
+				CE08B5A715616FFA009FAEA0 /* alarm-clock-1.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

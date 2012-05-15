@@ -8,14 +8,12 @@
 
 #import "ODAlertViewController.h"
 
-@interface ODAlertViewController ()
-
-@end
-
 @implementation ODAlertViewController
 
+@synthesize delegate;
 @synthesize alertMessege;
 @synthesize imageView;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -34,18 +32,6 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -54,9 +40,9 @@
 
 - (IBAction)hideView:(id)sender
 {
-    [self.view removeFromSuperview];
+    if ([self.delegate respondsToSelector:@selector(alertViewDidStopAlarm:)]) {
+        [self.delegate alertViewDidStopAlarm:self];
+    }
 }
-
-#pragma mark - Clock View
 
 @end

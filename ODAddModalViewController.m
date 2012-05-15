@@ -11,14 +11,13 @@
 #import "ODEditLabelViewController.h"
 #import "ODSoundListViewController.h"
 
-@interface ODAddModalViewController()
-{
+@interface ODAddModalViewController() {
     ODEditLabelViewController *editViewController;
-    BOOL isAlarmOn;
     ODSoundListViewController *soundListViewController;
+    BOOL isAlarmOn;
 }
-
 @end
+
 @implementation ODAddModalViewController
 
 @synthesize delegate;
@@ -32,6 +31,7 @@
         editViewController = [[ODEditLabelViewController alloc] initWithNibName:@"ODEditLabelViewController" bundle:nil];
         isUpdate = NO;
         saveTextLabel = [[NSString alloc]init];
+        saveTextLabel = @"Walk outside";
     }
     return self;
 }
@@ -43,8 +43,6 @@
         self.updateAlarm = alarm;
         isUpdate = YES;
         saveTextLabel = updateAlarm.title;
-        //isAlarmOn = [updateAlarm enable].boolValue;
-        
     }
     return self;
 }
@@ -58,7 +56,6 @@
 
     if (isUpdate)
         datePicker.date = updateAlarm.fireDate;
-    
 
     UIBarButtonItem *backToCameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
                                                                                         target:self action:@selector(backToAlarmListPage)];
@@ -108,11 +105,12 @@
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellLabelIdentifier];
             }
             cell.textLabel.text = @"Label";
+            
             cell.detailTextLabel.text = saveTextLabel;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         }
-        case 1: {   //status
+        case 1: { //status
             UILabel *leftLabel;
             UISwitch *statusSwitch;
             cell = [tableView dequeueReusableCellWithIdentifier:CellStatusIdentifier];
@@ -173,7 +171,7 @@
             [self.navigationController pushViewController:editViewController animated:YES];
             break;
         }
-        case 2: {   //sound
+        case 2: { //sound
             soundListViewController = [[ODSoundListViewController alloc] init];
             [self.navigationController pushViewController:soundListViewController animated:YES];
             break;        
@@ -186,6 +184,11 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+- (void)switchChanged:(UISwitch *)sender
+{
+    isAlarmOn = sender.on;
+}
+
 - (void)doneButton
 {
     if(isUpdate)
@@ -194,72 +197,78 @@
         [self saveAlarmToDB];
 }
 
-- (void)switchChanged:(UISwitch *)sender
+- (NSString *)mergeStringFromArray:(NSArray *)sArray
 {
-    isAlarmOn = sender.on;
+    __block NSMutableString *mergeString = [[NSMutableString alloc] init];
+    [sArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+        [mergeString appendString: (NSString *)obj];
+    }];
+    return mergeString;
 }
 
 - (void)updateAlarmToDB
 {
-    __block NSMutableString *selectedDayRepeatString = [[NSMutableString alloc] init];
-    [timeRepeat.selectedDayRepeat enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
-        [selectedDayRepeatString appendString: (NSString *)obj];
-    }];
-    
-    __block NSMutableString *selectedTimeRepeatString = [[NSMutableString alloc] init];
-    [timeRepeat.selectedTimeRepeat enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
-        [selectedTimeRepeatString appendString: (NSString *)obj];
-    }];
-    self.updateAlarm.fireDate = datePicker.date;
-    self.updateAlarm.repeatDayFlag = selectedDayRepeatString;
-    self.updateAlarm.repeatTimeFlag = selectedTimeRepeatString;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dateComps = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | 
+                                                        NSDayCalendarUnit | NSWeekCalendarUnit |
+                                                        NSHourCalendarUnit | NSMinuteCalendarUnit
+                                                        | NSSecondCalendarUnit) 
+                                              fromDate:datePicker.date];
+    [dateComps setSecond:0];
+    NSDate *saveDate = [calendar dateFromComponents:dateComps];
+    self.updateAlarm.fireDate = saveDate; // set to DB
     self.updateAlarm.title = saveTextLabel;
     self.updateAlarm.enable = [NSNumber numberWithBool:isAlarmOn];
+    
+    self.updateAlarm.repeatDayFlag = [self mergeStringFromArray:timeRepeat.selectedDayRepeat];
+    self.updateAlarm.repeatTimeFlag = [self mergeStringFromArray:timeRepeat.selectedTimeRepeat];
+    
     [APPDELEGATE saveContext];
     
     [self.delegate addViewController:self didUpdateAlarm:self.updateAlarm];
-    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)saveAlarmToDB
 {
-    __block NSMutableString *selectedDayRepeatString = [[NSMutableString alloc] init];
-    
-    [timeRepeat.selectedDayRepeat enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
-        [selectedDayRepeatString appendString: (NSString *)obj];
-    }];
-    
-    __block NSMutableString *selectedTimeRepeatString = [[NSMutableString alloc] init];
-    [timeRepeat.selectedTimeRepeat enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
-        [selectedTimeRepeatString appendString: (NSString *)obj];
-    }];
-    
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Alarm" inManagedObjectContext:[APPDELEGATE managedObjectContext]];
     
     Alarm *newAlarm = [NSEntityDescription insertNewObjectForEntityForName:entity.name inManagedObjectContext:[APPDELEGATE managedObjectContext]];
-    
-    newAlarm.repeatDayFlag = selectedDayRepeatString;
-    newAlarm.repeatTimeFlag = selectedTimeRepeatString;
-    
-    newAlarm.repeatPeriod = selectedDayRepeatString;
     newAlarm.title = saveTextLabel;
-    newAlarm.fireDate = datePicker.date;
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *dateComps = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekCalendarUnit |
+                                                        NSHourCalendarUnit | NSMinuteCalendarUnit
+                                                        | NSSecondCalendarUnit) 
+                                                        fromDate:datePicker.date];
+    [dateComps setSecond:0];
+    NSDate *saveDate = [calendar dateFromComponents:dateComps];
+    newAlarm.fireDate = saveDate; // set to DB
+    
     newAlarm.enable = [NSNumber numberWithBool:isAlarmOn];
-    newAlarm.alarmPeriod = [NSNumber numberWithInt:1];
+    
+    newAlarm.repeatDayFlag = [self mergeStringFromArray:timeRepeat.selectedDayRepeat];
+    newAlarm.repeatTimeFlag = [self mergeStringFromArray:timeRepeat.selectedTimeRepeat];
+    
+    
     [APPDELEGATE saveContext];
 
-    if (![newAlarm isFault]) {
+    if ([newAlarm isFault]) {
+        if ([self.delegate respondsToSelector:@selector(addViewController:didFailInsertAlarm:)]) {
+            [self.delegate addViewController:self didFailInsertAlarm:nil];
+        }
+    } else {
         [self.delegate addViewController:self didInsertAlarm:(Alarm *)newAlarm];
     }
-    
-    [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)shouldSaveTextLabel:(ODEditLabelViewController *)controller :(NSString *)textLabel
+- (void)shouldSaveTextLabel:(ODEditLabelViewController *)controller withString:(NSString *)text
 {
-    saveTextLabel = textLabel;
-    [detailNewAlarm reloadData];
-    NSLog(@"reloadData");
+    if (text != nil) {
+        saveTextLabel = text;
+        [detailNewAlarm reloadData];
+    }
+    
+    [self.navigationController popToViewController:self animated:YES];
 }
 
 @end

@@ -9,6 +9,13 @@
 #import "ODListAlarmViewController.h"
 #import "ODAlarmServices.h"
 
+@interface ODAppDelegate()
+{
+    NSMutableArray *alertControllers;
+}
+
+@end
+
 @implementation ODAppDelegate
 
 @synthesize window = _window;
@@ -19,35 +26,51 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    alertControllers = [NSMutableArray new];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
 
+    [ODAlarmServices sharedAlarmServices];
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(pushAlertView:) 
+                                                 name:@"alarmServicesWillAlert" 
+                                               object:nil];
+    
+    
+//    alertViewController = [[ODAlertViewController alloc] initWithNibName:@"ODAlertViewController" bundle:nil];
+//    alertViewController.delegate = self;
+    
+    [application setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    
     ODListAlarmViewController *masterViewController = [[ODListAlarmViewController alloc] initWithNibName:@"ODListAlarmViewController" bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-    
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
-    
-    alertViewController = [[ODAlertViewController alloc] initWithNibName:@"ODAlertViewController" bundle:nil];
-    [ODAlarmServices sharedAlarmServices];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushAlartView:) name:@"alarmServicesWillAlert" object:nil];
     
     return YES;
 }
 
-- (void)pushAlartView:(NSNotification *)n
+
+- (void)pushAlertView:(NSNotification *)n
 {
+    ODAlertViewController *alertViewController = [[ODAlertViewController alloc] initWithNibName:@"ODAlertViewController" bundle:nil];
+    alertViewController.delegate = self;
+    [alertControllers addObject:alertViewController];
+    
     NSLog(@"%@",[n.userInfo valueForKey:@"kAlarm"]);
+    
     __block CGRect rect = alertViewController.view.frame;
     rect.origin.y = 400;
-    alertViewController.view.frame = rect;
-    NSString *label = [(Alarm *)[n.userInfo valueForKey:@"kAlarm"] title];
     
-    alertViewController.alertMessege.text = label;
+    alertViewController.view.frame = rect;
+    
+    NSString *labelString = [(Alarm *)[n.userInfo valueForKey:@"kAlarm"] title];
+    alertViewController.alertMessege.text = labelString;
     alertViewController.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg",(arc4random()%5)+1]];
+    
     [self.navigationController.view addSubview:alertViewController.view];
+    
     [UIView animateWithDuration:0.5 animations:^{
         rect = alertViewController.view.frame;
         rect.origin.y = 0;
@@ -55,43 +78,44 @@
     }];
 }
 
-- (void)hideAlertView
+- (void)hideAlertView:(ODAlertViewController *)alertViewController
 {
-    [alertViewController.view removeFromSuperview];
+    __block CGRect rect = alertViewController.view.frame;
+    rect.origin.y = 0;
+    alertViewController.view.frame = rect;
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        rect = alertViewController.view.frame;
+        rect.origin.y = 480;
+        alertViewController.view.frame = rect;
+    } completion:^(BOOL finished){
+        [alertControllers removeObject:alertViewController];
+    }];
+//    [UIView animateWithDuration:0.4 animations:^{
+//        alertViewController.view.alpha = 0.0;
+//    }];
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application
+- (void)alertViewDidStopAlarm:(ODAlertViewController *)controller
 {
-    NSLog(@"applicationWillResignActive");
+    [self hideAlertView:controller];
+//    [alertViewController dismissViewControllerAnimated:YES completion:nil];
 }
+
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    [[ODAlarmServices sharedAlarmServices] setAlarm];
+    [[ODAlarmServices sharedAlarmServices] scheduleLocalNotificationsForAllAlarms];
 }
+
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    NSLog(@"applicationDidBecomeActive");
-}
-
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     [self saveContext];
-}
-
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
-    NSLog(@"didReceiveLocalNotification notification");
-}
-
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-{
-    NSLog(@"didReceiveRemoteNotification userInfo");
 }
 
 - (void)saveContext
@@ -100,8 +124,6 @@
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         } 

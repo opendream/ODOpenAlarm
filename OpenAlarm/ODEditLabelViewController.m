@@ -37,6 +37,7 @@
     self.navigationItem.rightBarButtonItem = saveButton;
     self.textLabel.text = currentName;
     
+    self.textLabel.delegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -57,19 +58,17 @@
 {
     [self setTextLabel:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (void)save:(id)sender
 {
-    [self.delegate shouldSaveTextLabel:self :textLabel.text];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.delegate shouldSaveTextLabel:self withString:textLabel.text];
+
 }
 
 - (void)cancel:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.delegate shouldSaveTextLabel:self withString:nil];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -77,4 +76,12 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.delegate shouldSaveTextLabel:self withString:textField.text];
+    return YES;
+}
 @end

@@ -16,7 +16,6 @@ NSString *alarmServicesWillAlert;
 
 static ODAlarmServices *shareAlarmService = nil;
 
-@synthesize counter;
 @synthesize alarms;
 
 - (id)init
@@ -27,11 +26,9 @@ static ODAlarmServices *shareAlarmService = nil;
         alarmServicesWillAlert = @"alarmServicesWillAlert";
         
         // timer
-        [self fetchAlarm];
+        [self fetchAllAlarms];
 
         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkAlarm) userInfo:nil repeats:YES];
-
-        alarmCount = 0;
     }
     return self;
 }
@@ -94,7 +91,7 @@ static ODAlarmServices *shareAlarmService = nil;
     return NO;
 }
 
-- (BOOL)alarmTest:(Alarm *)a
+- (BOOL)alarmTest:(Alarm *)alarm;
 {
     // check whether alarm should be alert
     // alarmCheck, nowCheck -> in second
@@ -106,27 +103,27 @@ static ODAlarmServices *shareAlarmService = nil;
                                                      fromDate:today];
     
     // check alert
-    if (![a shouldAlert]) {
+    if (![alarm shouldAlert]) {
         return NO;
     }
     if (![self isAlarmEnable]) {
         return NO;
     }
     // check repeat
-    NSString *repeatTimeFlags = [a repeatTimeFlag];
-    NSString *repeatDayFlags = [a repeatDayFlag];
+    NSString *repeatTimeFlags = [alarm repeatTimeFlag];
+    NSString *repeatDayFlags = [alarm repeatDayFlag];
     
     BOOL isTimeRepeat = ![repeatTimeFlags isEqualToString:TIME_FLAG_DEFAULT];
     BOOL isDayRepeat = ![repeatDayFlags isEqualToString:DAY_FLAG_DEFAULT];
     
     // no repeat
     if (isTimeRepeat == NO && isDayRepeat == NO) {
-        BOOL shouldAlert = [self isNowDateEqualToAlarmDate:a.fireDate];   
+        BOOL shouldAlert = [self isNowDateEqualToAlarmDate:alarm.fireDate];   
         if (shouldAlert) {
-            a.repeatFlag = [NSNumber numberWithBool:NO];
+            alarm.repeatFlag = [NSNumber numberWithBool:NO];
             [APPDELEGATE saveContext];
             
-            [self performSelector:@selector(repeatCooldown:) withObject:a afterDelay:60-componentsToday.second];
+            [self performSelector:@selector(repeatCooldown:) withObject:alarm afterDelay:60 - componentsToday.second];
         }
         return shouldAlert;
         
@@ -135,25 +132,25 @@ static ODAlarmServices *shareAlarmService = nil;
         BOOL shouldAlert;
         if (isTimeRepeat && !isDayRepeat) {
             // time repeat
-            shouldAlert = [self isNowDateEqualToAlarmDate:a.fireDate withTimePeriod:[a repeatTimeInMinutes]];
+            shouldAlert = [self isNowDateEqualToAlarmDate:alarm.fireDate withTimePeriod:[alarm repeatTimeInMinutes]];
         } else if (isDayRepeat && !isTimeRepeat) {
             // day repeat
-            BOOL isEqualToAlarmWeekday = [self isAlarmWeekdayEqualToCurrentDay:a];
-            BOOL isEqualToNowTime =[ self isNowDateEqualToAlarmDate:a.fireDate];
+            BOOL isEqualToAlarmWeekday = [self isAlarmWeekdayEqualToCurrentDay:alarm];
+            BOOL isEqualToNowTime =[ self isNowDateEqualToAlarmDate:alarm.fireDate];
             shouldAlert = isEqualToAlarmWeekday && isEqualToNowTime;
         } else {
             // time + day repeat
-            BOOL isEqualToAlarmWeekday = [self isAlarmWeekdayEqualToCurrentDay:a];
-            BOOL isEqualToNowDate = [self isNowDateEqualToAlarmDate:a.fireDate withTimePeriod:[a repeatTimeInMinutes]];
+            BOOL isEqualToAlarmWeekday = [self isAlarmWeekdayEqualToCurrentDay:alarm];
+            BOOL isEqualToNowDate = [self isNowDateEqualToAlarmDate:alarm.fireDate withTimePeriod:[alarm repeatTimeInMinutes]];
             shouldAlert = isEqualToAlarmWeekday && isEqualToNowDate;
         }
         
         if (shouldAlert) {
             
-            a.repeatFlag = [NSNumber numberWithBool:NO];
+            alarm.repeatFlag = [NSNumber numberWithBool:NO];
             [APPDELEGATE saveContext];
             
-            [self performSelector:@selector(repeatCooldown:) withObject:a afterDelay:60];
+            [self performSelector:@selector(repeatCooldown:) withObject:alarm afterDelay:60 - componentsToday.second];
             return shouldAlert;
         }
     }
@@ -163,17 +160,18 @@ static ODAlarmServices *shareAlarmService = nil;
 
 - (void)checkAlarm
 {
-    if (![self fetchAlarm]) return;
-
-    for (Alarm *alarmObject in alarms) {
+    NSArray *allAlarms = [self fetchAllAlarms];
+    
+    for (Alarm *alarm in allAlarms) {
         
-        BOOL shouldAlert = [self alarmTest:alarmObject];
+        BOOL shouldAlert = [self alarmTest:alarm];
         
         if (shouldAlert) {
             
-            NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:alarmObject, @"kAlarm", nil];
+            NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:alarm, @"kAlarm", nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:alarmServicesWillAlert object:nil userInfo:userInfo];
             [APPDELEGATE saveContext];
+            
         }
     }    
 }
@@ -185,7 +183,7 @@ static ODAlarmServices *shareAlarmService = nil;
     NSLog(@"cooldown for alarm %@", a.fireDate);
 }
 
-- (BOOL)fetchAlarm
+- (NSArray *)fetchAllAlarms
 {
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Alarm" 
                                               inManagedObjectContext:[APPDELEGATE managedObjectContext]];
@@ -195,28 +193,49 @@ static ODAlarmServices *shareAlarmService = nil;
     [request setEntity:entity];
     
     NSError *error;
-    alarms = [[APPDELEGATE managedObjectContext] executeFetchRequest:request error:&error];
+    NSArray *allAlarms = [[APPDELEGATE managedObjectContext] executeFetchRequest:request error:&error];
     
     if (error != nil) {
         NSLog(@"cannot fetch alarm objects from database.");
-        return NO;
+        return nil;
     }
     
-    return [alarms count] > 0 ? YES : NO;
+    alarms = allAlarms;
+    return allAlarms;
 }
 
-//#warning should not use setAlarm for method name
-- (void)setAlarm 
+- (void)scheduleLocalNotificationsForAlarms:(NSArray *)scheduleAlarms
 {
-    for (Alarm *localNotifFireDate in alarms) {
-        if ([self shouldAlertLocalNotification:localNotifFireDate] == YES) {
+    NSDate *today = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    NSDateComponents * componentsToday = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | 
+                                                               NSDayCalendarUnit | NSWeekdayCalendarUnit | 
+                                                               NSHourCalendarUnit | NSMinuteCalendarUnit | 
+                                                               NSSecondCalendarUnit) 
+                                                     fromDate:today];
+    
+    for (Alarm *alarm in scheduleAlarms) {
+        if ([self shouldAlertLocalNotification:alarm] == YES) {
+            NSDateComponents * componentsfireDate = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | 
+                                                                          NSDayCalendarUnit | NSWeekdayCalendarUnit | 
+                                                                          NSHourCalendarUnit | NSMinuteCalendarUnit | 
+                                                                          NSSecondCalendarUnit) 
+                                                                        fromDate:alarm.fireDate];
+            [componentsfireDate setYear:componentsToday.year];
+            [componentsfireDate setMonth:componentsToday.month];
+            [componentsfireDate setDay:componentsToday.day];
+            [componentsfireDate setWeekday:componentsToday.weekday];
+            
+            NSDate *fireDate = [calendar dateFromComponents:componentsfireDate];
+            
             UILocalNotification *localNotif = [[UILocalNotification alloc] init];
             localNotif.timeZone = [NSTimeZone defaultTimeZone];
-            localNotif.alertBody = localNotifFireDate.title;
+            localNotif.alertBody = alarm.title;
             localNotif.alertAction = NSLocalizedString(@"View Details", nil);
-            localNotif.fireDate = localNotifFireDate.fireDate;
+            localNotif.fireDate = fireDate;
             
-            NSArray *object = [[NSArray alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@",localNotifFireDate.fireDate]];
+            NSArray *object = [[NSArray alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@",alarm.fireDate]];
             NSArray *key = [[NSArray alloc]initWithContentsOfFile:@"notif"];
             localNotif.userInfo = [[NSDictionary alloc]initWithObjects:object forKeys:key];
             localNotif.soundName = UILocalNotificationDefaultSoundName;
@@ -224,6 +243,13 @@ static ODAlarmServices *shareAlarmService = nil;
             [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
             
         }
+    }
+}
+
+- (void)scheduleLocalNotificationsForAllAlarms
+{
+    if ([self isAlarmEnable]) {
+        [self scheduleLocalNotificationsForAlarms:alarms];
     }
 }
 
@@ -244,10 +270,30 @@ static ODAlarmServices *shareAlarmService = nil;
     NSInteger nowCheck = ( componentsToday.hour * 60 ) + componentsToday.minute;
     NSInteger alarmCheck = ( componentsAlarm.hour * 60 ) + componentsAlarm.minute;
     
-    if(nowCheck < alarmCheck ) {
-        return YES;
+    return nowCheck < alarmCheck;
+}
+
+- (void)setAlarmUptoDate
+{
+    NSArray *allAlarms = [self fetchAllAlarms];
+    
+    for (Alarm *alarm in allAlarms) {
+        NSDate *nowDate = [NSDate date];
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *nowDateComps = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | 
+                                                            NSDayCalendarUnit | NSWeekCalendarUnit |
+                                                            NSHourCalendarUnit | NSMinuteCalendarUnit
+                                                            | NSSecondCalendarUnit) 
+                                                  fromDate:nowDate];
+        
+        NSDateComponents *fireDateComps = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | 
+                                                            NSDayCalendarUnit | NSWeekCalendarUnit |
+                                                            NSHourCalendarUnit | NSMinuteCalendarUnit
+                                                            | NSSecondCalendarUnit) 
+                                                            fromDate:alarm.fireDate];
+        [fireDateComps setYear:nowDateComps.year];
+
     }
-    return NO;
 }
 
 #define ALARMFILE @"ALARMFILE"
@@ -294,10 +340,13 @@ static ODAlarmServices *shareAlarmService = nil;
     // Create the URL for the source audio file. The URLForResource:withExtension: method is
     //    new in iOS 4.0.
     NSFileManager *fm = [NSFileManager defaultManager];
+
     NSURL *tapSound   = [[NSBundle mainBundle] URLForResource:soundName withExtension:soundType]; //@"tap.aif"
     
+    NSLog(@"url for sound %@", tapSound);
     
     if (![fm fileExistsAtPath:[tapSound path]]) {
+        NSLog(@"File does not exist at path %@", [tapSound path]);
         tapSound   = [[NSBundle mainBundle] URLForResource:@"tap" withExtension:@"aif"]; //@"tap.aif"
     }    
     
@@ -311,8 +360,15 @@ static ODAlarmServices *shareAlarmService = nil;
     
     AudioServicesPlayAlertSound (soundFileObject);
     
-
+    [self resetAlert];
     
+    [self performSelector:@selector(vibratePhone) withObject:nil afterDelay:0];
+    [self performSelector:@selector(vibratePhone) withObject:nil afterDelay:1.0];
+}
+
+- (void)vibratePhone
+{
+    AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
 }
 
 @end

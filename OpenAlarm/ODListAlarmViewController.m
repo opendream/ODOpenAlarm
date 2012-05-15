@@ -38,7 +38,11 @@
     //creat right navigation button (add button)
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertnewAlarm)];
     self.navigationItem.leftBarButtonItem = addButton;
-        
+    
+    
+//    UIBarButtonItem *soundButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(playSound)];
+//    self.navigationItem.rightBarButtonItem = soundButton;
+    
     //creat left navigation button (delete button)
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
         
@@ -47,6 +51,11 @@
     
     [enableAlarmSwitch addTarget:self action:@selector(alarmSwitchAction:) forControlEvents:UIControlEventValueChanged];
 } 
+
+- (void)playSound
+{
+    [[ODAlarmServices sharedAlarmServices] alertWithSound:@"alarm-clock-1" withSoundType:@"wav"];
+}
 
 - (void)alarmSwitchAction:(id)sender
 {
@@ -294,11 +303,13 @@
 - (void)addViewController:(ODAddModalViewController *)controller didInsertAlarm:(Alarm *)alarm
 {
     [alarmList reloadData];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)addViewController:(ODAddModalViewController *)controller didUpdateAlarm:(Alarm *)alarm
 {
     [alarmList reloadData];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

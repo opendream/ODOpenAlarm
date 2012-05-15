@@ -38,4 +38,6 @@
 @protocol ODAddViewControllerDelegate <NSObject>
 - (void)addViewController:(ODAddModalViewController *)controller didInsertAlarm:(Alarm *)alarm;
 - (void)addViewController:(ODAddModalViewController *)controller didUpdateAlarm:(Alarm *)alarm;
+@optional
+- (void)addViewController:(ODAddModalViewController *)controller didFailInsertAlarm:(Alarm *)alarm;
 @end

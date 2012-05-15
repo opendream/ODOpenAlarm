@@ -11,25 +11,25 @@
 
 extern NSString *alarmServicesWillAlert;
 
-@interface ODAlarmServices : NSObject{
+@interface ODAlarmServices : NSObject {
     NSArray *alarms;
-    int alarmCount;
 }
 
 @property (nonatomic, strong) NSArray *alarms;
-@property (nonatomic, assign) float counter;
 
 + (id)sharedAlarmServices;
 
-- (BOOL)fetchAlarm;
-- (BOOL)alarmTest:(Alarm *)a;
+- (NSArray *)fetchAllAlarms;
+
+- (BOOL)alarmTest:(Alarm *)alarm;
+- (void)stopAlert;
+- (void)resetAlert;
 
 - (BOOL)isAlarmEnable;
 - (void)setEnableAlarm:(BOOL)enable;
-- (void)setAlarm;
-@end
 
-////////////////////////// TODO ////////////////////////////
-// - Move saveAlarmToDB and updateAlarmToDB to services
-// - Create alarm's label or message view
-// - Add photo/sound/video
+- (void)alertWithSound:(NSString *)soundName withSoundType:(NSString *)soundType;
+
+- (void)scheduleLocalNotificationsForAlarms:(NSArray *)scheduleAlarms;
+- (void)scheduleLocalNotificationsForAllAlarms;
+@end
